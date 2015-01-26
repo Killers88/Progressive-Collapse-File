@@ -26,12 +26,13 @@ public class ProgressCollapseTest {
 	@Test
 	public void testCalculatePeakIncidentOverPressurePso() {
 
-		double result = PeakIncidentOverPressurePso.calculatePso(Z);
+		double result = PeakIncidentOverPressurePso
+				.findPeakIncidentOverPressureWith(Z);
 		System.out.println(result);
 		assertEquals(EXPECTED_RESULT, result, 0);
 
 		try {
-			PeakIncidentOverPressurePso.calculatePso(-1);
+			PeakIncidentOverPressurePso.findPeakIncidentOverPressureWith(-1);
 			fail();
 		} catch (RuntimeException e) {
 			assertTrue(e.getMessage(), e != null);
