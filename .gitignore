@@ -8,6 +8,7 @@
 *.war
 *.ear
 
+# USED FOR JAVA PROJECTS #
 .classpath
 .project
 .settings
