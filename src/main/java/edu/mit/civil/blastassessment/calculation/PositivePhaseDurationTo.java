@@ -103,18 +103,18 @@ public class PositivePhaseDurationTo {
 	/**
 	 * Return Positive Phase Duration to
 	 * 
-	 * @param Z
+	 * @param z
 	 * @param w
 	 *            (Weight of TNT)
 	 * @return
 	 */
-	public static double findPositivePhaseDurationForZ(final double Z,
+	public static double findPositivePhaseDurationForZ(final double z,
 			final double w) {
 		// Check that Z is greater than 0
-		if (Z > 0) {
+		if (z > 0) {
 			// http://stackoverflow.com/questions/5419123/how-to-round-a-float-to-the-nearest-quarter
 			float coeff = 4f;
-			double nearestQuarterZ = Math.round(Z * coeff) / coeff;
+			double nearestQuarterZ = Math.round(z * coeff) / coeff;
 			return (graph.get(nearestQuarterZ)) * Math.pow(w, 0.3333);
 		}
 

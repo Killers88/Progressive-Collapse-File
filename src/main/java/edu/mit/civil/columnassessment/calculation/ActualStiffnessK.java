@@ -14,10 +14,10 @@ public class ActualStiffnessK {
 	public static double UNIT_CONVERSIONA = 0.00694444;
 	public static double UNIT_CONVERSIONB = 0.0000481;
 
-	public static double calculateColumnActualStiffness(final double E,
-			final double I, final double L) {
+	public static double calculateColumnActualStiffness(final double e,
+			final double i, final double l) {
 
-		return (CONSTANT_A * (E / UNIT_CONVERSIONA) * (I * UNIT_CONVERSIONB))
-				/ (5 * (Math.pow(L, 3)));
+		return (CONSTANT_A * (e / UNIT_CONVERSIONA) * (i * UNIT_CONVERSIONB))
+				/ (5 * (Math.pow(l, 3)));
 	}
 }

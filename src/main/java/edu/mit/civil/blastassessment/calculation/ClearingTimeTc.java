@@ -16,34 +16,34 @@ public class ClearingTimeTc {
 	/**
 	 * Return min(S) and max(G) of building dimensions
 	 * 
-	 * @param H
-	 * @param W
+	 * @param h
+	 * @param w
 	 * @param Cr
 	 */
-	public static double parameterS(final double W, final double H) {
+	public static double parameterS(final double w, final double h) {
 
-		if (H > (W / 2)) {
-			return (W / 2);
+		if (h > (w / 2)) {
+			return (w / 2);
 		} else {
-			return H;
+			return h;
 		}
 	}
 
-	public static double parameterG(final double W, final double H) {
-		if (H < (W / 2)) {
-			return (W / 2);
+	public static double parameterG(final double w, final double h) {
+		if (h < (w / 2)) {
+			return (w / 2);
 		} else {
-			return H;
+			return h;
 		}
 	}
 
-	public static double calculateclearingTimeTc(final double W,
-			final double H, final double Cr) {
+	public static double calculateclearingTimeTc(final double w,
+			final double h, final double cr) {
 
-		double S = parameterS(H, W);
-		double G = parameterG(H, W);
+		double S = parameterS(h, w);
+		double G = parameterG(h, w);
 
-		return (CONSTANT_A * S) / ((CONSTANT_B + (S / G)) * Cr);
+		return (CONSTANT_A * S) / ((CONSTANT_B + (S / G)) * cr);
 
 	}
 

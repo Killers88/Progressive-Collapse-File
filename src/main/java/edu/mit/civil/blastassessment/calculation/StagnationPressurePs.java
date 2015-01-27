@@ -12,14 +12,14 @@ public class StagnationPressurePs {
 	/**
 	 * Return Stagnation Pressure
 	 * 
-	 * @param Pso
+	 * @param pso
 	 * @param qo
 	 * @return
 	 */
 	public static double calculateStagnationPressureWithPsoandqo(
-			final double Pso, final double qo) {
+			final double pso, final double qo) {
 
-		return Pso + qo;// psi;
+		return pso + qo;// psi;
 
 	}
 

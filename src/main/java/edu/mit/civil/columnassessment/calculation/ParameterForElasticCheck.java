@@ -9,9 +9,9 @@ package edu.mit.civil.columnassessment.calculation;
  */
 public class ParameterForElasticCheck {
 
-	public static double TEquivDividedByTn(final double T, final double Tn) {
+	public static double tEquivDividedByTn(final double t, final double tn) {
 
-		return T / Tn;
+		return t / tn;
 	}
 
 }

@@ -97,15 +97,15 @@ public class PeakIncidentOverPressurePso {
 	/**
 	 * Return Peak Incident Over-Pressure Pso
 	 * 
-	 * @param Z
+	 * @param z
 	 * @return
 	 */
-	public static double findPeakIncidentOverPressureWith(final double Z) {
+	public static double findPeakIncidentOverPressureWith(final double z) {
 		// Check that Z is greater than 0
-		if (Z > 0) {
+		if (z > 0) {
 			// http://stackoverflow.com/questions/5419123/how-to-round-a-float-to-the-nearest-quarter
 			float coeff = 4f;
-			double nearestQuarterZ = Math.round(Z * coeff) / coeff;
+			double nearestQuarterZ = Math.round(z * coeff) / coeff;
 			return (graph.get(nearestQuarterZ));
 		}
 		// TODO add logging here

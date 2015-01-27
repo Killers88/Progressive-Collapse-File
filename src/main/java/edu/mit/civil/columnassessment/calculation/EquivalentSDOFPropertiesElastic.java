@@ -14,20 +14,20 @@ public class EquivalentSDOFPropertiesElastic {
 	public static double Mass_Factor_ELASTIC = 0.5;
 	public static double CONSTANT_A = 2;
 
-	public static double StiffnessOfEquivSDOF(final double k) {
+	public static double stiffnessOfEquivSDOF(final double k) {
 
 		return Load_Factor_ELASTIC * k;
 	}
 
-	public static double MassOfEquivSDOF(final double m) {
+	public static double massOfEquivSDOF(final double m) {
 
 		return Mass_Factor_ELASTIC * m;
 	}
 
-	public static double NaturalPeriodSDOF(final double m, final double k) {
+	public static double naturalPeriodSDOF(final double m, final double k) {
 
-		double K = StiffnessOfEquivSDOF(k);
-		double M = MassOfEquivSDOF(m);
+		double K = stiffnessOfEquivSDOF(k);
+		double M = massOfEquivSDOF(m);
 
 		return CONSTANT_A * Math.PI * (Math.sqrt(M / K));
 	}

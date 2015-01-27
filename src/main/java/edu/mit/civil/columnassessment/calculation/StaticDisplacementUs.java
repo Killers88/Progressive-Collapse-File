@@ -9,21 +9,21 @@ package edu.mit.civil.columnassessment.calculation;
  */
 public class StaticDisplacementUs {
 
-	public static double calculateAppliedLoading(final double Q) {
-		return Q;
+	public static double calculateAppliedLoading(final double q) {
+		return q;
 	}
 
-	public static double calculateColumnActualStiffness(final double K) {
-		return K;
+	public static double calculateColumnActualStiffness(final double k) {
+		return k;
 	}
 
-	public static double CalculateStaticDisplacement(final double Q,
-			final double K) {
+	public static double CalculateStaticDisplacement(final double q,
+			final double k) {
 
-		double q = calculateAppliedLoading(Q);
-		double k = calculateColumnActualStiffness(K);
+		double Q = calculateAppliedLoading(q);
+		double K = calculateColumnActualStiffness(k);
 
-		return q / k;
+		return Q / K;
 
 	}
 

@@ -55,12 +55,12 @@ public class BlastAssessmentApp {
 		r = Double.parseDouble(br1.readLine());
 
 		// Angle of Incidence
-		double Angle = 0.000;
+		int angle = 0;
 		System.out.println("Angle of Incidence");
 		// get the Angle-Dist from console
 		BufferedReader br4 = new BufferedReader(
 				new InputStreamReader(System.in));
-		Angle = Double.parseDouble(br4.readLine());
+		angle = (int) Double.parseDouble(br4.readLine());
 
 		// Building Height
 		double h = 0.000;
@@ -151,9 +151,10 @@ public class BlastAssessmentApp {
 				+ SoundVelocityCr.caculateCrWithPso(PeakIncidentOverPressurePso
 						.findPeakIncidentOverPressureWith(z)) + " psi");
 
-		System.out.println("Blast Analysis - Peak Reflected Pressure 'Pr' = "
-				+ ReflectedPressurePr.findingPrWithAngleOfIncidence(z, Angle)
-				+ " psi");
+		System.out
+				.println("Blast Analysis - Peak Reflected Pressure 'Pr' = "
+						+ ReflectedPressurePr.findingPrWithZAndAngle(z, angle)
+						+ " psi");
 
 		System.out.println("Blast Analysis - Clearing Time 'tc' = "
 				+ ClearingTimeTc.calculateclearingTimeTc(h, width,
@@ -181,8 +182,8 @@ public class BlastAssessmentApp {
 		System.out
 				.println("Blast Analysis - Blast Analysis - Impulse 'Is' = "
 						+ ImpulseIs.calculateImpulseIsWithPrPsTcTo(
-								ReflectedPressurePr
-										.findingPrWithAngleOfIncidence(z, Angle),
+								ReflectedPressurePr.findingPrWithZAndAngle(z,
+										angle),
 								StagnationPressurePs
 										.calculateStagnationPressureWithPsoandqo(
 												PeakIncidentOverPressurePso
@@ -205,8 +206,8 @@ public class BlastAssessmentApp {
 						+ EquivalentDurationTe.calculateEquivalentDurationWithIsAndPr(
 								ImpulseIs.calculateImpulseIsWithPrPsTcTo(
 										ReflectedPressurePr
-												.findingPrWithAngleOfIncidence(
-														z, Angle),
+												.findingPrWithZAndAngle(z,
+														angle),
 										StagnationPressurePs
 												.calculateStagnationPressureWithPsoandqo(
 														PeakIncidentOverPressurePso
@@ -223,16 +224,14 @@ public class BlastAssessmentApp {
 										PositivePhaseDurationTo
 												.findPositivePhaseDurationForZ(
 														z, w)),
-								ReflectedPressurePr
-										.findingPrWithAngleOfIncidence(z, Angle))
-						+ " ms");
+								ReflectedPressurePr.findingPrWithZAndAngle(z,
+										angle)) + " ms");
 
 		System.out
 				.println("Target Column Analysis - Applied Column Loading 'Q*' = "
 						+ AppliedLoadingToColumnQ.calculateAppliedLoading(
-								ReflectedPressurePr
-										.findingPrWithAngleOfIncidence(z, Angle),
-								colwidth, colhgt) + " kipf");
+								ReflectedPressurePr.findingPrWithZAndAngle(z,
+										angle), colwidth, colhgt) + " kipf");
 
 		System.out
 				.println("Target Column Analysis - Actual Column Stiffness 'k' = "
@@ -248,8 +247,8 @@ public class BlastAssessmentApp {
 						+ StaticDisplacementUs.CalculateStaticDisplacement(
 								AppliedLoadingToColumnQ.calculateAppliedLoading(
 										ReflectedPressurePr
-												.findingPrWithAngleOfIncidence(
-														z, Angle), colwidth,
+												.findingPrWithZAndAngle(z,
+														angle), colwidth,
 										colhgt), ActualStiffnessK
 										.calculateColumnActualStiffness(e, i,
 												colhgt)) + " ft");
@@ -262,39 +261,39 @@ public class BlastAssessmentApp {
 		System.out
 				.println("Target Column Analysis - Stiffness of Equivalent SDOF 'ke' = "
 						+ EquivalentSDOFPropertiesElastic
-								.StiffnessOfEquivSDOF(ActualStiffnessK
+								.stiffnessOfEquivSDOF(ActualStiffnessK
 										.calculateColumnActualStiffness(e, i,
 												colhgt)) + " kipf.ft^-1");
 
 		System.out
 				.println("Target Column Analysis - Mass of Equivalent SDOF 'me' = "
 						+ EquivalentSDOFPropertiesElastic
-								.MassOfEquivSDOF(TotalActalMassM
+								.massOfEquivSDOF(TotalActalMassM
 										.calculatingTotalActualMass(colweight,
 												colhgt)) + " kipf.s^2.ft^-1");
 
 		System.out
 				.println("Target Column Analysis - Natural Period of Equivalent SDOF 'Tn' = "
-						+ EquivalentSDOFPropertiesElastic.NaturalPeriodSDOF(
+						+ EquivalentSDOFPropertiesElastic.naturalPeriodSDOF(
 								EquivalentSDOFPropertiesElastic
-										.MassOfEquivSDOF(TotalActalMassM
+										.massOfEquivSDOF(TotalActalMassM
 												.calculatingTotalActualMass(
 														colweight, colhgt)),
-								EquivalentSDOFPropertiesElastic.StiffnessOfEquivSDOF(ActualStiffnessK
+								EquivalentSDOFPropertiesElastic.stiffnessOfEquivSDOF(ActualStiffnessK
 										.calculateColumnActualStiffness(e, i,
 												colhgt))) + " s");
 
 		System.out
 				.println("Target Column Analysis - T/Tn used for UFC 3-340 graphs to determnine whether column remains elastic = "
-						+ ParameterForElasticCheck.TEquivDividedByTn(
+						+ ParameterForElasticCheck.tEquivDividedByTn(
 								EquivalentDurationTe
 										.calculateEquivalentDurationWithIsAndPr(
 												ImpulseIs
 														.calculateImpulseIsWithPrPsTcTo(
 																ReflectedPressurePr
-																		.findingPrWithAngleOfIncidence(
+																		.findingPrWithZAndAngle(
 																				z,
-																				Angle),
+																				angle),
 																StagnationPressurePs
 																		.calculateStagnationPressureWithPsoandqo(
 																				PeakIncidentOverPressurePso
@@ -314,16 +313,16 @@ public class BlastAssessmentApp {
 																				z,
 																				w)),
 												ReflectedPressurePr
-														.findingPrWithAngleOfIncidence(
-																z, Angle)),
-								EquivalentSDOFPropertiesElastic.NaturalPeriodSDOF(
+														.findingPrWithZAndAngle(
+																z, angle)),
+								EquivalentSDOFPropertiesElastic.naturalPeriodSDOF(
 										EquivalentSDOFPropertiesElastic
-												.MassOfEquivSDOF(TotalActalMassM
+												.massOfEquivSDOF(TotalActalMassM
 														.calculatingTotalActualMass(
 																colweight,
 																colhgt)),
 										EquivalentSDOFPropertiesElastic
-												.StiffnessOfEquivSDOF(ActualStiffnessK
+												.stiffnessOfEquivSDOF(ActualStiffnessK
 														.calculateColumnActualStiffness(
 																e, i, colhgt)))));
 

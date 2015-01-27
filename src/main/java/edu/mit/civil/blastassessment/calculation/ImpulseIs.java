@@ -14,16 +14,16 @@ public class ImpulseIs {
 	/**
 	 * Return Impulse
 	 * 
-	 * @param Pr
-	 * @param Ps
+	 * @param pr
+	 * @param ps
 	 * @param tc
 	 * @param to
 	 * @return
 	 */
-	public static double calculateImpulseIsWithPrPsTcTo(final double Pr,
-			final double Ps, final double tc, final double to) {
+	public static double calculateImpulseIsWithPrPsTcTo(final double pr,
+			final double ps, final double tc, final double to) {
 
-		return CONSTANT_A * (Pr - Ps) * tc + CONSTANT_A * Ps * to;// psi - ms;
+		return CONSTANT_A * (pr - ps) * tc + CONSTANT_A * ps * to;// psi - ms;
 
 	}
 

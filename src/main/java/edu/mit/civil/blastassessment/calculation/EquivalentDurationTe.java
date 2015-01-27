@@ -14,14 +14,14 @@ public class EquivalentDurationTe {
 	/**
 	 * Return Equivalent Time Duration
 	 * 
-	 * @param Is
-	 * @param Pr
+	 * @param is
+	 * @param pr
 	 * @return
 	 */
 	public static double calculateEquivalentDurationWithIsAndPr(
-			final double Is, final double Pr) {
+			final double is, final double pr) {
 
-		return (CONSTANT_A * Is) / Pr;
+		return (CONSTANT_A * is) / pr;
 	}
 
 }

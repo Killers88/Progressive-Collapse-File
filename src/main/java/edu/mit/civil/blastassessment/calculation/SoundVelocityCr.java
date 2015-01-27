@@ -9,15 +9,15 @@ public class SoundVelocityCr {
 	/**
 	 * Return Sound Velocity 'Cr'
 	 * 
-	 * @param Pso
+	 * @param pso
 	 *            (Peak incident over-pressure)
 	 */
-	public static double caculateCrWithPso(final double Pso) {
+	public static double caculateCrWithPso(final double pso) {
 
 		// Equation determine from plotting graph on excel, and retrieving the
 		// polynomial equation
-		return CONSTANT_A * Math.pow(10, -5) * (Math.pow(Pso, 2)) + +CONSTANT_B
-				* Pso + CONSTANT_C;
+		return CONSTANT_A * Math.pow(10, -5) * (Math.pow(pso, 2)) + +CONSTANT_B
+				* pso + CONSTANT_C;
 	}
 
 }
