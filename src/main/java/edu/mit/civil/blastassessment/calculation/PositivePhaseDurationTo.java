@@ -16,7 +16,7 @@ public class PositivePhaseDurationTo {
 	private static Map<Double, Double> graph = new HashMap<Double, Double>();
 
 	static {
-		// TODO get accurate graph values for time duration
+
 		graph.put((double) 0.25, (double) 0.175);
 		graph.put((double) 0.5, (double) 0.15);
 		graph.put((double) 0.75, (double) 0.15);

@@ -24,6 +24,9 @@ import edu.mit.civil.columnassessment.calculation.ParameterForElasticCheck;
 import edu.mit.civil.columnassessment.calculation.StaticDisplacementUs;
 import edu.mit.civil.columnassessment.calculation.TotalActalMassM;
 import edu.mit.civil.columnassessment.calculation.YieldDisplacementUy;
+import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFElasticCheck;
+import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFElasticResponseA;
+import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFElasticResponseB;
 
 /**
  * @author koleary
@@ -325,6 +328,198 @@ public class BlastAssessmentApp {
 												.stiffnessOfEquivSDOF(ActualStiffnessK
 														.calculateColumnActualStiffness(
 																e, i, colhgt)))));
+
+		System.out
+				.println("Elastic Parameter - Peak Response Parameter um = "
+						+ EquivalentSDOFElasticResponseB.elasticResponseParameterCheck(
+								(ParameterForElasticCheck
+										.tEquivDividedByTn(
+												EquivalentDurationTe
+														.calculateEquivalentDurationWithIsAndPr(
+																ImpulseIs
+																		.calculateImpulseIsWithPrPsTcTo(
+																				ReflectedPressurePr
+																						.findingPrWithZAndAngle(
+																								z,
+																								angle),
+																				StagnationPressurePs
+																						.calculateStagnationPressureWithPsoandqo(
+																								PeakIncidentOverPressurePso
+																										.findPeakIncidentOverPressureWith(z),
+																								PeakDynamicPressureQo
+																										.calculatQoWithPso(PeakIncidentOverPressurePso
+																												.findPeakIncidentOverPressureWith(z))),
+																				ClearingTimeTc
+																						.calculateclearingTimeTc(
+																								h,
+																								width,
+																								SoundVelocityCr
+																										.caculateCrWithPso(PeakIncidentOverPressurePso
+																												.findPeakIncidentOverPressureWith(z))),
+																				PositivePhaseDurationTo
+																						.findPositivePhaseDurationForZ(
+																								z,
+																								w)),
+																ReflectedPressurePr
+																		.findingPrWithZAndAngle(
+																				z,
+																				angle)),
+												EquivalentSDOFPropertiesElastic.naturalPeriodSDOF(
+														EquivalentSDOFPropertiesElastic
+																.massOfEquivSDOF(TotalActalMassM
+																		.calculatingTotalActualMass(
+																				colweight,
+																				colhgt)),
+														EquivalentSDOFPropertiesElastic
+																.stiffnessOfEquivSDOF(ActualStiffnessK
+																		.calculateColumnActualStiffness(
+																				e,
+																				i,
+																				colhgt))))),
+								StaticDisplacementUs.CalculateStaticDisplacement(
+										AppliedLoadingToColumnQ.calculateAppliedLoading(
+												ReflectedPressurePr
+														.findingPrWithZAndAngle(
+																z, angle),
+												colwidth, colhgt),
+										ActualStiffnessK
+												.calculateColumnActualStiffness(
+														e, i, colhgt))) + " ft");
+
+		System.out
+				.println("Elastic Parameter - Peak Response Parameter tm = "
+						+ EquivalentSDOFElasticResponseA.elasticResponseParameterCheck(
+								(ParameterForElasticCheck
+										.tEquivDividedByTn(
+												EquivalentDurationTe
+														.calculateEquivalentDurationWithIsAndPr(
+																ImpulseIs
+																		.calculateImpulseIsWithPrPsTcTo(
+																				ReflectedPressurePr
+																						.findingPrWithZAndAngle(
+																								z,
+																								angle),
+																				StagnationPressurePs
+																						.calculateStagnationPressureWithPsoandqo(
+																								PeakIncidentOverPressurePso
+																										.findPeakIncidentOverPressureWith(z),
+																								PeakDynamicPressureQo
+																										.calculatQoWithPso(PeakIncidentOverPressurePso
+																												.findPeakIncidentOverPressureWith(z))),
+																				ClearingTimeTc
+																						.calculateclearingTimeTc(
+																								h,
+																								width,
+																								SoundVelocityCr
+																										.caculateCrWithPso(PeakIncidentOverPressurePso
+																												.findPeakIncidentOverPressureWith(z))),
+																				PositivePhaseDurationTo
+																						.findPositivePhaseDurationForZ(
+																								z,
+																								w)),
+																ReflectedPressurePr
+																		.findingPrWithZAndAngle(
+																				z,
+																				angle)),
+												EquivalentSDOFPropertiesElastic.naturalPeriodSDOF(
+														EquivalentSDOFPropertiesElastic
+																.massOfEquivSDOF(TotalActalMassM
+																		.calculatingTotalActualMass(
+																				colweight,
+																				colhgt)),
+														EquivalentSDOFPropertiesElastic
+																.stiffnessOfEquivSDOF(ActualStiffnessK
+																		.calculateColumnActualStiffness(
+																				e,
+																				i,
+																				colhgt))))),
+								EquivalentDurationTe
+										.calculateEquivalentDurationWithIsAndPr(
+												ImpulseIs
+														.calculateImpulseIsWithPrPsTcTo(
+																ReflectedPressurePr
+																		.findingPrWithZAndAngle(
+																				z,
+																				angle),
+																StagnationPressurePs
+																		.calculateStagnationPressureWithPsoandqo(
+																				PeakIncidentOverPressurePso
+																						.findPeakIncidentOverPressureWith(z),
+																				PeakDynamicPressureQo
+																						.calculatQoWithPso(PeakIncidentOverPressurePso
+																								.findPeakIncidentOverPressureWith(z))),
+																ClearingTimeTc
+																		.calculateclearingTimeTc(
+																				h,
+																				width,
+																				SoundVelocityCr
+																						.caculateCrWithPso(PeakIncidentOverPressurePso
+																								.findPeakIncidentOverPressureWith(z))),
+																PositivePhaseDurationTo
+																		.findPositivePhaseDurationForZ(
+																				z,
+																				w)),
+												ReflectedPressurePr
+														.findingPrWithZAndAngle(
+																z, angle)))
+						+ " ms");
+
+		System.out
+				.println("Elastic Check - "
+						+ EquivalentSDOFElasticCheck.determiningDynamicLoadFactor(
+								(ParameterForElasticCheck
+										.tEquivDividedByTn(
+												EquivalentDurationTe
+														.calculateEquivalentDurationWithIsAndPr(
+																ImpulseIs
+																		.calculateImpulseIsWithPrPsTcTo(
+																				ReflectedPressurePr
+																						.findingPrWithZAndAngle(
+																								z,
+																								angle),
+																				StagnationPressurePs
+																						.calculateStagnationPressureWithPsoandqo(
+																								PeakIncidentOverPressurePso
+																										.findPeakIncidentOverPressureWith(z),
+																								PeakDynamicPressureQo
+																										.calculatQoWithPso(PeakIncidentOverPressurePso
+																												.findPeakIncidentOverPressureWith(z))),
+																				ClearingTimeTc
+																						.calculateclearingTimeTc(
+																								h,
+																								width,
+																								SoundVelocityCr
+																										.caculateCrWithPso(PeakIncidentOverPressurePso
+																												.findPeakIncidentOverPressureWith(z))),
+																				PositivePhaseDurationTo
+																						.findPositivePhaseDurationForZ(
+																								z,
+																								w)),
+																ReflectedPressurePr
+																		.findingPrWithZAndAngle(
+																				z,
+																				angle)),
+												EquivalentSDOFPropertiesElastic.naturalPeriodSDOF(
+														EquivalentSDOFPropertiesElastic
+																.massOfEquivSDOF(TotalActalMassM
+																		.calculatingTotalActualMass(
+																				colweight,
+																				colhgt)),
+														EquivalentSDOFPropertiesElastic
+																.stiffnessOfEquivSDOF(ActualStiffnessK
+																		.calculateColumnActualStiffness(
+																				e,
+																				i,
+																				colhgt))))),
+								StaticDisplacementUs.CalculateStaticDisplacement(
+										AppliedLoadingToColumnQ.calculateAppliedLoading(
+												ReflectedPressurePr
+														.findingPrWithZAndAngle(
+																z, angle),
+												colwidth, colhgt),
+										ActualStiffnessK
+												.calculateColumnActualStiffness(
+														e, i, colhgt))));
 
 	}
 }

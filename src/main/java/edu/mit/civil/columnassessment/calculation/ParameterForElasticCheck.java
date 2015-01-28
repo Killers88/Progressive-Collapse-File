@@ -11,7 +11,7 @@ public class ParameterForElasticCheck {
 
 	public static double tEquivDividedByTn(final double t, final double tn) {
 
-		return t / tn;
+		return (t / 1000) / tn;
 	}
 
 }

@@ -2,6 +2,8 @@ package edu.mit.civil.blastassessment.calculation;
 
 public class ReflectedPressurePr {
 
+	// TODO Increase accuracy by interpolating between graph lines for different
+	// z values
 	private static final int ZERO = 0;
 	private static final int FIVE = 5;
 	private static final int TEN = 10;

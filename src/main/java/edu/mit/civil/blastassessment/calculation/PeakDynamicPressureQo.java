@@ -15,8 +15,8 @@ public class PeakDynamicPressureQo {
 	public static double CONSTANT_F = 2400;
 
 	/**
-	 * Return Peak Dynamic Pressure 'qo' Could also use UFC 3-340 Fig 2.3 pg 155
-	 * GRAPH
+	 * Return Peak Dynamic Pressure 'qo' from UFC 3-340 Fig 2.3 pg 155 Converted
+	 * to two graphs to increase accuracy
 	 * 
 	 * @param pso
 	 * @return
@@ -26,14 +26,15 @@ public class PeakDynamicPressureQo {
 		if (pso < 100) {
 
 			return CONSTANT_A * Math.pow(pso, 2) + CONSTANT_B * pso
-					+ CONSTANT_C;// psi;
+					+ CONSTANT_C;
 
 		} else if ((pso > 100) && (pso < 130)) {
 
 			return CONSTANT_D * Math.pow(pso, 2) + CONSTANT_E * pso
-					- CONSTANT_F;// psi;
+					- CONSTANT_F;
 		}
-		return 0;
+
+		throw new RuntimeException("invalid Z value");
 	}
 
 }
