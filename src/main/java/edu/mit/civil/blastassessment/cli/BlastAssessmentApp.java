@@ -26,6 +26,7 @@ import edu.mit.civil.columnassessment.calculation.YieldDisplacementUy;
 import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFElasticCheck;
 import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFElasticResponseA;
 import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFElasticResponseB;
+import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFPlasticResponse;
 import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFPropertiesElastic;
 import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFPropertiesPlastic;
 import edu.mit.civil.columnassessment.elasticplasticchecks.UltimateUnitResistance;
@@ -45,107 +46,43 @@ public class BlastAssessmentApp {
 			IOException {
 
 		// Weight of TNT Input
-		double w = 0.000;
-		System.out.println("Weight of explosive (TNT equiv)");
-		// get the W-Wgt of TNT from console
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		w = Double.parseDouble(br.readLine());
+		double w = collectInputWithLabel("Weight of explosive (TNT equiv)");
 
 		// Standoff Distance from Target Column
-		double r = 0.000;
-		System.out.println("Standoff distance from target column");
-		// get the R-Dist from console
-		BufferedReader br1 = new BufferedReader(
-				new InputStreamReader(System.in));
-		r = Double.parseDouble(br1.readLine());
+		double r = collectInputWithLabel("Standoff distance from target column");
 
 		// Angle of Incidence
-		int angle = 0;
-		System.out.println("Angle of Incidence");
-		// get the Angle-Dist from console
-		BufferedReader br4 = new BufferedReader(
-				new InputStreamReader(System.in));
-		angle = (int) Double.parseDouble(br4.readLine());
+		int angle = (int) collectInputWithLabel("Angle of Incidence");
 
 		// Building Height
-		double h = 0.000;
-		System.out.println("Building Height 'H' (ft)");
-		// get the Height-Dist from console
-		BufferedReader br2 = new BufferedReader(
-				new InputStreamReader(System.in));
-		h = Double.parseDouble(br2.readLine());
+		double h = collectInputWithLabel("Building Height 'H' (ft)");
 
 		// Building Width
-		double width = 0.000;
-		System.out.println("Building Width 'W' (ft)");
-		// get the Width-Dist from console
-		BufferedReader br3 = new BufferedReader(
-				new InputStreamReader(System.in));
-		width = Double.parseDouble(br3.readLine());
+		double width = collectInputWithLabel("Building Width 'W' (ft))");
 
 		// Steel Modulus
-		double e = 0.000;
-		System.out.println("Youngs Modulous 'E' (ksi)");
-		// get the Modulus from console
-		BufferedReader br5 = new BufferedReader(
-				new InputStreamReader(System.in));
-		e = Double.parseDouble(br5.readLine());
+		double e = collectInputWithLabel("Youngs Modulous 'E' (ksi)");
 
 		// Yield Stress
-		double yield = 0.000;
-		System.out.println("Steel Yield Strength (ksi)");
-		// get the Modulus from console
-		BufferedReader br6 = new BufferedReader(
-				new InputStreamReader(System.in));
-		yield = Double.parseDouble(br6.readLine());
+		double yield = collectInputWithLabel("Steel Yield Strength (ksi)");
 
 		// Ixx
-		double i = 0.000;
-		System.out.println("Second Moment of Inertia 'I' (in^4)");
-		// get the Modulus from console
-		BufferedReader br7 = new BufferedReader(
-				new InputStreamReader(System.in));
-		i = Double.parseDouble(br7.readLine());
+		double i = collectInputWithLabel("Second Moment of Inertia 'I' (in^4)");
 
 		// S - Section Modulus
-		double s = 0.000;
-		System.out.println("Section Modulous 'S' (in^3)");
-		// get the Section Modulus from console
-		BufferedReader br8 = new BufferedReader(
-				new InputStreamReader(System.in));
-		s = Double.parseDouble(br8.readLine());
+		double s = collectInputWithLabel("Section Modulous 'S' (in^3)");
 
 		// Z - Plastic Modulus
-		double zxx = 0.000;
-		System.out.println("Plastic Section Modulus 'Z' (in^3)");
-		// get the Plastic Modulus from console
-		BufferedReader br81 = new BufferedReader(new InputStreamReader(
-				System.in));
-		s = Double.parseDouble(br81.readLine());
+		double zxx = collectInputWithLabel("Plastic Section Modulus 'Z' (in^3)");
 
 		// Steel Section - Linear Weight
-		double colweight = 0.000;
-		System.out.println("Column Linear Weight (lbf/ft)");
-		// get the linear weight from console
-		BufferedReader br9 = new BufferedReader(
-				new InputStreamReader(System.in));
-		colweight = Double.parseDouble(br9.readLine());
+		double colweight = collectInputWithLabel("Column Linear Weight (lbf/ft)");
 
 		// Width of section in perpendicular to the blast
-		double colwidth = 0.000;
-		System.out.println("Column width perpendicular to the blast (in)");
-		// get the Column Width from console
-		BufferedReader br10 = new BufferedReader(new InputStreamReader(
-				System.in));
-		colwidth = Double.parseDouble(br10.readLine());
+		double colwidth = collectInputWithLabel("Column width perpendicular to the blast (in)");
 
 		// Height of Column
-		double colhgt = 0.000;
-		System.out.println("Height of Column (ft)");
-		// get the Column Height from console
-		BufferedReader br12 = new BufferedReader(new InputStreamReader(
-				System.in));
-		colhgt = Double.parseDouble(br12.readLine());
+		double colhgt = collectInputWithLabel("Height of Column (ft)");
 
 		double z = (double) ((r) / Math.pow(w, 0.33333));
 
@@ -475,7 +412,7 @@ public class BlastAssessmentApp {
 						+ " ms");
 
 		System.out
-				.println("Elastic Check - "
+				.println("***Elastic Check*** - "
 						+ EquivalentSDOFElasticCheck.determiningDynamicLoadFactor(
 								EquivalentSDOFElasticResponseB
 										.elasticResponseParameterCheck(
@@ -572,5 +509,128 @@ public class BlastAssessmentApp {
 				+ UltimateUnitResistance.calculatingPlasticMoment(yield, zxx,
 						colhgt) + " kipf.ft^-1");
 
+		System.out
+				.println("Plastic Parameter - Peak Response Parameter 'um'  = "
+						+ EquivalentSDOFPlasticResponse.peakResponseParameterPlastic(
+								EquivalentDurationTe
+										.calculateEquivalentDurationWithIsAndPr(
+												ImpulseIs
+														.calculateImpulseIsWithPrPsTcTo(
+																ReflectedPressurePr
+																		.findingPrWithZAndAngle(
+																				z,
+																				angle),
+																StagnationPressurePs
+																		.calculateStagnationPressureWithPsoandqo(
+																				PeakIncidentOverPressurePso
+																						.findPeakIncidentOverPressureWith(z),
+																				PeakDynamicPressureQo
+																						.calculatQoWithPso(PeakIncidentOverPressurePso
+																								.findPeakIncidentOverPressureWith(z))),
+																ClearingTimeTc
+																		.calculateclearingTimeTc(
+																				h,
+																				width,
+																				SoundVelocityCr
+																						.caculateCrWithPso(PeakIncidentOverPressurePso
+																								.findPeakIncidentOverPressureWith(z))),
+																PositivePhaseDurationTo
+																		.findPositivePhaseDurationForZ(
+																				z,
+																				w)),
+												ReflectedPressurePr
+														.findingPrWithZAndAngle(
+																z, angle)),
+								EquivalentSDOFPropertiesPlastic.naturalPeriodSDOF(
+										EquivalentSDOFPropertiesPlastic
+												.massOfEquivSDOF(TotalActalMassM
+														.calculatingTotalActualMass(
+																colweight,
+																colhgt)),
+										EquivalentSDOFPropertiesPlastic
+												.stiffnessOfEquivSDOF(ActualStiffnessK
+														.calculateColumnActualStiffness(
+																e, i, colhgt))),
+								EquivalentSDOFPropertiesElastic.stiffnessOfEquivSDOF(ActualStiffnessK
+										.calculateColumnActualStiffness(e, i,
+												colhgt)),
+								YieldDisplacementUy
+										.calculateYieldDisplacementUy(colhgt,
+												s, yield, e, i),
+								AppliedLoadingToColumnQ.calculateAppliedLoading(
+										ReflectedPressurePr
+												.findingPrWithZAndAngle(z,
+														angle), colwidth,
+										colhgt)));
+
+		System.out
+				.println("***Plastic Check*** -  = "
+						+ EquivalentSDOFPlasticResponse.plasticCheckFinal(
+								EquivalentDurationTe
+										.calculateEquivalentDurationWithIsAndPr(
+												ImpulseIs
+														.calculateImpulseIsWithPrPsTcTo(
+																ReflectedPressurePr
+																		.findingPrWithZAndAngle(
+																				z,
+																				angle),
+																StagnationPressurePs
+																		.calculateStagnationPressureWithPsoandqo(
+																				PeakIncidentOverPressurePso
+																						.findPeakIncidentOverPressureWith(z),
+																				PeakDynamicPressureQo
+																						.calculatQoWithPso(PeakIncidentOverPressurePso
+																								.findPeakIncidentOverPressureWith(z))),
+																ClearingTimeTc
+																		.calculateclearingTimeTc(
+																				h,
+																				width,
+																				SoundVelocityCr
+																						.caculateCrWithPso(PeakIncidentOverPressurePso
+																								.findPeakIncidentOverPressureWith(z))),
+																PositivePhaseDurationTo
+																		.findPositivePhaseDurationForZ(
+																				z,
+																				w)),
+												ReflectedPressurePr
+														.findingPrWithZAndAngle(
+																z, angle)),
+								EquivalentSDOFPropertiesPlastic.naturalPeriodSDOF(
+										EquivalentSDOFPropertiesPlastic
+												.massOfEquivSDOF(TotalActalMassM
+														.calculatingTotalActualMass(
+																colweight,
+																colhgt)),
+										EquivalentSDOFPropertiesPlastic
+												.stiffnessOfEquivSDOF(ActualStiffnessK
+														.calculateColumnActualStiffness(
+																e, i, colhgt))),
+								EquivalentSDOFPropertiesElastic.stiffnessOfEquivSDOF(ActualStiffnessK
+										.calculateColumnActualStiffness(e, i,
+												colhgt)),
+								YieldDisplacementUy
+										.calculateYieldDisplacementUy(colhgt,
+												s, yield, e, i),
+								AppliedLoadingToColumnQ.calculateAppliedLoading(
+										ReflectedPressurePr
+												.findingPrWithZAndAngle(z,
+														angle), colwidth,
+										colhgt)));
+
+	}
+
+	/**
+	 * 
+	 * @param label
+	 * @return
+	 * @throws IOException
+	 */
+	private static double collectInputWithLabel(String label)
+			throws IOException {
+		System.out.println(label);
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		double input = Double.parseDouble(br.readLine());
+		// br.close();
+		return input;
 	}
 }

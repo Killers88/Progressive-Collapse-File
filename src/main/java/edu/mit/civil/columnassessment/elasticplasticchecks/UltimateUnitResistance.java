@@ -10,14 +10,15 @@ package edu.mit.civil.columnassessment.elasticplasticchecks;
 public class UltimateUnitResistance {
 
 	public static double CONSTANT_A = 8;
+	public static double In_TO_Feet = 12;
 	public static double Dynamic_Increase_Factor = 1.29;
 	public static double Strength_Increase_Factor = 1.1;
 
 	public static double calculatingPlasticMoment(final double fyi,
 			final double z, final double colheight) {
 
-		return (CONSTANT_A * ((Dynamic_Increase_Factor
-				* Strength_Increase_Factor * fyi) * z))
+		return (CONSTANT_A * (((Dynamic_Increase_Factor
+				* Strength_Increase_Factor * fyi) / In_TO_Feet) * z))
 				/ (Math.pow(colheight, 2));
 
 	}
