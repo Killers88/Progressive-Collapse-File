@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.mit.civil.columnassessment.calculation;
+package edu.mit.civil.columnassessment.elasticplasticchecks;
 
 /**
  * @author koleary

@@ -19,7 +19,6 @@ import edu.mit.civil.blastassessment.calculation.StagnationPressurePs;
 import edu.mit.civil.blastassessment.calculation.WaveLengthLw;
 import edu.mit.civil.columnassessment.calculation.ActualStiffnessK;
 import edu.mit.civil.columnassessment.calculation.AppliedLoadingToColumnQ;
-import edu.mit.civil.columnassessment.calculation.EquivalentSDOFPropertiesElastic;
 import edu.mit.civil.columnassessment.calculation.ParameterForElasticCheck;
 import edu.mit.civil.columnassessment.calculation.StaticDisplacementUs;
 import edu.mit.civil.columnassessment.calculation.TotalActalMassM;
@@ -27,6 +26,9 @@ import edu.mit.civil.columnassessment.calculation.YieldDisplacementUy;
 import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFElasticCheck;
 import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFElasticResponseA;
 import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFElasticResponseB;
+import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFPropertiesElastic;
+import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFPropertiesPlastic;
+import edu.mit.civil.columnassessment.elasticplasticchecks.UltimateUnitResistance;
 
 /**
  * @author koleary
@@ -81,10 +83,10 @@ public class BlastAssessmentApp {
 				new InputStreamReader(System.in));
 		width = Double.parseDouble(br3.readLine());
 
-		// Steel Modulous
+		// Steel Modulus
 		double e = 0.000;
 		System.out.println("Youngs Modulous 'E' (ksi)");
-		// get the Modulous from console
+		// get the Modulus from console
 		BufferedReader br5 = new BufferedReader(
 				new InputStreamReader(System.in));
 		e = Double.parseDouble(br5.readLine());
@@ -92,7 +94,7 @@ public class BlastAssessmentApp {
 		// Yield Stress
 		double yield = 0.000;
 		System.out.println("Steel Yield Strength (ksi)");
-		// get the Modulous from console
+		// get the Modulus from console
 		BufferedReader br6 = new BufferedReader(
 				new InputStreamReader(System.in));
 		yield = Double.parseDouble(br6.readLine());
@@ -100,7 +102,7 @@ public class BlastAssessmentApp {
 		// Ixx
 		double i = 0.000;
 		System.out.println("Second Moment of Inertia 'I' (in^4)");
-		// get the Modulous from console
+		// get the Modulus from console
 		BufferedReader br7 = new BufferedReader(
 				new InputStreamReader(System.in));
 		i = Double.parseDouble(br7.readLine());
@@ -108,10 +110,18 @@ public class BlastAssessmentApp {
 		// S - Section Modulus
 		double s = 0.000;
 		System.out.println("Section Modulous 'S' (in^3)");
-		// get the Section Modulous from console
+		// get the Section Modulus from console
 		BufferedReader br8 = new BufferedReader(
 				new InputStreamReader(System.in));
 		s = Double.parseDouble(br8.readLine());
+
+		// Z - Plastic Modulus
+		double zxx = 0.000;
+		System.out.println("Plastic Section Modulus 'Z' (in^3)");
+		// get the Plastic Modulus from console
+		BufferedReader br81 = new BufferedReader(new InputStreamReader(
+				System.in));
+		s = Double.parseDouble(br81.readLine());
 
 		// Steel Section - Linear Weight
 		double colweight = 0.000;
@@ -262,31 +272,6 @@ public class BlastAssessmentApp {
 								colhgt, s, yield, e, i) + " ft");
 
 		System.out
-				.println("Target Column Analysis - Stiffness of Equivalent SDOF 'ke' = "
-						+ EquivalentSDOFPropertiesElastic
-								.stiffnessOfEquivSDOF(ActualStiffnessK
-										.calculateColumnActualStiffness(e, i,
-												colhgt)) + " kipf.ft^-1");
-
-		System.out
-				.println("Target Column Analysis - Mass of Equivalent SDOF 'me' = "
-						+ EquivalentSDOFPropertiesElastic
-								.massOfEquivSDOF(TotalActalMassM
-										.calculatingTotalActualMass(colweight,
-												colhgt)) + " kipf.s^2.ft^-1");
-
-		System.out
-				.println("Target Column Analysis - Natural Period of Equivalent SDOF 'Tn' = "
-						+ EquivalentSDOFPropertiesElastic.naturalPeriodSDOF(
-								EquivalentSDOFPropertiesElastic
-										.massOfEquivSDOF(TotalActalMassM
-												.calculatingTotalActualMass(
-														colweight, colhgt)),
-								EquivalentSDOFPropertiesElastic.stiffnessOfEquivSDOF(ActualStiffnessK
-										.calculateColumnActualStiffness(e, i,
-												colhgt))) + " s");
-
-		System.out
 				.println("Target Column Analysis - T/Tn used for UFC 3-340 graphs to determnine whether column remains elastic = "
 						+ ParameterForElasticCheck.tEquivDividedByTn(
 								EquivalentDurationTe
@@ -328,6 +313,31 @@ public class BlastAssessmentApp {
 												.stiffnessOfEquivSDOF(ActualStiffnessK
 														.calculateColumnActualStiffness(
 																e, i, colhgt)))));
+
+		System.out
+				.println("Elastic Equivalent - Target Column Analysis - Stiffness of Equivalent SDOF 'ke' = "
+						+ EquivalentSDOFPropertiesElastic
+								.stiffnessOfEquivSDOF(ActualStiffnessK
+										.calculateColumnActualStiffness(e, i,
+												colhgt)) + " kipf.ft^-1");
+
+		System.out
+				.println("Elastic Equivalent - Target Column Analysis - Mass of Equivalent SDOF 'me' = "
+						+ EquivalentSDOFPropertiesElastic
+								.massOfEquivSDOF(TotalActalMassM
+										.calculatingTotalActualMass(colweight,
+												colhgt)) + " kipf.s^2.ft^-1");
+
+		System.out
+				.println("Elastic Equivalent - Target Column Analysis - Natural Period of Equivalent SDOF 'Tn' = "
+						+ EquivalentSDOFPropertiesElastic.naturalPeriodSDOF(
+								EquivalentSDOFPropertiesElastic
+										.massOfEquivSDOF(TotalActalMassM
+												.calculatingTotalActualMass(
+														colweight, colhgt)),
+								EquivalentSDOFPropertiesElastic.stiffnessOfEquivSDOF(ActualStiffnessK
+										.calculateColumnActualStiffness(e, i,
+												colhgt))) + " s");
 
 		System.out
 				.println("Elastic Parameter - Peak Response Parameter 'um' = "
@@ -532,6 +542,35 @@ public class BlastAssessmentApp {
 								YieldDisplacementUy
 										.calculateYieldDisplacementUy(colhgt,
 												s, yield, e, i)));
+
+		System.out
+				.println("Plastic Equivalent - Target Column Analysis - Stiffness of Equivalent SDOF (k'e) = "
+						+ EquivalentSDOFPropertiesPlastic
+								.stiffnessOfEquivSDOF(ActualStiffnessK
+										.calculateColumnActualStiffness(e, i,
+												colhgt)) + " kipf.ft^-1");
+
+		System.out
+				.println("Plastic Equivalent - Target Column Analysis - Mass of Equivalent SDOF (m'e) = "
+						+ EquivalentSDOFPropertiesPlastic
+								.massOfEquivSDOF(TotalActalMassM
+										.calculatingTotalActualMass(colweight,
+												colhgt)) + " kipf.s^2.ft^-1");
+
+		System.out
+				.println("Plastic Equivalent - Target Column Analysis - Natural Period of Equivalent SDOF (T'n) = "
+						+ EquivalentSDOFPropertiesPlastic.naturalPeriodSDOF(
+								EquivalentSDOFPropertiesPlastic
+										.massOfEquivSDOF(TotalActalMassM
+												.calculatingTotalActualMass(
+														colweight, colhgt)),
+								EquivalentSDOFPropertiesPlastic.stiffnessOfEquivSDOF(ActualStiffnessK
+										.calculateColumnActualStiffness(e, i,
+												colhgt))) + " s");
+
+		System.out.println("Plastic Parameter - Ultimate Resistance = "
+				+ UltimateUnitResistance.calculatingPlasticMoment(yield, zxx,
+						colhgt) + " kipf.ft^-1");
 
 	}
 }
