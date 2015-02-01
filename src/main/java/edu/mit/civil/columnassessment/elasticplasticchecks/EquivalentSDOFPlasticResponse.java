@@ -60,17 +60,17 @@ public class EquivalentSDOFPlasticResponse {
 		return (te / 1000) / tn;
 	}
 
-	public static double maxDeflectionPlasticInputsFyDivideQ(final double ke,
-			final double uy, final double q) {
+	public static double maxDeflectionPlasticInputsFyDivideQ(final double ru,
+			final double q) {
 
-		return (ke * uy) / q;
+		return (ru) / (q / 6.944);
 
 	}
 
 	public static double determiningMaxDeflectionResponse(final double te,
-			final double tn, final double ke, final double uy, final double q) {
+			final double tn, final double ru, final double uy, final double q) {
 
-		double graphinput = maxDeflectionPlasticInputsFyDivideQ(ke, uy, q);
+		double graphinput = maxDeflectionPlasticInputsFyDivideQ(ru, q);
 
 		double tDivideTn = maxDeflectionPlasticInputsTeDivideTn(te, tn);
 
@@ -126,7 +126,7 @@ public class EquivalentSDOFPlasticResponse {
 
 		} else if ((graphinput > 1.1) && (graphinput <= 1.35)) {
 
-			return CONSTANT_11P * Math.log(graphinput) + CONSTANT_11Q;
+			return CONSTANT_11P * Math.log(tDivideTn) + CONSTANT_11Q;
 
 		} else if ((graphinput > 1.35) && (graphinput <= 1.75)) {
 
@@ -166,17 +166,17 @@ public class EquivalentSDOFPlasticResponse {
 	}
 
 	public static double peakResponseParameterPlastic(final double te,
-			final double tn, final double ke, final double uy, final double q) {
+			final double tn, final double ru, final double uy, final double q) {
 
-		double A = determiningMaxDeflectionResponse(te, tn, ke, uy, q);
+		double A = determiningMaxDeflectionResponse(te, tn, ru, uy, q);
 
 		return A * uy;
 	}
 
 	public static String plasticCheckFinal(final double te, final double tn,
-			final double ke, final double uy, final double q) {
+			final double ru, final double uy, final double q) {
 
-		double um = peakResponseParameterPlastic(te, tn, ke, uy, q);
+		double um = peakResponseParameterPlastic(te, tn, ru, uy, q);
 
 		if ((um <= uy)) {
 

@@ -26,9 +26,9 @@ public class PeakDynamicPressureQo {
 		if (pso < 100) {
 
 			return CONSTANT_A * Math.pow(pso, 2) + CONSTANT_B * pso
-					+ CONSTANT_C;
+					- CONSTANT_C;
 
-		} else if ((pso > 100) && (pso < 130)) {
+		} else if ((pso > 100) && (pso < 160)) {
 
 			return CONSTANT_D * Math.pow(pso, 2) + CONSTANT_E * pso
 					- CONSTANT_F;

@@ -510,6 +510,60 @@ public class BlastAssessmentApp {
 						colhgt) + " kipf.ft^-1");
 
 		System.out
+				.println("Plastic Parameter - T/T'n = "
+						+ EquivalentSDOFPlasticResponse.maxDeflectionPlasticInputsTeDivideTn(
+								EquivalentDurationTe
+										.calculateEquivalentDurationWithIsAndPr(
+												ImpulseIs
+														.calculateImpulseIsWithPrPsTcTo(
+																ReflectedPressurePr
+																		.findingPrWithZAndAngle(
+																				z,
+																				angle),
+																StagnationPressurePs
+																		.calculateStagnationPressureWithPsoandqo(
+																				PeakIncidentOverPressurePso
+																						.findPeakIncidentOverPressureWith(z),
+																				PeakDynamicPressureQo
+																						.calculatQoWithPso(PeakIncidentOverPressurePso
+																								.findPeakIncidentOverPressureWith(z))),
+																ClearingTimeTc
+																		.calculateclearingTimeTc(
+																				h,
+																				width,
+																				SoundVelocityCr
+																						.caculateCrWithPso(PeakIncidentOverPressurePso
+																								.findPeakIncidentOverPressureWith(z))),
+																PositivePhaseDurationTo
+																		.findPositivePhaseDurationForZ(
+																				z,
+																				w)),
+												ReflectedPressurePr
+														.findingPrWithZAndAngle(
+																z, angle)),
+								EquivalentSDOFPropertiesPlastic.naturalPeriodSDOF(
+										EquivalentSDOFPropertiesPlastic
+												.massOfEquivSDOF(TotalActalMassM
+														.calculatingTotalActualMass(
+																colweight,
+																colhgt)),
+										EquivalentSDOFPropertiesPlastic
+												.stiffnessOfEquivSDOF(ActualStiffnessK
+														.calculateColumnActualStiffness(
+																e, i, colhgt)))));
+
+		System.out
+				.println("Plastic Parameter - Ultimate Resistance ru / Peak Reflected Pressure = "
+						+ EquivalentSDOFPlasticResponse
+								.maxDeflectionPlasticInputsFyDivideQ(
+										UltimateUnitResistance
+												.calculatingPlasticMoment(
+														yield, zxx, colhgt),
+										ReflectedPressurePr
+												.findingPrWithZAndAngle(z,
+														angle)));
+
+		System.out
 				.println("Plastic Parameter - Peak Response Parameter 'um'  = "
 						+ EquivalentSDOFPlasticResponse.peakResponseParameterPlastic(
 								EquivalentDurationTe
@@ -551,17 +605,13 @@ public class BlastAssessmentApp {
 												.stiffnessOfEquivSDOF(ActualStiffnessK
 														.calculateColumnActualStiffness(
 																e, i, colhgt))),
-								EquivalentSDOFPropertiesElastic.stiffnessOfEquivSDOF(ActualStiffnessK
-										.calculateColumnActualStiffness(e, i,
-												colhgt)),
-								YieldDisplacementUy
+								UltimateUnitResistance
+										.calculatingPlasticMoment(yield, zxx,
+												colhgt), YieldDisplacementUy
 										.calculateYieldDisplacementUy(colhgt,
 												s, yield, e, i),
-								AppliedLoadingToColumnQ.calculateAppliedLoading(
-										ReflectedPressurePr
-												.findingPrWithZAndAngle(z,
-														angle), colwidth,
-										colhgt)));
+								ReflectedPressurePr.findingPrWithZAndAngle(z,
+										angle)));
 
 		System.out
 				.println("***Plastic Check*** -  = "
@@ -605,9 +655,9 @@ public class BlastAssessmentApp {
 												.stiffnessOfEquivSDOF(ActualStiffnessK
 														.calculateColumnActualStiffness(
 																e, i, colhgt))),
-								EquivalentSDOFPropertiesElastic.stiffnessOfEquivSDOF(ActualStiffnessK
-										.calculateColumnActualStiffness(e, i,
-												colhgt)),
+								UltimateUnitResistance
+										.calculatingPlasticMoment(yield, zxx,
+												colhgt),
 								YieldDisplacementUy
 										.calculateYieldDisplacementUy(colhgt,
 												s, yield, e, i),

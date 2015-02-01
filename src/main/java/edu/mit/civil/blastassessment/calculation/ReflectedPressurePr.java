@@ -33,19 +33,31 @@ public class ReflectedPressurePr {
 			return findingPrWithZ06Angle(angle);
 		} else if ((z > 0.7) && (z < 1.35)) {
 			return findingPrWithZ08Angle(angle);
-		} else if ((z > 1.35) && (z < 2.45)) {
+		} else if ((z > 1.35) && (z < 2.0375)) {
 			return findingPrWithZ19Angle(angle);
-		} else if ((z > 2.45) && (z < 4.15)) {
-			return findingPrWithZ30Angle(angle);
-		} else if ((z > 4.15) && (z < 6.25)) {
+		} else if ((z > 2.0375) && (z < 2.3125)) {
+			return findingPrWithZ2175Angle(angle);
+		} else if ((z > 2.3125) && (z < 2.5875)) {
+			return findingPrWithZ245Angle(angle);
+		} else if ((z > 2.5875) && (z < 2.8625)) {
+			return findingPrWithZ2725Angle(angle);
+		} else if ((z > 2.8625) && (z < 3.2875)) {
+			return findingPrWithZ3Angle(angle);
+		} else if ((z > 3.2875) && (z < 3.8625)) {
+			return findingPrWithZ3575Angle(angle);
+		} else if ((z > 3.8625) && (z < 4.6375)) {
+			return findingPrWithZ415Angle(angle);
+		} else if ((z > 4.6375) && (z < 5.2125)) {
+			return findingPrWithZ5125Angle(angle);
+		} else if ((z > 5.2125) && (z < 6.25)) {
 			return findingPrWithZ53Angle(angle);
 		} else if ((z > 6.25) && (z < 8.05)) {
 			return findingPrWithZ72Angle(angle);
 		} else if ((z > 8.05) && (z < 10.4)) {
 			return findingPrWithZ89Angle(angle);
-		} else if ((z > 10.4) && (z < 13.1)) {
+		} else if ((z > 10.4) && (z < 12.5)) {
 			return findingPrWithZ119Angle(angle);
-		} else if (z > 13.1) {
+		} else if (z > 12.5) {
 			return findingPrWithZ143Angle(angle);
 		}
 		return angle;
@@ -241,12 +253,153 @@ public class ReflectedPressurePr {
 	}
 
 	/**
+	 * Z = 2.175
+	 * 
+	 * @param angle
+	 * @return
+	 */
+	private static double findingPrWithZ2175Angle(int angle) {
+
+		switch (angle) {
+		case ZERO:
+			return 1100;
+		case FIVE:
+			return 1100;
+		case TEN:
+			return 1100;
+		case FIFTEEN:
+			return 1100;
+		case TWENTY:
+			return 900;
+		case TWENTY_FIVE:
+			return 800;
+		case THIRTY:
+			return 700;
+		case THIRTY_FIVE:
+			return 600;
+		case FORTY:
+			return 500;
+		case FORTY_FIVE:
+			return 400;
+		case FIFTY:
+			return 300;
+		case FIFTY_FIVE:
+			return 200;
+		case SIXTY:
+			return 150;
+		case SIXTY_FIVE:
+			return 85;
+		case SEVENTY:
+			return 45;
+		case SEVENTY_FIVE:
+			return 25;
+		case EIGHTY:
+			return 8;
+		}
+		return 0;
+	}
+
+	/**
+	 * Z = 2.245
+	 * 
+	 * @param angle
+	 * @return
+	 */
+	private static double findingPrWithZ245Angle(int angle) {
+
+		switch (angle) {
+		case ZERO:
+			return 800;
+		case FIVE:
+			return 800;
+		case TEN:
+			return 750;
+		case FIFTEEN:
+			return 700;
+		case TWENTY:
+			return 600;
+		case TWENTY_FIVE:
+			return 500;
+		case THIRTY:
+			return 450;
+		case THIRTY_FIVE:
+			return 400;
+		case FORTY:
+			return 350;
+		case FORTY_FIVE:
+			return 250;
+		case FIFTY:
+			return 190;
+		case FIFTY_FIVE:
+			return 150;
+		case SIXTY:
+			return 85;
+		case SIXTY_FIVE:
+			return 60;
+		case SEVENTY:
+			return 35;
+		case SEVENTY_FIVE:
+			return 15;
+		case EIGHTY:
+			return 6;
+		}
+		return 0;
+	}
+
+	/**
+	 * Z = 2.735
+	 * 
+	 * @param angle
+	 * @return
+	 */
+	private static double findingPrWithZ2725Angle(int angle) {
+
+		switch (angle) {
+		case ZERO:
+			return 600;
+		case FIVE:
+			return 600;
+		case TEN:
+			return 550;
+		case FIFTEEN:
+			return 500;
+		case TWENTY:
+			return 425;
+		case TWENTY_FIVE:
+			return 350;
+		case THIRTY:
+			return 300;
+		case THIRTY_FIVE:
+			return 250;
+		case FORTY:
+			return 190;
+		case FORTY_FIVE:
+			return 150;
+		case FIFTY:
+			return 125;
+		case FIFTY_FIVE:
+			return 80;
+		case SIXTY:
+			return 60;
+		case SIXTY_FIVE:
+			return 40;
+		case SEVENTY:
+			return 22.5;
+		case SEVENTY_FIVE:
+			return 12;
+		case EIGHTY:
+			return 4.5;
+		}
+		return 0;
+	}
+
+	/**
 	 * Z = 3.0
 	 * 
 	 * @param angle
 	 * @return
 	 */
-	private static double findingPrWithZ30Angle(int angle) {
+	private static double findingPrWithZ3Angle(int angle) {
 
 		switch (angle) {
 		case ZERO:
@@ -283,6 +436,147 @@ public class ReflectedPressurePr {
 			return 9;
 		case EIGHTY:
 			return 4;
+		}
+		return 0;
+	}
+
+	/**
+	 * Z = 3.575
+	 * 
+	 * @param angle
+	 * @return
+	 */
+	private static double findingPrWithZ3575Angle(int angle) {
+
+		switch (angle) {
+		case ZERO:
+			return 300;
+		case FIVE:
+			return 300;
+		case TEN:
+			return 275;
+		case FIFTEEN:
+			return 250;
+		case TWENTY:
+			return 200;
+		case TWENTY_FIVE:
+			return 175;
+		case THIRTY:
+			return 160;
+		case THIRTY_FIVE:
+			return 135;
+		case FORTY:
+			return 100;
+		case FORTY_FIVE:
+			return 85;
+		case FIFTY:
+			return 63;
+		case FIFTY_FIVE:
+			return 50;
+		case SIXTY:
+			return 38;
+		case SIXTY_FIVE:
+			return 25;
+		case SEVENTY:
+			return 16;
+		case SEVENTY_FIVE:
+			return 8;
+		case EIGHTY:
+			return 3;
+		}
+		return 0;
+	}
+
+	/**
+	 * Z = 4.15
+	 * 
+	 * @param angle
+	 * @return
+	 */
+	private static double findingPrWithZ415Angle(int angle) {
+
+		switch (angle) {
+		case ZERO:
+			return 185;
+		case FIVE:
+			return 185;
+		case TEN:
+			return 175;
+		case FIFTEEN:
+			return 155;
+		case TWENTY:
+			return 145;
+		case TWENTY_FIVE:
+			return 135;
+		case THIRTY:
+			return 110;
+		case THIRTY_FIVE:
+			return 95;
+		case FORTY:
+			return 80;
+		case FORTY_FIVE:
+			return 70;
+		case FIFTY:
+			return 55;
+		case FIFTY_FIVE:
+			return 45;
+		case SIXTY:
+			return 30;
+		case SIXTY_FIVE:
+			return 20;
+		case SEVENTY:
+			return 14;
+		case SEVENTY_FIVE:
+			return 7;
+		case EIGHTY:
+			return 3;
+		}
+		return 0;
+	}
+
+	/**
+	 * Z = 5.125
+	 * 
+	 * @param angle
+	 * @return
+	 */
+	private static double findingPrWithZ5125Angle(int angle) {
+
+		switch (angle) {
+		case ZERO:
+			return 125;
+		case FIVE:
+			return 125;
+		case TEN:
+			return 110;
+		case FIFTEEN:
+			return 100;
+		case TWENTY:
+			return 95;
+		case TWENTY_FIVE:
+			return 90;
+		case THIRTY:
+			return 85;
+		case THIRTY_FIVE:
+			return 75;
+		case FORTY:
+			return 65;
+		case FORTY_FIVE:
+			return 55;
+		case FIFTY:
+			return 45;
+		case FIFTY_FIVE:
+			return 33;
+		case SIXTY:
+			return 25;
+		case SIXTY_FIVE:
+			return 18;
+		case SEVENTY:
+			return 11;
+		case SEVENTY_FIVE:
+			return 6;
+		case EIGHTY:
+			return 2;
 		}
 		return 0;
 	}

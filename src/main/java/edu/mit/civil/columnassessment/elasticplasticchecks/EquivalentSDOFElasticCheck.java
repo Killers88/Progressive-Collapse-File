@@ -18,7 +18,7 @@ public class EquivalentSDOFElasticCheck {
 
 		} else {
 
-			return "Exceeds Elastic limits, a Plastic check is required";
+			return "EXCEEDS Elastic limits, a Plastic check is required";
 
 		}
 
