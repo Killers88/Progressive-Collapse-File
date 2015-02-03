@@ -14,11 +14,11 @@ public class EquivalentSDOFElasticCheck {
 
 		if ((um <= uy)) {
 
-			return "Column PASSES for specified blast parameters";
+			return "'um' <= 'uy', therefore Column PASSES for specified blast parameters";
 
 		} else {
 
-			return "EXCEEDS Elastic limits, a Plastic check is required";
+			return "'um' > 'uy', therefore EXCEEDS Elastic limits, a Plastic check is required";
 
 		}
 

@@ -20,6 +20,5 @@ public class UltimateUnitResistance {
 		return (CONSTANT_A * (((Dynamic_Increase_Factor
 				* Strength_Increase_Factor * fyi) / In_TO_Feet) * z))
 				/ (Math.pow(colheight, 2));
-
 	}
 }

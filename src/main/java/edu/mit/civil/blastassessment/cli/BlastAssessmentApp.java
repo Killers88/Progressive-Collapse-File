@@ -7,16 +7,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import edu.mit.civil.blastassessment.calculation.ClearingTimeTc;
 import edu.mit.civil.blastassessment.calculation.EquivalentDurationTe;
 import edu.mit.civil.blastassessment.calculation.ImpulseIs;
 import edu.mit.civil.blastassessment.calculation.PeakDynamicPressureQo;
 import edu.mit.civil.blastassessment.calculation.PeakIncidentOverPressurePso;
-import edu.mit.civil.blastassessment.calculation.PositivePhaseDurationTo;
 import edu.mit.civil.blastassessment.calculation.ReflectedPressurePr;
-import edu.mit.civil.blastassessment.calculation.SoundVelocityCr;
 import edu.mit.civil.blastassessment.calculation.StagnationPressurePs;
-import edu.mit.civil.blastassessment.calculation.WaveLengthLw;
 import edu.mit.civil.columnassessment.calculation.ActualStiffnessK;
 import edu.mit.civil.columnassessment.calculation.AppliedLoadingToColumnQ;
 import edu.mit.civil.columnassessment.calculation.ParameterForElasticCheck;
@@ -24,9 +20,8 @@ import edu.mit.civil.columnassessment.calculation.StaticDisplacementUs;
 import edu.mit.civil.columnassessment.calculation.TotalActalMassM;
 import edu.mit.civil.columnassessment.calculation.YieldDisplacementUy;
 import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFElasticCheck;
-import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFElasticResponseA;
-import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFElasticResponseB;
-import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFPlasticResponse;
+import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFElasticResponseUm;
+import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFPlasticResponseUm;
 import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFPropertiesElastic;
 import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFPropertiesPlastic;
 import edu.mit.civil.columnassessment.elasticplasticchecks.UltimateUnitResistance;
@@ -97,29 +92,31 @@ public class BlastAssessmentApp {
 						.calculatQoWithPso(PeakIncidentOverPressurePso
 								.findPeakIncidentOverPressureWith(z)) + " psi");
 
-		System.out.println("Blast Analysis - Sound Velocity 'Cr' = "
-				+ SoundVelocityCr.caculateCrWithPso(PeakIncidentOverPressurePso
-						.findPeakIncidentOverPressureWith(z)) + " psi");
+		// System.out.println("Blast Analysis - Sound Velocity 'Cr' = "
+		// + SoundVelocityCr.caculateCrWithPso(PeakIncidentOverPressurePso
+		// .findPeakIncidentOverPressureWith(z)) + " psi");
 
 		System.out
-				.println("Blast Analysis - Peak Reflected Pressure 'Pr' = "
-						+ ReflectedPressurePr.findingPrWithZAndAngle(z, angle)
+				.println("Blast Analysis - Peak Reflected Pressure 'Pr(alpha)' = "
+						+ ReflectedPressurePr.findReflectedPressureWith(angle,
+								PeakIncidentOverPressurePso
+										.findPeakIncidentOverPressureWith(z))
 						+ " psi");
 
-		System.out.println("Blast Analysis - Clearing Time 'tc' = "
-				+ ClearingTimeTc.calculateclearingTimeTc(h, width,
-						SoundVelocityCr
-								.caculateCrWithPso(PeakIncidentOverPressurePso
-										.findPeakIncidentOverPressureWith(z)))
-				+ " ms");
+		// System.out.println("Blast Analysis - Clearing Time 'tc' = "
+		// + ClearingTimeTc.calculateclearingTimeTc(h, width,
+		// SoundVelocityCr
+		// .caculateCrWithPso(PeakIncidentOverPressurePso
+		// .findPeakIncidentOverPressureWith(z)))
+		// + " ms");
 
-		System.out.println("Blast Analysis - Positive Phase Duration 'to' = "
-				+ PositivePhaseDurationTo.findPositivePhaseDurationForZ(z, w)
-				+ " ms");
-
-		System.out.println("Blast Analysis - Wave Length 'Lw' = "
-				+ WaveLengthLw.findWaveLengthWithZ(z, w) + " ft");
-
+		// System.out.println("Blast Analysis - Positive Phase Duration 'to' = "
+		// + PositivePhaseDurationTo.findPositivePhaseDurationForZ(z, w)
+		// + " ms");
+		//
+		// System.out.println("Blast Analysis - Wave Length 'Lw' = "
+		// + WaveLengthLw.findWaveLengthWithZ(z, w) + " ft");
+		//
 		System.out.println("Blast Analysis - Stagnation Pressure 'Ps' = "
 				+ StagnationPressurePs.calculateStagnationPressureWithPsoandqo(
 						PeakIncidentOverPressurePso
@@ -130,58 +127,34 @@ public class BlastAssessmentApp {
 				+ " psi");
 
 		System.out
-				.println("Blast Analysis - Blast Analysis - Impulse 'Is' = "
-						+ ImpulseIs.calculateImpulseIsWithPrPsTcTo(
-								ReflectedPressurePr.findingPrWithZAndAngle(z,
-										angle),
-								StagnationPressurePs
-										.calculateStagnationPressureWithPsoandqo(
-												PeakIncidentOverPressurePso
-														.findPeakIncidentOverPressureWith(z),
-												PeakDynamicPressureQo
-														.calculatQoWithPso(PeakIncidentOverPressurePso
-																.findPeakIncidentOverPressureWith(z))),
-								ClearingTimeTc.calculateclearingTimeTc(
-										h,
-										width,
-										SoundVelocityCr
-												.caculateCrWithPso(PeakIncidentOverPressurePso
-														.findPeakIncidentOverPressureWith(z))),
-								PositivePhaseDurationTo
-										.findPositivePhaseDurationForZ(z, w))
-						+ " psi-ms");
+				.println("Blast Analysis - Blast Analysis - Impulse 'Ir(alpha)' = "
+						+ ImpulseIs.calculateImpulseIsUFCGraph(
+								PeakIncidentOverPressurePso
+										.findPeakIncidentOverPressureWith(z),
+								angle, w) + " psi-ms");
 
 		System.out
-				.println("Blast Analysis - Equivalent Duration 'te' = "
+				.println("Blast Analysis - Equivalent Duration 'tr(alpha)' = "
 						+ EquivalentDurationTe.calculateEquivalentDurationWithIsAndPr(
-								ImpulseIs.calculateImpulseIsWithPrPsTcTo(
-										ReflectedPressurePr
-												.findingPrWithZAndAngle(z,
-														angle),
-										StagnationPressurePs
-												.calculateStagnationPressureWithPsoandqo(
-														PeakIncidentOverPressurePso
-																.findPeakIncidentOverPressureWith(z),
-														PeakDynamicPressureQo
-																.calculatQoWithPso(PeakIncidentOverPressurePso
-																		.findPeakIncidentOverPressureWith(z))),
-										ClearingTimeTc.calculateclearingTimeTc(
-												h,
-												width,
-												SoundVelocityCr
-														.caculateCrWithPso(PeakIncidentOverPressurePso
-																.findPeakIncidentOverPressureWith(z))),
-										PositivePhaseDurationTo
-												.findPositivePhaseDurationForZ(
-														z, w)),
-								ReflectedPressurePr.findingPrWithZAndAngle(z,
-										angle)) + " ms");
+								ImpulseIs.calculateImpulseIsUFCGraph(
+										PeakIncidentOverPressurePso
+												.findPeakIncidentOverPressureWith(z),
+										angle, w),
+								ReflectedPressurePr.findReflectedPressureWith(
+										angle,
+										PeakIncidentOverPressurePso
+												.findPeakIncidentOverPressureWith(z)))
+						+ " ms");
 
 		System.out
 				.println("Target Column Analysis - Applied Column Loading 'Q*' = "
 						+ AppliedLoadingToColumnQ.calculateAppliedLoading(
-								ReflectedPressurePr.findingPrWithZAndAngle(z,
-										angle), colwidth, colhgt) + " kipf");
+								ReflectedPressurePr
+										.findReflectedPressureWith(
+												angle,
+												PeakIncidentOverPressurePso
+														.findPeakIncidentOverPressureWith(z)),
+								colwidth, colhgt) + " kipf");
 
 		System.out
 				.println("Target Column Analysis - Actual Column Stiffness 'k' = "
@@ -197,9 +170,11 @@ public class BlastAssessmentApp {
 						+ StaticDisplacementUs.CalculateStaticDisplacement(
 								AppliedLoadingToColumnQ.calculateAppliedLoading(
 										ReflectedPressurePr
-												.findingPrWithZAndAngle(z,
-														angle), colwidth,
-										colhgt), ActualStiffnessK
+												.findReflectedPressureWith(
+														angle,
+														PeakIncidentOverPressurePso
+																.findPeakIncidentOverPressureWith(z)),
+										colwidth, colhgt), ActualStiffnessK
 										.calculateColumnActualStiffness(e, i,
 												colhgt)) + " ft");
 
@@ -214,32 +189,15 @@ public class BlastAssessmentApp {
 								EquivalentDurationTe
 										.calculateEquivalentDurationWithIsAndPr(
 												ImpulseIs
-														.calculateImpulseIsWithPrPsTcTo(
-																ReflectedPressurePr
-																		.findingPrWithZAndAngle(
-																				z,
-																				angle),
-																StagnationPressurePs
-																		.calculateStagnationPressureWithPsoandqo(
-																				PeakIncidentOverPressurePso
-																						.findPeakIncidentOverPressureWith(z),
-																				PeakDynamicPressureQo
-																						.calculatQoWithPso(PeakIncidentOverPressurePso
-																								.findPeakIncidentOverPressureWith(z))),
-																ClearingTimeTc
-																		.calculateclearingTimeTc(
-																				h,
-																				width,
-																				SoundVelocityCr
-																						.caculateCrWithPso(PeakIncidentOverPressurePso
-																								.findPeakIncidentOverPressureWith(z))),
-																PositivePhaseDurationTo
-																		.findPositivePhaseDurationForZ(
-																				z,
-																				w)),
+														.calculateImpulseIsUFCGraph(
+																PeakIncidentOverPressurePso
+																		.findPeakIncidentOverPressureWith(z),
+																angle, w),
 												ReflectedPressurePr
-														.findingPrWithZAndAngle(
-																z, angle)),
+														.findReflectedPressureWith(
+																angle,
+																PeakIncidentOverPressurePso
+																		.findPeakIncidentOverPressureWith(z))),
 								EquivalentSDOFPropertiesElastic.naturalPeriodSDOF(
 										EquivalentSDOFPropertiesElastic
 												.massOfEquivSDOF(TotalActalMassM
@@ -278,39 +236,22 @@ public class BlastAssessmentApp {
 
 		System.out
 				.println("Elastic Parameter - Peak Response Parameter 'um' = "
-						+ EquivalentSDOFElasticResponseB.elasticResponseParameterCheck(
+						+ EquivalentSDOFElasticResponseUm.elasticResponseParameterCheck(
 								(ParameterForElasticCheck
 										.tEquivDividedByTn(
 												EquivalentDurationTe
 														.calculateEquivalentDurationWithIsAndPr(
 																ImpulseIs
-																		.calculateImpulseIsWithPrPsTcTo(
-																				ReflectedPressurePr
-																						.findingPrWithZAndAngle(
-																								z,
-																								angle),
-																				StagnationPressurePs
-																						.calculateStagnationPressureWithPsoandqo(
-																								PeakIncidentOverPressurePso
-																										.findPeakIncidentOverPressureWith(z),
-																								PeakDynamicPressureQo
-																										.calculatQoWithPso(PeakIncidentOverPressurePso
-																												.findPeakIncidentOverPressureWith(z))),
-																				ClearingTimeTc
-																						.calculateclearingTimeTc(
-																								h,
-																								width,
-																								SoundVelocityCr
-																										.caculateCrWithPso(PeakIncidentOverPressurePso
-																												.findPeakIncidentOverPressureWith(z))),
-																				PositivePhaseDurationTo
-																						.findPositivePhaseDurationForZ(
-																								z,
-																								w)),
+																		.calculateImpulseIsUFCGraph(
+																				PeakIncidentOverPressurePso
+																						.findPeakIncidentOverPressureWith(z),
+																				angle,
+																				w),
 																ReflectedPressurePr
-																		.findingPrWithZAndAngle(
-																				z,
-																				angle)),
+																		.findReflectedPressureWith(
+																				angle,
+																				PeakIncidentOverPressurePso
+																						.findPeakIncidentOverPressureWith(z))),
 												EquivalentSDOFPropertiesElastic.naturalPeriodSDOF(
 														EquivalentSDOFPropertiesElastic
 																.massOfEquivSDOF(TotalActalMassM
@@ -326,128 +267,76 @@ public class BlastAssessmentApp {
 								StaticDisplacementUs.CalculateStaticDisplacement(
 										AppliedLoadingToColumnQ.calculateAppliedLoading(
 												ReflectedPressurePr
-														.findingPrWithZAndAngle(
-																z, angle),
+														.findReflectedPressureWith(
+																angle,
+																PeakIncidentOverPressurePso
+																		.findPeakIncidentOverPressureWith(z)),
 												colwidth, colhgt),
 										ActualStiffnessK
 												.calculateColumnActualStiffness(
 														e, i, colhgt))) + " ft");
 
-		System.out
-				.println("Elastic Parameter - Peak Response Parameter 'tm' = "
-						+ EquivalentSDOFElasticResponseA.elasticResponseParameterCheck(
-								(ParameterForElasticCheck
-										.tEquivDividedByTn(
-												EquivalentDurationTe
-														.calculateEquivalentDurationWithIsAndPr(
-																ImpulseIs
-																		.calculateImpulseIsWithPrPsTcTo(
-																				ReflectedPressurePr
-																						.findingPrWithZAndAngle(
-																								z,
-																								angle),
-																				StagnationPressurePs
-																						.calculateStagnationPressureWithPsoandqo(
-																								PeakIncidentOverPressurePso
-																										.findPeakIncidentOverPressureWith(z),
-																								PeakDynamicPressureQo
-																										.calculatQoWithPso(PeakIncidentOverPressurePso
-																												.findPeakIncidentOverPressureWith(z))),
-																				ClearingTimeTc
-																						.calculateclearingTimeTc(
-																								h,
-																								width,
-																								SoundVelocityCr
-																										.caculateCrWithPso(PeakIncidentOverPressurePso
-																												.findPeakIncidentOverPressureWith(z))),
-																				PositivePhaseDurationTo
-																						.findPositivePhaseDurationForZ(
-																								z,
-																								w)),
-																ReflectedPressurePr
-																		.findingPrWithZAndAngle(
-																				z,
-																				angle)),
-												EquivalentSDOFPropertiesElastic.naturalPeriodSDOF(
-														EquivalentSDOFPropertiesElastic
-																.massOfEquivSDOF(TotalActalMassM
-																		.calculatingTotalActualMass(
-																				colweight,
-																				colhgt)),
-														EquivalentSDOFPropertiesElastic
-																.stiffnessOfEquivSDOF(ActualStiffnessK
-																		.calculateColumnActualStiffness(
-																				e,
-																				i,
-																				colhgt))))),
-								EquivalentDurationTe
-										.calculateEquivalentDurationWithIsAndPr(
-												ImpulseIs
-														.calculateImpulseIsWithPrPsTcTo(
-																ReflectedPressurePr
-																		.findingPrWithZAndAngle(
-																				z,
-																				angle),
-																StagnationPressurePs
-																		.calculateStagnationPressureWithPsoandqo(
-																				PeakIncidentOverPressurePso
-																						.findPeakIncidentOverPressureWith(z),
-																				PeakDynamicPressureQo
-																						.calculatQoWithPso(PeakIncidentOverPressurePso
-																								.findPeakIncidentOverPressureWith(z))),
-																ClearingTimeTc
-																		.calculateclearingTimeTc(
-																				h,
-																				width,
-																				SoundVelocityCr
-																						.caculateCrWithPso(PeakIncidentOverPressurePso
-																								.findPeakIncidentOverPressureWith(z))),
-																PositivePhaseDurationTo
-																		.findPositivePhaseDurationForZ(
-																				z,
-																				w)),
-												ReflectedPressurePr
-														.findingPrWithZAndAngle(
-																z, angle)))
-						+ " ms");
+		// System.out
+		// .println("Elastic Parameter - Peak Response Parameter 'tm' = "
+		// + EquivalentSDOFElasticResponseA.elasticResponseParameterCheck(
+		// (ParameterForElasticCheck
+		// .tEquivDividedByTn(
+		// EquivalentDurationTe
+		// .calculateEquivalentDurationWithIsAndPr(
+		// ImpulseIs
+		// .calculateImpulseIsUFCGraph(
+		// PeakIncidentOverPressurePso
+		// .findPeakIncidentOverPressureWith(z),
+		// angle,
+		// w),
+		// ReflectedPressurePr
+		// .findingPrWithZAndAngle(
+		// z,
+		// angle)),
+		// EquivalentSDOFPropertiesElastic.naturalPeriodSDOF(
+		// EquivalentSDOFPropertiesElastic
+		// .massOfEquivSDOF(TotalActalMassM
+		// .calculatingTotalActualMass(
+		// colweight,
+		// colhgt)),
+		// EquivalentSDOFPropertiesElastic
+		// .stiffnessOfEquivSDOF(ActualStiffnessK
+		// .calculateColumnActualStiffness(
+		// e,
+		// i,
+		// colhgt))))),
+		// EquivalentDurationTe
+		// .calculateEquivalentDurationWithIsAndPr(
+		// ImpulseIs
+		// .calculateImpulseIsUFCGraph(
+		// PeakIncidentOverPressurePso
+		// .findPeakIncidentOverPressureWith(z),
+		// angle, w),
+		// ReflectedPressurePr
+		// .findingPrWithZAndAngle(
+		// z, angle)))
+		// + " ms");
 
 		System.out
 				.println("***Elastic Check*** - "
 						+ EquivalentSDOFElasticCheck.determiningDynamicLoadFactor(
-								EquivalentSDOFElasticResponseB
+								EquivalentSDOFElasticResponseUm
 										.elasticResponseParameterCheck(
 												(ParameterForElasticCheck
 														.tEquivDividedByTn(
 																EquivalentDurationTe
 																		.calculateEquivalentDurationWithIsAndPr(
 																				ImpulseIs
-																						.calculateImpulseIsWithPrPsTcTo(
-																								ReflectedPressurePr
-																										.findingPrWithZAndAngle(
-																												z,
-																												angle),
-																								StagnationPressurePs
-																										.calculateStagnationPressureWithPsoandqo(
-																												PeakIncidentOverPressurePso
-																														.findPeakIncidentOverPressureWith(z),
-																												PeakDynamicPressureQo
-																														.calculatQoWithPso(PeakIncidentOverPressurePso
-																																.findPeakIncidentOverPressureWith(z))),
-																								ClearingTimeTc
-																										.calculateclearingTimeTc(
-																												h,
-																												width,
-																												SoundVelocityCr
-																														.caculateCrWithPso(PeakIncidentOverPressurePso
-																																.findPeakIncidentOverPressureWith(z))),
-																								PositivePhaseDurationTo
-																										.findPositivePhaseDurationForZ(
-																												z,
-																												w)),
+																						.calculateImpulseIsUFCGraph(
+																								PeakIncidentOverPressurePso
+																										.findPeakIncidentOverPressureWith(z),
+																								angle,
+																								w),
 																				ReflectedPressurePr
-																						.findingPrWithZAndAngle(
-																								z,
-																								angle)),
+																						.findReflectedPressureWith(
+																								angle,
+																								PeakIncidentOverPressurePso
+																										.findPeakIncidentOverPressureWith(z))),
 																EquivalentSDOFPropertiesElastic
 																		.naturalPeriodSDOF(
 																				EquivalentSDOFPropertiesElastic
@@ -466,9 +355,10 @@ public class BlastAssessmentApp {
 																AppliedLoadingToColumnQ
 																		.calculateAppliedLoading(
 																				ReflectedPressurePr
-																						.findingPrWithZAndAngle(
-																								z,
-																								angle),
+																						.findReflectedPressureWith(
+																								angle,
+																								PeakIncidentOverPressurePso
+																										.findPeakIncidentOverPressureWith(z)),
 																				colwidth,
 																				colhgt),
 																ActualStiffnessK
@@ -511,36 +401,19 @@ public class BlastAssessmentApp {
 
 		System.out
 				.println("Plastic Parameter - T/T'n = "
-						+ EquivalentSDOFPlasticResponse.maxDeflectionPlasticInputsTeDivideTn(
+						+ EquivalentSDOFPlasticResponseUm.maxDeflectionPlasticInputsTeDivideTn(
 								EquivalentDurationTe
 										.calculateEquivalentDurationWithIsAndPr(
 												ImpulseIs
-														.calculateImpulseIsWithPrPsTcTo(
-																ReflectedPressurePr
-																		.findingPrWithZAndAngle(
-																				z,
-																				angle),
-																StagnationPressurePs
-																		.calculateStagnationPressureWithPsoandqo(
-																				PeakIncidentOverPressurePso
-																						.findPeakIncidentOverPressureWith(z),
-																				PeakDynamicPressureQo
-																						.calculatQoWithPso(PeakIncidentOverPressurePso
-																								.findPeakIncidentOverPressureWith(z))),
-																ClearingTimeTc
-																		.calculateclearingTimeTc(
-																				h,
-																				width,
-																				SoundVelocityCr
-																						.caculateCrWithPso(PeakIncidentOverPressurePso
-																								.findPeakIncidentOverPressureWith(z))),
-																PositivePhaseDurationTo
-																		.findPositivePhaseDurationForZ(
-																				z,
-																				w)),
+														.calculateImpulseIsUFCGraph(
+																PeakIncidentOverPressurePso
+																		.findPeakIncidentOverPressureWith(z),
+																angle, w),
 												ReflectedPressurePr
-														.findingPrWithZAndAngle(
-																z, angle)),
+														.findReflectedPressureWith(
+																angle,
+																PeakIncidentOverPressurePso
+																		.findPeakIncidentOverPressureWith(z))),
 								EquivalentSDOFPropertiesPlastic.naturalPeriodSDOF(
 										EquivalentSDOFPropertiesPlastic
 												.massOfEquivSDOF(TotalActalMassM
@@ -554,47 +427,30 @@ public class BlastAssessmentApp {
 
 		System.out
 				.println("Plastic Parameter - Ultimate Resistance ru / Peak Reflected Pressure = "
-						+ EquivalentSDOFPlasticResponse
-								.maxDeflectionPlasticInputsFyDivideQ(
-										UltimateUnitResistance
-												.calculatingPlasticMoment(
-														yield, zxx, colhgt),
-										ReflectedPressurePr
-												.findingPrWithZAndAngle(z,
-														angle)));
+						+ EquivalentSDOFPlasticResponseUm.maxDeflectionPlasticInputsRuDivideP(
+								UltimateUnitResistance
+										.calculatingPlasticMoment(yield, zxx,
+												colhgt),
+								ReflectedPressurePr.findReflectedPressureWith(
+										angle,
+										PeakIncidentOverPressurePso
+												.findPeakIncidentOverPressureWith(z))));
 
 		System.out
 				.println("Plastic Parameter - Peak Response Parameter 'um'  = "
-						+ EquivalentSDOFPlasticResponse.peakResponseParameterPlastic(
+						+ EquivalentSDOFPlasticResponseUm.peakResponseParameterPlastic(
 								EquivalentDurationTe
 										.calculateEquivalentDurationWithIsAndPr(
 												ImpulseIs
-														.calculateImpulseIsWithPrPsTcTo(
-																ReflectedPressurePr
-																		.findingPrWithZAndAngle(
-																				z,
-																				angle),
-																StagnationPressurePs
-																		.calculateStagnationPressureWithPsoandqo(
-																				PeakIncidentOverPressurePso
-																						.findPeakIncidentOverPressureWith(z),
-																				PeakDynamicPressureQo
-																						.calculatQoWithPso(PeakIncidentOverPressurePso
-																								.findPeakIncidentOverPressureWith(z))),
-																ClearingTimeTc
-																		.calculateclearingTimeTc(
-																				h,
-																				width,
-																				SoundVelocityCr
-																						.caculateCrWithPso(PeakIncidentOverPressurePso
-																								.findPeakIncidentOverPressureWith(z))),
-																PositivePhaseDurationTo
-																		.findPositivePhaseDurationForZ(
-																				z,
-																				w)),
+														.calculateImpulseIsUFCGraph(
+																PeakIncidentOverPressurePso
+																		.findPeakIncidentOverPressureWith(z),
+																angle, w),
 												ReflectedPressurePr
-														.findingPrWithZAndAngle(
-																z, angle)),
+														.findReflectedPressureWith(
+																angle,
+																PeakIncidentOverPressurePso
+																		.findPeakIncidentOverPressureWith(z))),
 								EquivalentSDOFPropertiesPlastic.naturalPeriodSDOF(
 										EquivalentSDOFPropertiesPlastic
 												.massOfEquivSDOF(TotalActalMassM
@@ -607,44 +463,30 @@ public class BlastAssessmentApp {
 																e, i, colhgt))),
 								UltimateUnitResistance
 										.calculatingPlasticMoment(yield, zxx,
-												colhgt), YieldDisplacementUy
+												colhgt),
+								YieldDisplacementUy
 										.calculateYieldDisplacementUy(colhgt,
 												s, yield, e, i),
-								ReflectedPressurePr.findingPrWithZAndAngle(z,
-										angle)));
+								ReflectedPressurePr.findReflectedPressureWith(
+										angle,
+										PeakIncidentOverPressurePso
+												.findPeakIncidentOverPressureWith(z))));
 
 		System.out
 				.println("***Plastic Check*** -  = "
-						+ EquivalentSDOFPlasticResponse.plasticCheckFinal(
+						+ EquivalentSDOFPlasticResponseUm.plasticCheckFinal(
 								EquivalentDurationTe
 										.calculateEquivalentDurationWithIsAndPr(
 												ImpulseIs
-														.calculateImpulseIsWithPrPsTcTo(
-																ReflectedPressurePr
-																		.findingPrWithZAndAngle(
-																				z,
-																				angle),
-																StagnationPressurePs
-																		.calculateStagnationPressureWithPsoandqo(
-																				PeakIncidentOverPressurePso
-																						.findPeakIncidentOverPressureWith(z),
-																				PeakDynamicPressureQo
-																						.calculatQoWithPso(PeakIncidentOverPressurePso
-																								.findPeakIncidentOverPressureWith(z))),
-																ClearingTimeTc
-																		.calculateclearingTimeTc(
-																				h,
-																				width,
-																				SoundVelocityCr
-																						.caculateCrWithPso(PeakIncidentOverPressurePso
-																								.findPeakIncidentOverPressureWith(z))),
-																PositivePhaseDurationTo
-																		.findPositivePhaseDurationForZ(
-																				z,
-																				w)),
+														.calculateImpulseIsUFCGraph(
+																PeakIncidentOverPressurePso
+																		.findPeakIncidentOverPressureWith(z),
+																angle, w),
 												ReflectedPressurePr
-														.findingPrWithZAndAngle(
-																z, angle)),
+														.findReflectedPressureWith(
+																angle,
+																PeakIncidentOverPressurePso
+																		.findPeakIncidentOverPressureWith(z))),
 								EquivalentSDOFPropertiesPlastic.naturalPeriodSDOF(
 										EquivalentSDOFPropertiesPlastic
 												.massOfEquivSDOF(TotalActalMassM
@@ -663,9 +505,11 @@ public class BlastAssessmentApp {
 												s, yield, e, i),
 								AppliedLoadingToColumnQ.calculateAppliedLoading(
 										ReflectedPressurePr
-												.findingPrWithZAndAngle(z,
-														angle), colwidth,
-										colhgt)));
+												.findReflectedPressureWith(
+														angle,
+														PeakIncidentOverPressurePso
+																.findPeakIncidentOverPressureWith(z)),
+										colwidth, colhgt)));
 
 	}
 

@@ -199,7 +199,7 @@ public class PositivePhaseDurationTo {
 		}
 
 		// TODO add logging here
-		throw new RuntimeException("invalid Z value");
+		throw new RuntimeException("invalid Z value - Range 0.25 to 40");
 	}
 
 }
