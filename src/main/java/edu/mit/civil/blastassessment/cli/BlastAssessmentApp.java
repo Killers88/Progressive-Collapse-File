@@ -503,13 +503,10 @@ public class BlastAssessmentApp {
 								YieldDisplacementUy
 										.calculateYieldDisplacementUy(colhgt,
 												s, yield, e, i),
-								AppliedLoadingToColumnQ.calculateAppliedLoading(
-										ReflectedPressurePr
-												.findReflectedPressureWith(
-														angle,
-														PeakIncidentOverPressurePso
-																.findPeakIncidentOverPressureWith(z)),
-										colwidth, colhgt)));
+								ReflectedPressurePr.findReflectedPressureWith(
+										angle,
+										PeakIncidentOverPressurePso
+												.findPeakIncidentOverPressureWith(z))));
 
 	}
 

@@ -25,10 +25,7 @@ public class EquivalentSDOFPropertiesPlastic {
 
 	public static double naturalPeriodSDOF(final double m, final double k) {
 
-		double K = stiffnessOfEquivSDOF(k);
-		double M = massOfEquivSDOF(m);
-
-		return CONSTANT_A * Math.PI * (Math.sqrt(M / K));
+		return CONSTANT_A * Math.PI * (Math.sqrt(m / k));
 	}
 
 }
