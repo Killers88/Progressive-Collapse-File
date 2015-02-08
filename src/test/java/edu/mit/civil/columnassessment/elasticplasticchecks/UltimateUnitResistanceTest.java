@@ -9,8 +9,9 @@ public class UltimateUnitResistanceTest {
 
 	@Test
 	public void testCalculatingPlasticMoment() {
-		double result = UltimateUnitResistance.calculatingPlasticMoment(50,
-				113, 11.6);
+		double result = UltimateUnitResistance.calculatingPlasticMoment(50, 87,
+				11);
+
 		System.out.println("result: " + result);
 		System.out.println(Math.log(18));
 		assertTrue(result > 0);

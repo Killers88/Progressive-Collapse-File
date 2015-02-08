@@ -17,8 +17,9 @@ public class UltimateUnitResistance {
 	public static double calculatingPlasticMoment(final double fyi,
 			final double z, final double colheight) {
 
-		return (CONSTANT_A * (((Dynamic_Increase_Factor
-				* Strength_Increase_Factor * fyi) / In_TO_Feet) * z))
-				/ (Math.pow(colheight, 2));
+		double mp = (Dynamic_Increase_Factor * Strength_Increase_Factor * fyi * z)
+				/ In_TO_Feet;
+
+		return CONSTANT_A * mp / colheight;
 	}
 }

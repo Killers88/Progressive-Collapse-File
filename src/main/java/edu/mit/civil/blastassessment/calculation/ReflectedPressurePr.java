@@ -34,7 +34,7 @@ public class ReflectedPressurePr {
 			graph.put((double) 75, (double) 1.25);
 			graph.put((double) 80, (double) 1.2);
 
-			if (angle > 0) {
+			if (angle >= 0) {
 				double cr = (graph.get(angle));
 				return cr * pso;
 			}
@@ -59,7 +59,7 @@ public class ReflectedPressurePr {
 			graph.put((double) 70, (double) 1.3);
 			graph.put((double) 75, (double) 1.25);
 			graph.put((double) 80, (double) 1.2);
-			if (angle > 0) {
+			if (angle >= 0) {
 				double cr = (graph.get(angle));
 				return cr * pso;
 			}
@@ -84,7 +84,7 @@ public class ReflectedPressurePr {
 			graph.put((double) 70, (double) 1.5);
 			graph.put((double) 75, (double) 1.3);
 			graph.put((double) 80, (double) 1.1);
-			if (angle > 0) {
+			if (angle >= 0) {
 				double cr = (graph.get(angle));
 				return cr * pso;
 			}
@@ -109,7 +109,7 @@ public class ReflectedPressurePr {
 			graph.put((double) 70, (double) 1.5);
 			graph.put((double) 75, (double) 1.3);
 			graph.put((double) 80, (double) 1.1);
-			if (angle > 0) {
+			if (angle >= 0) {
 				double cr = (graph.get(angle));
 				return cr * pso;
 			}
@@ -134,7 +134,7 @@ public class ReflectedPressurePr {
 			graph.put((double) 70, (double) 1.55);
 			graph.put((double) 75, (double) 1.4);
 			graph.put((double) 80, (double) 1.15);
-			if (angle > 0) {
+			if (angle >= 0) {
 				double cr = (graph.get(angle));
 				return cr * pso;
 			}
@@ -159,7 +159,7 @@ public class ReflectedPressurePr {
 			graph.put((double) 70, (double) 1.6);
 			graph.put((double) 75, (double) 1.5);
 			graph.put((double) 80, (double) 1.2);
-			if (angle > 0) {
+			if (angle >= 0) {
 				double cr = (graph.get(angle));
 				return cr * pso;
 			}
@@ -184,7 +184,7 @@ public class ReflectedPressurePr {
 			graph.put((double) 70, (double) 1.7);
 			graph.put((double) 75, (double) 1.5);
 			graph.put((double) 80, (double) 1.2);
-			if (angle > 0) {
+			if (angle >= 0) {
 				double cr = (graph.get(angle));
 				return cr * pso;
 			}
@@ -209,7 +209,7 @@ public class ReflectedPressurePr {
 			graph.put((double) 70, (double) 1.8);
 			graph.put((double) 75, (double) 1.5);
 			graph.put((double) 80, (double) 1.2);
-			if (angle > 0) {
+			if (angle >= 0) {
 				double cr = (graph.get(angle));
 				return cr * pso;
 			}
@@ -234,7 +234,7 @@ public class ReflectedPressurePr {
 			graph.put((double) 70, (double) 1.8);
 			graph.put((double) 75, (double) 1.4);
 			graph.put((double) 80, (double) 1.15);
-			if (angle > 0) {
+			if (angle >= 0) {
 				double cr = (graph.get(angle));
 				return cr * pso;
 			}
@@ -259,7 +259,7 @@ public class ReflectedPressurePr {
 			graph.put((double) 70, (double) 1.8);
 			graph.put((double) 75, (double) 1.3);
 			graph.put((double) 80, (double) 1.1);
-			if (angle > 0) {
+			if (angle >= 0) {
 				double cr = (graph.get(angle));
 				return cr * pso;
 			}
@@ -284,7 +284,7 @@ public class ReflectedPressurePr {
 			graph.put((double) 70, (double) 1.55);
 			graph.put((double) 75, (double) 1.2);
 			graph.put((double) 80, (double) 1.05);
-			if (angle > 0) {
+			if (angle >= 0) {
 				double cr = (graph.get(angle));
 				return cr * pso;
 			}
@@ -309,7 +309,7 @@ public class ReflectedPressurePr {
 			graph.put((double) 70, (double) 1.3);
 			graph.put((double) 75, (double) 1.1);
 			graph.put((double) 80, (double) 1);
-			if (angle > 0) {
+			if (angle >= 0) {
 				double cr = (graph.get(angle));
 				return cr * pso;
 			}
@@ -334,7 +334,7 @@ public class ReflectedPressurePr {
 			graph.put((double) 70, (double) 1.3);
 			graph.put((double) 75, (double) 1.1);
 			graph.put((double) 80, (double) 1);
-			if (angle > 0) {
+			if (angle >= 0) {
 				double cr = (graph.get(angle));
 				return cr * pso;
 			}
@@ -359,7 +359,7 @@ public class ReflectedPressurePr {
 			graph.put((double) 70, (double) 1.3);
 			graph.put((double) 75, (double) 1.1);
 			graph.put((double) 80, (double) 1);
-			if (angle > 0) {
+			if (angle >= 0) {
 				double cr = (graph.get(angle));
 				return cr * pso;
 			}

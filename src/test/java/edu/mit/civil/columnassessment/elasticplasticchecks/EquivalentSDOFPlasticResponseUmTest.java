@@ -18,7 +18,8 @@ public class EquivalentSDOFPlasticResponseUmTest {
 	public void test() {
 
 		double result = EquivalentSDOFPlasticResponseUm
-				.peakResponseParameterPlastic(13.1, 0.0262, 5, 69.44, 3);
+				.equivalentElastDeflection(1.51, 0.0097, 374, 0.0428, 630.5,
+						10, 11, 5505);
 
 		System.out.println("result: " + result);
 		assertTrue(result > 0);

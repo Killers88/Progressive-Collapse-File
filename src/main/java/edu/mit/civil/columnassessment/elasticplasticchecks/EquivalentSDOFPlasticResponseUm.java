@@ -20,18 +20,20 @@ public class EquivalentSDOFPlasticResponseUm {
 	}
 
 	public static double maxDeflectionPlasticInputsRuDivideP(final double ru,
-			final double q) {
+			final double pr, final double width, final double colhgt) {
 
-		return (ru) / (q / 6.944);
+		return (ru) / ((pr * width * colhgt * 12) / 1000);
 
 	}
 
 	private static Map<Double, Double> graph = new HashMap<Double, Double>();
 
 	static double retrievingGraphData(final double te, final double tn,
-			final double ru, final double uy, final double pr) {
+			final double ru, final double uy, final double pr,
+			final double width, final double colhgt) {
 
-		double graphinput = (ru) / (pr / 6.944);
+		double graphinput = maxDeflectionPlasticInputsRuDivideP(ru, pr, width,
+				colhgt);
 
 		double tDivideTn = (te / 1000) / tn;
 
@@ -1292,22 +1294,32 @@ public class EquivalentSDOFPlasticResponseUm {
 		return graphinput;
 	}
 
+	// public static double peakResponseParameterPlastic(final double te,
+	// final double tn, final double ru, final double uy, final double pr) {
+	//
+	// double x = retrievingGraphData(te, tn, ru, uy, pr);
+	//
+	// return x * uy;
+	// }
+
 	public static double peakResponseParameterPlastic(final double te,
-			final double tn, final double ru, final double uy, final double pr) {
+			final double tn, final double ru, final double uy, final double pr,
+			final double width, final double colhgt) {
 
-		double x = retrievingGraphData(te, tn, ru, uy, pr);
+		return retrievingGraphData(te, tn, ru, uy, pr, width, colhgt);
 
-		return x * uy;
 	}
 
 	public static String plasticCheckFinal(final double te, final double tn,
-			final double ru, final double uy, final double pr) {
+			final double ru, final double uy, final double pr,
+			final double width, final double colhgt) {
 
-		double um = peakResponseParameterPlastic(te, tn, ru, uy, pr);
+		double x = peakResponseParameterPlastic(te, tn, ru, uy, pr, width,
+				colhgt);
 
-		if ((um <= uy)) {
+		if ((x <= 3.0)) {
 
-			return "Column PASSES for specified blast parameters";
+			return "Column WITHIN Maximum Ductility Ratio";
 
 		} else {
 
@@ -1317,4 +1329,17 @@ public class EquivalentSDOFPlasticResponseUm {
 
 	}
 
+	public static double equivalentElastDeflection(final double te,
+			final double tn, final double ru, final double uy, final double pr,
+			final double width, final double colhgt, final double k) {
+
+		double ductratio = peakResponseParameterPlastic(te, tn, ru, uy, pr,
+				width, colhgt);
+
+		double xe = ru / k;
+
+		double xm = ductratio * xe;
+
+		return ((Math.atan(((2 * xm) / colhgt))) * 180) / Math.PI;
+	}
 }

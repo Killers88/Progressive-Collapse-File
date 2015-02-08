@@ -7,12 +7,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import edu.mit.civil.blastassessment.calculation.ClearingTimeTc;
 import edu.mit.civil.blastassessment.calculation.EquivalentDurationTe;
+import edu.mit.civil.blastassessment.calculation.EquivalentDurationTrAlpha;
+import edu.mit.civil.blastassessment.calculation.ImpulseIralpha;
 import edu.mit.civil.blastassessment.calculation.ImpulseIs;
 import edu.mit.civil.blastassessment.calculation.PeakDynamicPressureQo;
 import edu.mit.civil.blastassessment.calculation.PeakIncidentOverPressurePso;
+import edu.mit.civil.blastassessment.calculation.PositivePhaseDurationTo;
 import edu.mit.civil.blastassessment.calculation.ReflectedPressurePr;
+import edu.mit.civil.blastassessment.calculation.SoundVelocityCr;
 import edu.mit.civil.blastassessment.calculation.StagnationPressurePs;
+import edu.mit.civil.blastassessment.calculation.WaveLengthLw;
 import edu.mit.civil.columnassessment.calculation.ActualStiffnessK;
 import edu.mit.civil.columnassessment.calculation.AppliedLoadingToColumnQ;
 import edu.mit.civil.columnassessment.calculation.ParameterForElasticCheck;
@@ -41,10 +47,10 @@ public class BlastAssessmentApp {
 			IOException {
 
 		// Weight of TNT Input
-		double w = collectInputWithLabel("Weight of explosive (TNT equiv)");
+		double w = collectInputWithLabel("Weight of explosive (TNT equiv, lbs)");
 
 		// Standoff Distance from Target Column
-		double r = collectInputWithLabel("Standoff distance from target column");
+		double r = collectInputWithLabel("Standoff distance from target column (ft)");
 
 		// Angle of Incidence
 		int angle = (int) collectInputWithLabel("Angle of Incidence");
@@ -92,31 +98,27 @@ public class BlastAssessmentApp {
 						.calculatQoWithPso(PeakIncidentOverPressurePso
 								.findPeakIncidentOverPressureWith(z)) + " psi");
 
-		// System.out.println("Blast Analysis - Sound Velocity 'Cr' = "
-		// + SoundVelocityCr.caculateCrWithPso(PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z)) + " psi");
+		System.out.println("Blast Analysis - Sound Velocity 'Cr' = "
+				+ SoundVelocityCr.caculateCrWithPso(PeakIncidentOverPressurePso
+						.findPeakIncidentOverPressureWith(z)) + " psi");
 
-		System.out
-				.println("Blast Analysis - Peak Reflected Pressure 'Pr(alpha)' = "
-						+ ReflectedPressurePr.findReflectedPressureWith(angle,
-								PeakIncidentOverPressurePso
-										.findPeakIncidentOverPressureWith(z))
-						+ " psi");
+		System.out.println("Blast Analysis - Impulse 'is' = "
+				+ ImpulseIs.findPeakImpulseIsWith(z, w) + " ms");
 
-		// System.out.println("Blast Analysis - Clearing Time 'tc' = "
-		// + ClearingTimeTc.calculateclearingTimeTc(h, width,
-		// SoundVelocityCr
-		// .caculateCrWithPso(PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z)))
-		// + " ms");
+		System.out.println("Blast Analysis - Clearing Time 'tc' = "
+				+ ClearingTimeTc.calculateclearingTimeTc(h, width,
+						SoundVelocityCr
+								.caculateCrWithPso(PeakIncidentOverPressurePso
+										.findPeakIncidentOverPressureWith(z)))
+				+ " ms");
 
-		// System.out.println("Blast Analysis - Positive Phase Duration 'to' = "
-		// + PositivePhaseDurationTo.findPositivePhaseDurationForZ(z, w)
-		// + " ms");
-		//
-		// System.out.println("Blast Analysis - Wave Length 'Lw' = "
-		// + WaveLengthLw.findWaveLengthWithZ(z, w) + " ft");
-		//
+		System.out.println("Blast Analysis - Positive Phase Duration 'to' = "
+				+ PositivePhaseDurationTo.findPositivePhaseDurationForZ(z, w)
+				+ " ms");
+
+		System.out.println("Blast Analysis - Wave Length 'Lw' = REVIEW"
+				+ WaveLengthLw.findWaveLengthWithZ(z, w) + " ft");
+
 		System.out.println("Blast Analysis - Stagnation Pressure 'Ps' = "
 				+ StagnationPressurePs.calculateStagnationPressureWithPsoandqo(
 						PeakIncidentOverPressurePso
@@ -126,17 +128,30 @@ public class BlastAssessmentApp {
 										.findPeakIncidentOverPressureWith(z)))
 				+ " psi");
 
+		System.out.println("Blast Analysis - Equivalent Duration 'te' = "
+				+ EquivalentDurationTe.calculateEquivalentDurationWithIsAndPso(
+						ImpulseIs.findPeakImpulseIsWith(z, w),
+						PeakIncidentOverPressurePso
+								.findPeakIncidentOverPressureWith(z)) + " ms");
+
+		System.out
+				.println("Blast Analysis - Peak Reflected Pressure 'Pr(alpha)' = "
+						+ ReflectedPressurePr.findReflectedPressureWith(angle,
+								PeakIncidentOverPressurePso
+										.findPeakIncidentOverPressureWith(z))
+						+ " psi");
+
 		System.out
 				.println("Blast Analysis - Blast Analysis - Impulse 'Ir(alpha)' = "
-						+ ImpulseIs.calculateImpulseIsUFCGraph(
+						+ ImpulseIralpha.calculateImpulseIsUFCGraph(
 								PeakIncidentOverPressurePso
 										.findPeakIncidentOverPressureWith(z),
 								angle, w) + " psi-ms");
 
 		System.out
 				.println("Blast Analysis - Equivalent Duration 'tr(alpha)' = "
-						+ EquivalentDurationTe.calculateEquivalentDurationWithIsAndPr(
-								ImpulseIs.calculateImpulseIsUFCGraph(
+						+ EquivalentDurationTrAlpha.calculateEquivalentDurationWithIsAndPr(
+								ImpulseIralpha.calculateImpulseIsUFCGraph(
 										PeakIncidentOverPressurePso
 												.findPeakIncidentOverPressureWith(z),
 										angle, w),
@@ -186,9 +201,9 @@ public class BlastAssessmentApp {
 		System.out
 				.println("Target Column Analysis - T/Tn used for UFC 3-340 graphs to determnine whether column remains elastic = "
 						+ ParameterForElasticCheck.tEquivDividedByTn(
-								EquivalentDurationTe
+								EquivalentDurationTrAlpha
 										.calculateEquivalentDurationWithIsAndPr(
-												ImpulseIs
+												ImpulseIralpha
 														.calculateImpulseIsUFCGraph(
 																PeakIncidentOverPressurePso
 																		.findPeakIncidentOverPressureWith(z),
@@ -239,9 +254,9 @@ public class BlastAssessmentApp {
 						+ EquivalentSDOFElasticResponseUm.elasticResponseParameterCheck(
 								(ParameterForElasticCheck
 										.tEquivDividedByTn(
-												EquivalentDurationTe
+												EquivalentDurationTrAlpha
 														.calculateEquivalentDurationWithIsAndPr(
-																ImpulseIs
+																ImpulseIralpha
 																		.calculateImpulseIsUFCGraph(
 																				PeakIncidentOverPressurePso
 																						.findPeakIncidentOverPressureWith(z),
@@ -324,9 +339,9 @@ public class BlastAssessmentApp {
 										.elasticResponseParameterCheck(
 												(ParameterForElasticCheck
 														.tEquivDividedByTn(
-																EquivalentDurationTe
+																EquivalentDurationTrAlpha
 																		.calculateEquivalentDurationWithIsAndPr(
-																				ImpulseIs
+																				ImpulseIralpha
 																						.calculateImpulseIsUFCGraph(
 																								PeakIncidentOverPressurePso
 																										.findPeakIncidentOverPressureWith(z),
@@ -402,9 +417,9 @@ public class BlastAssessmentApp {
 		System.out
 				.println("Plastic Parameter - T/T'n = "
 						+ EquivalentSDOFPlasticResponseUm.maxDeflectionPlasticInputsTeDivideTn(
-								EquivalentDurationTe
+								EquivalentDurationTrAlpha
 										.calculateEquivalentDurationWithIsAndPr(
-												ImpulseIs
+												ImpulseIralpha
 														.calculateImpulseIsUFCGraph(
 																PeakIncidentOverPressurePso
 																		.findPeakIncidentOverPressureWith(z),
@@ -434,14 +449,15 @@ public class BlastAssessmentApp {
 								ReflectedPressurePr.findReflectedPressureWith(
 										angle,
 										PeakIncidentOverPressurePso
-												.findPeakIncidentOverPressureWith(z))));
+												.findPeakIncidentOverPressureWith(z)),
+								colwidth, colhgt));
 
 		System.out
 				.println("Plastic Parameter - Peak Response Parameter 'um'  = "
 						+ EquivalentSDOFPlasticResponseUm.peakResponseParameterPlastic(
-								EquivalentDurationTe
+								EquivalentDurationTrAlpha
 										.calculateEquivalentDurationWithIsAndPr(
-												ImpulseIs
+												ImpulseIralpha
 														.calculateImpulseIsUFCGraph(
 																PeakIncidentOverPressurePso
 																		.findPeakIncidentOverPressureWith(z),
@@ -470,14 +486,15 @@ public class BlastAssessmentApp {
 								ReflectedPressurePr.findReflectedPressureWith(
 										angle,
 										PeakIncidentOverPressurePso
-												.findPeakIncidentOverPressureWith(z))));
+												.findPeakIncidentOverPressureWith(z)),
+								colwidth, colhgt));
 
 		System.out
 				.println("***Plastic Check*** -  = "
 						+ EquivalentSDOFPlasticResponseUm.plasticCheckFinal(
-								EquivalentDurationTe
+								EquivalentDurationTrAlpha
 										.calculateEquivalentDurationWithIsAndPr(
-												ImpulseIs
+												ImpulseIralpha
 														.calculateImpulseIsUFCGraph(
 																PeakIncidentOverPressurePso
 																		.findPeakIncidentOverPressureWith(z),
@@ -506,7 +523,82 @@ public class BlastAssessmentApp {
 								ReflectedPressurePr.findReflectedPressureWith(
 										angle,
 										PeakIncidentOverPressurePso
-												.findPeakIncidentOverPressureWith(z))));
+												.findPeakIncidentOverPressureWith(z)),
+								colwidth, colhgt)
+						+ " Ductility Ratio = "
+						+ EquivalentSDOFPlasticResponseUm.peakResponseParameterPlastic(
+								EquivalentDurationTrAlpha
+										.calculateEquivalentDurationWithIsAndPr(
+												ImpulseIralpha
+														.calculateImpulseIsUFCGraph(
+																PeakIncidentOverPressurePso
+																		.findPeakIncidentOverPressureWith(z),
+																angle, w),
+												ReflectedPressurePr
+														.findReflectedPressureWith(
+																angle,
+																PeakIncidentOverPressurePso
+																		.findPeakIncidentOverPressureWith(z))),
+								EquivalentSDOFPropertiesPlastic.naturalPeriodSDOF(
+										EquivalentSDOFPropertiesPlastic
+												.massOfEquivSDOF(TotalActalMassM
+														.calculatingTotalActualMass(
+																colweight,
+																colhgt)),
+										EquivalentSDOFPropertiesPlastic
+												.stiffnessOfEquivSDOF(ActualStiffnessK
+														.calculateColumnActualStiffness(
+																e, i, colhgt))),
+								UltimateUnitResistance
+										.calculatingPlasticMoment(yield, zxx,
+												colhgt),
+								YieldDisplacementUy
+										.calculateYieldDisplacementUy(colhgt,
+												s, yield, e, i),
+								ReflectedPressurePr.findReflectedPressureWith(
+										angle,
+										PeakIncidentOverPressurePso
+												.findPeakIncidentOverPressureWith(z)),
+								colwidth, colhgt) + " < 3.0");
+
+		System.out
+				.println("End Rotation of Column (Degrees)  = "
+						+ EquivalentSDOFPlasticResponseUm.equivalentElastDeflection(
+								EquivalentDurationTrAlpha
+										.calculateEquivalentDurationWithIsAndPr(
+												ImpulseIralpha
+														.calculateImpulseIsUFCGraph(
+																PeakIncidentOverPressurePso
+																		.findPeakIncidentOverPressureWith(z),
+																angle, w),
+												ReflectedPressurePr
+														.findReflectedPressureWith(
+																angle,
+																PeakIncidentOverPressurePso
+																		.findPeakIncidentOverPressureWith(z))),
+								EquivalentSDOFPropertiesPlastic.naturalPeriodSDOF(
+										EquivalentSDOFPropertiesPlastic
+												.massOfEquivSDOF(TotalActalMassM
+														.calculatingTotalActualMass(
+																colweight,
+																colhgt)),
+										EquivalentSDOFPropertiesPlastic
+												.stiffnessOfEquivSDOF(ActualStiffnessK
+														.calculateColumnActualStiffness(
+																e, i, colhgt))),
+								UltimateUnitResistance
+										.calculatingPlasticMoment(yield, zxx,
+												colhgt),
+								YieldDisplacementUy
+										.calculateYieldDisplacementUy(colhgt,
+												s, yield, e, i),
+								ReflectedPressurePr.findReflectedPressureWith(
+										angle,
+										PeakIncidentOverPressurePso
+												.findPeakIncidentOverPressureWith(z)),
+								colwidth, colhgt, ActualStiffnessK
+										.calculateColumnActualStiffness(e, i,
+												colhgt)));
 
 	}
 
