@@ -7,6 +7,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import edu.mit.civil.beamassessment.calculation.beamChecks;
+import edu.mit.civil.beamassessment.calculation.beamDesignForces;
 import edu.mit.civil.blastassessment.calculation.ClearingTimeTc;
 import edu.mit.civil.blastassessment.calculation.EquivalentDurationTe;
 import edu.mit.civil.blastassessment.calculation.EquivalentDurationTrAlpha;
@@ -47,13 +49,16 @@ public class BlastAssessmentApp {
 			IOException {
 
 		// Weight of TNT Input
-		double w = collectInputWithLabel("Weight of explosive (TNT equiv, lbs)");
+		double w = collectInputWithLabel("Blast Details - Weight of explosive (TNT equiv, lbs)");
+
+		// Weight of TNT Input
+		double blastfact = collectInputWithLabel("Factor of Safety for Blast (UFC indicate a 20% increase, i.e. 1.2)");
 
 		// Standoff Distance from Target Column
-		double r = collectInputWithLabel("Standoff distance from target column (ft)");
+		double r = collectInputWithLabel("Blast Details - Standoff distance from target column (ft)");
 
 		// Angle of Incidence
-		int angle = (int) collectInputWithLabel("Angle of Incidence");
+		int angle = (int) collectInputWithLabel("Blast Details - Angle of Incidence");
 
 		// Building Height
 		double h = collectInputWithLabel("Building Height 'H' (ft)");
@@ -68,24 +73,94 @@ public class BlastAssessmentApp {
 		double yield = collectInputWithLabel("Steel Yield Strength (ksi)");
 
 		// Ixx
-		double i = collectInputWithLabel("Second Moment of Inertia 'I' (in^4)");
+		double i = collectInputWithLabel("Column Details - Second Moment of Inertia 'I' (in^4)");
 
 		// S - Section Modulus
-		double s = collectInputWithLabel("Section Modulous 'S' (in^3)");
+		double s = collectInputWithLabel("Column Details - Section Modulous 'S' (in^3)");
 
 		// Z - Plastic Modulus
-		double zxx = collectInputWithLabel("Plastic Section Modulus 'Z' (in^3)");
+		double zxx = collectInputWithLabel("Column Details - Plastic Section Modulus 'Z' (in^3)");
 
 		// Steel Section - Linear Weight
-		double colweight = collectInputWithLabel("Column Linear Weight (lbf/ft)");
+		double colweight = collectInputWithLabel("Column Details - Linear Weight (lbf/ft)");
 
 		// Width of section in perpendicular to the blast
-		double colwidth = collectInputWithLabel("Column width perpendicular to the blast (in)");
+		double colwidth = collectInputWithLabel("Column Details - width perpendicular to the blast (in)");
 
 		// Height of Column
-		double colhgt = collectInputWithLabel("Height of Column (ft)");
+		double colhgt = collectInputWithLabel("Column Details - Height (ft)");
 
-		double z = (double) ((r) / Math.pow(w, 0.33333));
+		// Number of Storys
+		double numstorys = collectInputWithLabel("Number of storys incl. 1st floor excl. roof");
+
+		// Span LHS
+		double spanlhs = collectInputWithLabel("Beam span, left hand side of target column (ft)");
+
+		// Span LHS
+		double spanrhs = collectInputWithLabel("Beam span, right hand side of target column (ft)");
+
+		// Tributary Width
+		double trib = collectInputWithLabel("Beam tributary width, perpindicular to beam span direction (ft)");
+
+		// Dead Load
+		double dead = collectInputWithLabel("Typical floor dead load (psf)");
+
+		// Live Load
+		double live = collectInputWithLabel("Typical floor live load (psf)");
+
+		// Roof Dead Load
+		double roofdead = collectInputWithLabel("Typical roof dead load (psf)");
+
+		// Roof Live Load
+		double rooflive = collectInputWithLabel("Typical roof live load (psf)");
+
+		// Dead Load Combination
+		double deadcombo = collectInputWithLabel("Dead Load Combination for Blast Assessment (Generally 1.2 or 1.1)");
+
+		// Live Load Combination
+		double livecombo = collectInputWithLabel("Live Load Combination for Blast Assessment (Generally 0.25 - 0.5)");
+
+		// Beam Axial
+		double beamaxial = collectInputWithLabel("Axial force in beam at time of explosion (i.e. trib area x 0.2Wind) - Kips");
+
+		// Beam Details : Flange Breadth
+		double bf = collectInputWithLabel("Beam Details - Breadth of Flange (in)");
+
+		// Beam Details : Beam Depth
+		double depth = collectInputWithLabel("Beam Details - Depth (in)");
+
+		// Beam Details : Flange thickness
+		double tf = collectInputWithLabel("Beam Details - Thickness of Flange (in)");
+
+		// Beam Details : Flange thickness
+		double tw = collectInputWithLabel("Beam Details - Thickness of Web (in)");
+
+		// Beam Details : Area
+		double beamarea = collectInputWithLabel("Beam Details - Cross Sectional Area (in^2)");
+
+		// Beam Details : Plastic Sectional Area Zx
+		double beamzx = collectInputWithLabel("Beam Details - Plastic Section Modulus 'Zx' (in^3)");
+
+		// // Beam Details : Plastic Sectional Area Zy
+		// double beamzy =
+		// collectInputWithLabel("Beam Details - Plastic Section Modulus 'Zy' (in^3)");
+
+		// Beam Details : Radius of Gyration rx
+		double beamrx = collectInputWithLabel("Beam Details - Radius of Gyration 'rx' (in)");
+
+		// Beam Details : Radius of Gyration ry
+		double beamry = collectInputWithLabel("Beam Details - Radius of Gyration 'ry' (in)");
+
+		// Beam Details : Effective Length Lx
+		double beamlx = collectInputWithLabel("Beam Details - Effective Length, Major Axis 'Lx' (ft)");
+
+		// Beam Details : Effective Length Ly
+		double beamly = collectInputWithLabel("Beam Details - Effective Length, Major Axis 'Ly' (ft)");
+
+		// Dynamic Amplification Factor
+		double daf = collectInputWithLabel("Dynamic Amplification Factor 'DAF' for static loads (approx. - 2.0)");
+
+		double z = (double) ((r) / Math.pow(w * blastfact, 0.33333));
 
 		System.out.println("Blast Analysis - Scaled Distance 'Z' " + z);
 
@@ -453,7 +528,7 @@ public class BlastAssessmentApp {
 								colwidth, colhgt));
 
 		System.out
-				.println("Plastic Parameter - Peak Response Parameter 'um'  = "
+				.println("Plastic Parameter - Max Ductility Ratio 'Xm/Xe'  = "
 						+ EquivalentSDOFPlasticResponseUm.peakResponseParameterPlastic(
 								EquivalentDurationTrAlpha
 										.calculateEquivalentDurationWithIsAndPr(
@@ -525,7 +600,7 @@ public class BlastAssessmentApp {
 										PeakIncidentOverPressurePso
 												.findPeakIncidentOverPressureWith(z)),
 								colwidth, colhgt)
-						+ " Ductility Ratio = "
+						+ ". Max Ductility Ratio Xm/Xe = "
 						+ EquivalentSDOFPlasticResponseUm.peakResponseParameterPlastic(
 								EquivalentDurationTrAlpha
 										.calculateEquivalentDurationWithIsAndPr(
@@ -559,7 +634,7 @@ public class BlastAssessmentApp {
 										angle,
 										PeakIncidentOverPressurePso
 												.findPeakIncidentOverPressureWith(z)),
-								colwidth, colhgt) + " < 3.0");
+								colwidth, colhgt));
 
 		System.out
 				.println("End Rotation of Column (Degrees)  = "
@@ -599,6 +674,68 @@ public class BlastAssessmentApp {
 								colwidth, colhgt, ActualStiffnessK
 										.calculateColumnActualStiffness(e, i,
 												colhgt)));
+
+		System.out.println("Max Shear with Column Removed = "
+				+ beamDesignForces.maxBeamShear(spanlhs, spanrhs, trib, dead,
+						live, roofdead, rooflive, daf, numstorys, deadcombo,
+						livecombo) + " Kips");
+
+		System.out.println("Max Bending Moment with Column Removed = "
+				+ beamDesignForces.maxBeamMoment(spanlhs, spanrhs, trib, dead,
+						live, roofdead, rooflive, daf, numstorys, deadcombo,
+						livecombo) + " Kip-ft");
+
+		System.out.println(beamChecks.localBucklingCheck(bf, tf));
+
+		System.out.println(beamChecks.localshearCheck(beamaxial, beamarea,
+				yield, bf, tf));
+
+		System.out.println(beamChecks.shearcheck(yield, tf, tw, depth,
+				beamDesignForces.maxBeamShear(spanlhs, spanrhs, trib, dead,
+						live, roofdead, rooflive, daf, numstorys, deadcombo,
+						livecombo)));
+
+		System.out.println("Ultimate Axial Compressive Load "
+				+ beamChecks.flexuralCheck(beamzx, beamlx, beamly, yield,
+						beamrx, beamry, e, beamarea) + " Kips");
+
+		System.out.println("Factor for determining Mmx with Mpx"
+				+ beamChecks.momentMmxFactor(beamzx, beamlx, beamly, yield,
+						beamrx, beamry, e, beamarea));
+
+		System.out.println(beamChecks.momentMmxCheck(beamzx, beamlx, beamly,
+				yield, beamrx, beamry, e, beamarea));
+
+		System.out.println("Ultimate Axial Compressive Load "
+				+ beamChecks.eulerBucklingStresses(e, beamlx, beamrx) + " Ksi");
+
+		System.out.println("Euler Buckling Load about X-Axis "
+				+ beamChecks.eulerBucklingLoads(e, beamlx, beamrx, beamarea)
+				+ " Kips");
+
+		System.out.println("Ultimate Capacity for Dynamic Axial Load "
+				+ beamChecks.ultCapacityForDynAxialLoadPp(yield, beamarea)
+				+ " Kips");
+
+		System.out.println("Combined Check One "
+				+ beamChecks.combinedChcekOne(beamzx, beamlx, beamly, yield,
+						beamrx, beamry, e, beamarea, beamaxial,
+						beamDesignForces.maxBeamMoment(spanlhs, spanrhs, trib,
+								dead, live, roofdead, rooflive, daf, numstorys,
+								deadcombo, livecombo)));
+
+		System.out.println("Combined Check Two "
+				+ beamChecks.combinedChcekTwo(beamzx, beamlx, beamly, yield,
+						beamrx, beamry, e, beamarea, beamaxial,
+						beamDesignForces.maxBeamMoment(spanlhs, spanrhs, trib,
+								dead, live, roofdead, rooflive, daf, numstorys,
+								deadcombo, livecombo)));
+
+		System.out.println(beamChecks.combinedChcekOnePassOrFail(beamzx,
+				beamlx, beamly, yield, beamrx, beamry, e, beamarea, beamaxial,
+				beamDesignForces.maxBeamMoment(spanlhs, spanrhs, trib, dead,
+						live, roofdead, rooflive, daf, numstorys, deadcombo,
+						livecombo)));
 
 	}
 
