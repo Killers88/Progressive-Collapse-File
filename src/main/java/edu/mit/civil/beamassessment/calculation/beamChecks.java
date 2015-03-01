@@ -13,11 +13,11 @@ public class beamChecks {
 
 		double buckle = bf / (2 * tf);
 
-		if (buckle < 7.5) {
+		if (buckle < 7.0) {
 
 			return "Section size is sufficient to prevent local buckling and enable plastic moment to be achieved";
 
-		} else if (buckle >= 7.5) {
+		} else if (buckle >= 7.0) {
 
 			return "Section size is insufficient to prevent local buckling occurring before plastic moment";
 

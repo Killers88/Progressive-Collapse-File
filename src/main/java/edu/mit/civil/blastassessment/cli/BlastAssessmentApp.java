@@ -33,6 +33,7 @@ import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFPlastic
 import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFPropertiesElastic;
 import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFPropertiesPlastic;
 import edu.mit.civil.columnassessment.elasticplasticchecks.UltimateUnitResistance;
+import edu.mit.civil.sapoutputfile.fem.SapTextFile;
 
 /**
  * @author koleary
@@ -92,6 +93,9 @@ public class BlastAssessmentApp {
 
 		// Number of Storys
 		double numstorys = collectInputWithLabel("Number of storys incl. 1st floor excl. roof");
+
+		// Number of bays
+		double bays = collectInputWithLabel("Total number of bays");
 
 		// Span LHS
 		double spanlhs = collectInputWithLabel("Beam span, left hand side of target column (ft)");
@@ -673,7 +677,7 @@ public class BlastAssessmentApp {
 												.findPeakIncidentOverPressureWith(z)),
 								colwidth, colhgt, ActualStiffnessK
 										.calculateColumnActualStiffness(e, i,
-												colhgt)));
+												colhgt)) + " degrees");
 
 		System.out.println("Max Shear with Column Removed = "
 				+ beamDesignForces.maxBeamShear(spanlhs, spanrhs, trib, dead,
@@ -736,6 +740,9 @@ public class BlastAssessmentApp {
 				beamDesignForces.maxBeamMoment(spanlhs, spanrhs, trib, dead,
 						live, roofdead, rooflive, daf, numstorys, deadcombo,
 						livecombo)));
+
+		System.out.println(SapTextFile.sapFile(numstorys, bays, colhgt, width,
+				live, dead, trib));
 
 	}
 
