@@ -741,8 +741,8 @@ public class BlastAssessmentApp {
 						live, roofdead, rooflive, daf, numstorys, deadcombo,
 						livecombo)));
 
-		System.out.println(SapTextFile.sapFile(numstorys, bays, colhgt, width,
-				live, dead, trib));
+		System.out.println(SapTextFile.sapFile((int) numstorys, bays, colhgt,
+				width, live, dead, trib));
 
 	}
 
