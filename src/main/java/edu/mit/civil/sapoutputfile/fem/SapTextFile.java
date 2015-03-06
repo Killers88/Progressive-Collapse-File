@@ -18,6 +18,9 @@ public class SapTextFile {
 
 		double width = width1;
 
+		double live1 = live / 1000;
+		double sdl1 = sdl / 1000;
+
 		try {
 			String filePath = "///Users/koleary/Desktop/SAP_Import_File.txt";
 
@@ -457,6 +460,7 @@ public class SapTextFile {
 			pw.println("   Case=COL_CANCEL   Type=LinStatic   InitialCond=Zero   RunCase=Yes");
 			pw.println("   Case=NLD_PC   Type=NonDirHist   InitialCond=NLS_PC   RunCase=Yes");
 			pw.println("   Case=NLS_PC   Type=NonStatic   InitialCond=Zero   RunCase=Yes");
+			pw.println("   Case=Col_Equiv_Check   Type=LinStatic   InitialCond=Zero   RunCase=Yes");
 
 			/*
 			 * LOAD ASSIGNMENTS
@@ -473,7 +477,11 @@ public class SapTextFile {
 			pw.println("   Case=NLS_PC   LoadType=\"Load case\"   LoadName=SDL   LoadSF=1.2");
 			// pw.println("   Case=NLS_PC   LoadType=\"Load case\"   LoadName=SDL_R   LoadSF=1.2");
 			pw.println("   Case=NLS_PC   LoadType=\"Load case\"   LoadName=LL   LoadSF=0.5");
-			pw.println("   Case=NLS_PC   LoadType=\"Load case\"   LoadName=LR   LoadSF=0.5");
+			// pw.println("   Case=NLS_PC   LoadType=\"Load case\"   LoadName=LR   LoadSF=0.5");
+			pw.println("   Case=NLS_PC   LoadType=\"Load case\"   LoadName=COL_EQUIV   LoadSF=1.0");
+			pw.println("   Case=Col_Equiv_Check   LoadType=\"Load case\"   LoadName=DEAD  LoadSF=1.2");
+			pw.println("   Case=Col_Equiv_Check   LoadType=\"Load case\"   LoadName=SDL  LoadSF=1.2");
+			pw.println("   Case=Col_Equiv_Check   LoadType=\"Load case\"   LoadName=LL  LoadSF=0.5");
 
 			/*
 			 * NON LINEAR DATA
@@ -872,13 +880,13 @@ public class SapTextFile {
 				pw.println("Frame="
 						+ dd
 						+ "   LoadCase=LL   CoordSys=GLOBAL   Type=Force   Dir=Gravity   DistType=RelDist   RelDistA=0   RelDistB=1   AbsDistA=0   AbsDistB=24   FOverLA="
-						+ live * loadwidth + "   FOverLB=" + live * loadwidth
+						+ live1 * loadwidth + "   FOverLB=" + live1 * loadwidth
 						+ "");
 
 				pw.println("   Frame="
 						+ dd
 						+ "    LoadCase=SDL   CoordSys=GLOBAL   Type=Force   Dir=Gravity   DistType=RelDist   RelDistA=0   RelDistB=1   AbsDistA=0   AbsDistB=24   FOverLA="
-						+ sdl * loadwidth + "   FOverLB=" + sdl * loadwidth
+						+ sdl1 * loadwidth + "   FOverLB=" + sdl1 * loadwidth
 						+ "");
 
 			}
