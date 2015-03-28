@@ -35,8 +35,26 @@ public class EquivalentSDOFElasticResponseUm {
 		graph.put((double) 0.18, (double) 0.533333333);
 		graph.put((double) 0.19, (double) 0.566666667);
 		graph.put((double) 0.2, (double) 0.6);
-		graph.put((double) 0.3, (double) 0.875);
-		graph.put((double) 0.4, (double) 1.05);
+		graph.put((double) 0.21, (double) 0.625);
+		graph.put((double) 0.22, (double) 0.65);
+		graph.put((double) 0.23, (double) 0.675);
+		graph.put((double) 0.24, (double) 0.7);
+		graph.put((double) 0.25, (double) 0.725);
+		graph.put((double) 0.26, (double) 0.75);
+		graph.put((double) 0.27, (double) 0.775);
+		graph.put((double) 0.28, (double) 0.8);
+		graph.put((double) 0.29, (double) 0.825);
+		graph.put((double) 0.3, (double) 0.85);
+		graph.put((double) 0.31, (double) 0.87125);
+		graph.put((double) 0.32, (double) 0.8925);
+		graph.put((double) 0.33, (double) 0.91375);
+		graph.put((double) 0.34, (double) 0.935);
+		graph.put((double) 0.35, (double) 0.95625);
+		graph.put((double) 0.36, (double) 0.9775);
+		graph.put((double) 0.37, (double) 0.99875);
+		graph.put((double) 0.38, (double) 1.02);
+		graph.put((double) 0.39, (double) 1.04125);
+		graph.put((double) 0.4, (double) 1.0625);
 		graph.put((double) 0.5, (double) 1.1875);
 		graph.put((double) 0.6, (double) 1.275);
 		graph.put((double) 0.7, (double) 1.325);
@@ -74,12 +92,12 @@ public class EquivalentSDOFElasticResponseUm {
 
 	public static double findPeakResponseParameter(final double x) {
 
-		if ((x > 0) && (x <= 0.19)) {
+		if ((x > 0) && (x <= 0.39)) {
 			// http://stackoverflow.com/questions/5419123/how-to-round-a-float-to-the-nearest-quarter
 			float coeff = 100f;
 			double nearestValue = (Math.round(x * coeff) / 100.0);
 			return (graph.get(nearestValue));
-		} else if ((x > 0.19) && (x <= 2.9)) {
+		} else if ((x > 0.39) && (x <= 2.9)) {
 			float coeff = 10f;
 			double nearestValue = (Math.round(x * coeff) / 10.0);
 			return (graph.get(nearestValue));

@@ -37,38 +37,343 @@ public class EquivalentSDOFPlasticResponseUm {
 
 		double tDivideTn = (te / 1000) / tn;
 
-		if (graphinput < 0.15) {
+		if ((graphinput > 0.099) && (graphinput <= 0.105)) {
 			graph.put((double) 0.1, (double) 5.5);
+			graph.put((double) 0.11, (double) 6);
+			graph.put((double) 0.12, (double) 7);
+			graph.put((double) 0.13, (double) 8);
+			graph.put((double) 0.14, (double) 9);
 			graph.put((double) 0.15, (double) 10);
+			graph.put((double) 0.16, (double) 12);
+			graph.put((double) 0.17, (double) 14);
+			graph.put((double) 0.18, (double) 16);
+			graph.put((double) 0.19, (double) 17);
 			graph.put((double) 0.2, (double) 19);
-			graph.put((double) 0.25, (double) 28);
-			graph.put((double) 0.3, (double) 40);
-			graph.put((double) 0.35, (double) 56);
-			graph.put((double) 0.4, (double) 70);
-			graph.put((double) 0.45, (double) 90);
 
-			if ((tDivideTn > 0.1) && (tDivideTn <= 1.0)) {
-				float coeff = 20f;
-				double nearestValue = (Math.round(tDivideTn * coeff) / 20.0);
+			if ((tDivideTn > 0.09) && (tDivideTn <= 0.2)) {
+				float coeff = 100f;
+				double nearestValue = (Math.round(tDivideTn * coeff) / 100.0);
 				return (graph.get(nearestValue));
 
-			} else if ((tDivideTn >= 1.0) && (tDivideTn <= 3.0)) {
-				float coeff = 10f;
-				double nearestValue = (Math.round(tDivideTn * coeff) / 10.0);
-				return (graph.get(nearestValue));
-			} else if ((tDivideTn >= 3.0) && (tDivideTn <= 7.0)) {
-				float coeff = 4f;
-				double nearestValue = (Math.round(tDivideTn * coeff) / 4.0);
-				return (graph.get(nearestValue));
-			} else if ((tDivideTn >= 7.0) && (tDivideTn <= 20.0)) {
-				float coeff = 1f;
-				double nearestValue = (Math.round(tDivideTn * coeff) / 1.0);
-				return (graph.get(nearestValue));
+			} else if (tDivideTn > 0.2) {
+
+				System.exit(0);
+
+				return tDivideTn;
 			}
 
-			throw new RuntimeException(
-					"Review T/Tn & ru/P. Review Values Above");
-		} else if ((graphinput > 0.15) && (graphinput <= 0.25)) {
+		} else if ((graphinput > 0.105) && (graphinput <= 0.115)) {
+
+			graph.put((double) 0.1, (double) 5);
+			graph.put((double) 0.11, (double) 5.5);
+			graph.put((double) 0.12, (double) 6);
+			graph.put((double) 0.13, (double) 7);
+			graph.put((double) 0.14, (double) 7.6);
+			graph.put((double) 0.15, (double) 9);
+			graph.put((double) 0.16, (double) 10);
+			graph.put((double) 0.17, (double) 11.5);
+			graph.put((double) 0.18, (double) 13);
+			graph.put((double) 0.19, (double) 15);
+			graph.put((double) 0.2, (double) 17);
+			graph.put((double) 0.25, (double) 100);
+			graph.put((double) 0.3, (double) 100);
+			graph.put((double) 0.35, (double) 100);
+			graph.put((double) 0.4, (double) 100);
+			graph.put((double) 0.45, (double) 100);
+
+			if ((tDivideTn > 0.09) && (tDivideTn <= 0.2)) {
+				float coeff = 100f;
+				double nearestValue = (Math.round(tDivideTn * coeff) / 100.0);
+				return (graph.get(nearestValue));
+
+			} else if (tDivideTn > 0.2) {
+
+				System.exit(0);
+
+				return tDivideTn;
+
+			}
+		} else if ((graphinput > 0.115) && (graphinput <= 0.125)) {
+
+			graph.put((double) 0.1, (double) 4.5);
+			graph.put((double) 0.11, (double) 5);
+			graph.put((double) 0.12, (double) 5.5);
+			graph.put((double) 0.13, (double) 6);
+			graph.put((double) 0.14, (double) 7);
+			graph.put((double) 0.15, (double) 8);
+			graph.put((double) 0.16, (double) 8.5);
+			graph.put((double) 0.17, (double) 10);
+			graph.put((double) 0.18, (double) 11);
+			graph.put((double) 0.19, (double) 12.5);
+			graph.put((double) 0.2, (double) 15);
+			graph.put((double) 0.25, (double) 100);
+			graph.put((double) 0.3, (double) 100);
+			graph.put((double) 0.35, (double) 100);
+			graph.put((double) 0.4, (double) 100);
+			graph.put((double) 0.45, (double) 100);
+
+			if ((tDivideTn > 0.09) && (tDivideTn <= 0.2)) {
+				float coeff = 100f;
+				double nearestValue = (Math.round(tDivideTn * coeff) / 100.0);
+				return (graph.get(nearestValue));
+
+			} else if (tDivideTn > 0.2) {
+
+				System.exit(0);
+
+				return tDivideTn;
+
+			}
+		} else if ((graphinput > 0.125) && (graphinput <= 0.135)) {
+
+			graph.put((double) 0.1, (double) 4);
+			graph.put((double) 0.11, (double) 4.5);
+			graph.put((double) 0.12, (double) 5);
+			graph.put((double) 0.13, (double) 5.5);
+			graph.put((double) 0.14, (double) 6);
+			graph.put((double) 0.15, (double) 7);
+			graph.put((double) 0.16, (double) 7.8);
+			graph.put((double) 0.17, (double) 8.5);
+			graph.put((double) 0.18, (double) 9.5);
+			graph.put((double) 0.19, (double) 11);
+			graph.put((double) 0.2, (double) 13);
+			graph.put((double) 0.25, (double) 100);
+			graph.put((double) 0.3, (double) 100);
+			graph.put((double) 0.35, (double) 100);
+			graph.put((double) 0.4, (double) 100);
+			graph.put((double) 0.45, (double) 100);
+
+			if ((tDivideTn > 0.09) && (tDivideTn <= 0.2)) {
+				float coeff = 100f;
+				double nearestValue = (Math.round(tDivideTn * coeff) / 100.0);
+				return (graph.get(nearestValue));
+
+			} else if (tDivideTn > 0.2) {
+
+				System.exit(0);
+
+				return tDivideTn;
+
+			}
+		} else if ((graphinput > 0.135) && (graphinput <= 0.145)) {
+
+			graph.put((double) 0.1, (double) 3.6);
+			graph.put((double) 0.11, (double) 4);
+			graph.put((double) 0.12, (double) 4.5);
+			graph.put((double) 0.13, (double) 5);
+			graph.put((double) 0.14, (double) 5.5);
+			graph.put((double) 0.15, (double) 6.3);
+			graph.put((double) 0.16, (double) 7);
+			graph.put((double) 0.17, (double) 7.5);
+			graph.put((double) 0.18, (double) 8.5);
+			graph.put((double) 0.19, (double) 9.5);
+			graph.put((double) 0.2, (double) 10.5);
+			graph.put((double) 0.25, (double) 100);
+			graph.put((double) 0.3, (double) 100);
+			graph.put((double) 0.35, (double) 100);
+			graph.put((double) 0.4, (double) 100);
+			graph.put((double) 0.45, (double) 100);
+
+			if ((tDivideTn > 0.09) && (tDivideTn <= 0.2)) {
+				float coeff = 100f;
+				double nearestValue = (Math.round(tDivideTn * coeff) / 100.0);
+				return (graph.get(nearestValue));
+
+			} else if (tDivideTn > 0.2) {
+
+				System.exit(0);
+
+				return tDivideTn;
+
+			}
+		} else if ((graphinput > 0.145) && (graphinput <= 0.155)) {
+
+			graph.put((double) 0.1, (double) 3);
+			graph.put((double) 0.11, (double) 3.5);
+			graph.put((double) 0.12, (double) 4);
+			graph.put((double) 0.13, (double) 4.3);
+			graph.put((double) 0.14, (double) 4.8);
+			graph.put((double) 0.15, (double) 5.5);
+			graph.put((double) 0.16, (double) 6);
+			graph.put((double) 0.17, (double) 7);
+			graph.put((double) 0.18, (double) 7.6);
+			graph.put((double) 0.19, (double) 8.6);
+			graph.put((double) 0.2, (double) 9.6);
+			graph.put((double) 0.25, (double) 100);
+			graph.put((double) 0.3, (double) 100);
+			graph.put((double) 0.35, (double) 100);
+			graph.put((double) 0.4, (double) 100);
+			graph.put((double) 0.45, (double) 100);
+
+			if ((tDivideTn > 0.09) && (tDivideTn <= 0.2)) {
+				float coeff = 100f;
+				double nearestValue = (Math.round(tDivideTn * coeff) / 100.0);
+				return (graph.get(nearestValue));
+
+			} else if (tDivideTn > 0.2) {
+
+				System.exit(0);
+
+				return tDivideTn;
+
+			}
+		} else if ((graphinput > 0.155) && (graphinput <= 0.165)) {
+
+			graph.put((double) 0.1, (double) 2.8);
+			graph.put((double) 0.11, (double) 3);
+			graph.put((double) 0.12, (double) 3.5);
+			graph.put((double) 0.13, (double) 3.8);
+			graph.put((double) 0.14, (double) 4.2);
+			graph.put((double) 0.15, (double) 4.7);
+			graph.put((double) 0.16, (double) 5.3);
+			graph.put((double) 0.17, (double) 6);
+			graph.put((double) 0.18, (double) 6.6);
+			graph.put((double) 0.19, (double) 7.5);
+			graph.put((double) 0.2, (double) 8.5);
+			graph.put((double) 0.25, (double) 100);
+			graph.put((double) 0.3, (double) 100);
+			graph.put((double) 0.35, (double) 100);
+			graph.put((double) 0.4, (double) 100);
+			graph.put((double) 0.45, (double) 100);
+
+			if ((tDivideTn > 0.09) && (tDivideTn <= 0.2)) {
+				float coeff = 100f;
+				double nearestValue = (Math.round(tDivideTn * coeff) / 100.0);
+				return (graph.get(nearestValue));
+
+			} else if (tDivideTn > 0.2) {
+
+				System.exit(0);
+
+				return tDivideTn;
+
+			}
+		} else if ((graphinput > 0.165) && (graphinput <= 0.175)) {
+
+			graph.put((double) 0.1, (double) 2.5);
+			graph.put((double) 0.11, (double) 2.7);
+			graph.put((double) 0.12, (double) 3);
+			graph.put((double) 0.13, (double) 3.4);
+			graph.put((double) 0.14, (double) 3.8);
+			graph.put((double) 0.15, (double) 4.1);
+			graph.put((double) 0.16, (double) 4.5);
+			graph.put((double) 0.17, (double) 5);
+			graph.put((double) 0.18, (double) 5.5);
+			graph.put((double) 0.19, (double) 6.5);
+			graph.put((double) 0.2, (double) 7.5);
+			graph.put((double) 0.25, (double) 100);
+			graph.put((double) 0.3, (double) 100);
+			graph.put((double) 0.35, (double) 100);
+			graph.put((double) 0.4, (double) 100);
+			graph.put((double) 0.45, (double) 100);
+
+			if ((tDivideTn > 0.09) && (tDivideTn <= 0.2)) {
+				float coeff = 100f;
+				double nearestValue = (Math.round(tDivideTn * coeff) / 100.0);
+				return (graph.get(nearestValue));
+
+			} else if (tDivideTn > 0.2) {
+
+				System.exit(0);
+
+				return tDivideTn;
+
+			}
+		} else if ((graphinput > 0.175) && (graphinput <= 0.185)) {
+
+			graph.put((double) 0.1, (double) 2.25);
+			graph.put((double) 0.11, (double) 2.5);
+			graph.put((double) 0.12, (double) 2.8);
+			graph.put((double) 0.13, (double) 3);
+			graph.put((double) 0.14, (double) 3.4);
+			graph.put((double) 0.15, (double) 3.8);
+			graph.put((double) 0.16, (double) 4.2);
+			graph.put((double) 0.17, (double) 4.6);
+			graph.put((double) 0.18, (double) 5);
+			graph.put((double) 0.19, (double) 5.8);
+			graph.put((double) 0.2, (double) 6.5);
+			graph.put((double) 0.25, (double) 100);
+			graph.put((double) 0.3, (double) 100);
+			graph.put((double) 0.35, (double) 100);
+			graph.put((double) 0.4, (double) 100);
+			graph.put((double) 0.45, (double) 100);
+
+			if ((tDivideTn > 0.09) && (tDivideTn <= 0.2)) {
+				float coeff = 100f;
+				double nearestValue = (Math.round(tDivideTn * coeff) / 100.0);
+				return (graph.get(nearestValue));
+
+			} else if (tDivideTn > 0.2) {
+
+				System.exit(0);
+
+				return tDivideTn;
+
+			}
+		} else if ((graphinput > 0.185) && (graphinput <= 0.195)) {
+
+			graph.put((double) 0.1, (double) 2);
+			graph.put((double) 0.11, (double) 2.3);
+			graph.put((double) 0.12, (double) 2.6);
+			graph.put((double) 0.13, (double) 2.8);
+			graph.put((double) 0.14, (double) 3);
+			graph.put((double) 0.15, (double) 3.4);
+			graph.put((double) 0.16, (double) 3.8);
+			graph.put((double) 0.17, (double) 4.2);
+			graph.put((double) 0.18, (double) 4.6);
+			graph.put((double) 0.19, (double) 5.2);
+			graph.put((double) 0.2, (double) 5.6);
+			graph.put((double) 0.25, (double) 100);
+			graph.put((double) 0.3, (double) 100);
+			graph.put((double) 0.35, (double) 100);
+			graph.put((double) 0.4, (double) 100);
+			graph.put((double) 0.45, (double) 100);
+
+			if ((tDivideTn > 0.09) && (tDivideTn <= 0.2)) {
+				float coeff = 100f;
+				double nearestValue = (Math.round(tDivideTn * coeff) / 100.0);
+				return (graph.get(nearestValue));
+
+			} else if (tDivideTn > 0.2) {
+
+				System.exit(0);
+
+				return tDivideTn;
+
+			}
+		} else if ((graphinput > 0.195) && (graphinput <= 0.195)) {
+
+			graph.put((double) 0.1, (double) 1.8);
+			graph.put((double) 0.11, (double) 2);
+			graph.put((double) 0.12, (double) 2.15);
+			graph.put((double) 0.13, (double) 2.3);
+			graph.put((double) 0.14, (double) 2.6);
+			graph.put((double) 0.15, (double) 3);
+			graph.put((double) 0.16, (double) 3.3);
+			graph.put((double) 0.17, (double) 3.6);
+			graph.put((double) 0.18, (double) 4);
+			graph.put((double) 0.19, (double) 4.5);
+			graph.put((double) 0.2, (double) 5);
+			graph.put((double) 0.25, (double) 100);
+			graph.put((double) 0.3, (double) 100);
+			graph.put((double) 0.35, (double) 100);
+			graph.put((double) 0.4, (double) 100);
+			graph.put((double) 0.45, (double) 100);
+
+			if ((tDivideTn > 0.09) && (tDivideTn <= 0.2)) {
+				float coeff = 100f;
+				double nearestValue = (Math.round(tDivideTn * coeff) / 100.0);
+				return (graph.get(nearestValue));
+
+			} else if (tDivideTn > 0.2) {
+
+				System.exit(0);
+
+				return tDivideTn;
+
+			}
+		} else if ((graphinput > 0.195) && (graphinput <= 0.25)) {
+
 			graph.put((double) 0.1, (double) 1.75);
 			graph.put((double) 0.15, (double) 3);
 			graph.put((double) 0.2, (double) 5);
@@ -108,7 +413,6 @@ public class EquivalentSDOFPlasticResponseUm {
 				return (graph.get(nearestValue));
 			}
 
-			throw new RuntimeException("Review T/Tn & ru/P");
 		} else if ((graphinput > 0.25) && (graphinput < 0.35)) {
 			graph.put((double) 0.1, (double) 1.1);
 			graph.put((double) 0.15, (double) 1.65);
@@ -156,7 +460,6 @@ public class EquivalentSDOFPlasticResponseUm {
 				return (graph.get(nearestValue));
 			}
 
-			throw new RuntimeException("Review T/Tn & ru/P");
 		} else if ((graphinput > 0.35) && (graphinput <= 0.45)) {
 			graph.put((double) 0.1, (double) 0.79);
 			graph.put((double) 0.15, (double) 1.15);
@@ -1310,25 +1613,6 @@ public class EquivalentSDOFPlasticResponseUm {
 
 	}
 
-	public static String plasticCheckFinal(final double te, final double tn,
-			final double ru, final double uy, final double pr,
-			final double width, final double colhgt) {
-
-		double x = peakResponseParameterPlastic(te, tn, ru, uy, pr, width,
-				colhgt);
-
-		if ((x <= 3.0)) {
-
-			return "Column WITHIN Maximum Ductility Ratio";
-
-		} else {
-
-			return "EXCEEDS Plastic limits, Re-Design or Structure Assessment is required";
-
-		}
-
-	}
-
 	public static double equivalentElastDeflection(final double te,
 			final double tn, final double ru, final double uy, final double pr,
 			final double width, final double colhgt, final double k) {
@@ -1341,5 +1625,39 @@ public class EquivalentSDOFPlasticResponseUm {
 		double xm = ductratio * xe;
 
 		return ((Math.atan(((2 * xm) / colhgt))) * 180) / Math.PI;
+	}
+
+	public static String plasticCheckFinal(final double te, final double tn,
+			final double ru, final double uy, final double pr,
+			final double width, final double colhgt, final double mu) {
+
+		double du = peakResponseParameterPlastic(te, tn, ru, uy, pr, width,
+				colhgt);
+
+		if (du <= mu) {
+
+			return "Column WITHIN Maximum Ductility Ratio";
+
+		} else if (du > mu) {
+
+			return "EXCEEDS Plastic limits, Re-Design or Structure Assessment is required";
+
+		}
+		return "ERROR";
+
+	}
+
+	public static String programCheck(final double te, final double tn,
+			final double ru, final double uy, final double pr,
+			final double width, final double colhgt, final double mu) {
+
+		double x = peakResponseParameterPlastic(te, tn, ru, uy, pr, width,
+				colhgt);
+
+		if ((x <= mu)) {
+
+			System.exit(0);
+		}
+		return "Finish";
 	}
 }

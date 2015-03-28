@@ -20,6 +20,6 @@ public class UltimateUnitResistance {
 		double mp = (Dynamic_Increase_Factor * Strength_Increase_Factor * fyi * z)
 				/ In_TO_Feet;
 
-		return CONSTANT_A * mp / colheight;
+		return CONSTANT_A * mp / (colheight);
 	}
 }

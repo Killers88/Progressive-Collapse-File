@@ -10,16 +10,12 @@ import java.io.InputStreamReader;
 import edu.mit.civil.beamassessment.calculation.beamChecks;
 import edu.mit.civil.beamassessment.calculation.beamDesignForces;
 import edu.mit.civil.blastassessment.calculation.ClearingTimeTc;
-import edu.mit.civil.blastassessment.calculation.EquivalentDurationTe;
 import edu.mit.civil.blastassessment.calculation.EquivalentDurationTrAlpha;
 import edu.mit.civil.blastassessment.calculation.ImpulseIralpha;
-import edu.mit.civil.blastassessment.calculation.ImpulseIs;
-import edu.mit.civil.blastassessment.calculation.PeakDynamicPressureQo;
 import edu.mit.civil.blastassessment.calculation.PeakIncidentOverPressurePso;
 import edu.mit.civil.blastassessment.calculation.PositivePhaseDurationTo;
 import edu.mit.civil.blastassessment.calculation.ReflectedPressurePr;
 import edu.mit.civil.blastassessment.calculation.SoundVelocityCr;
-import edu.mit.civil.blastassessment.calculation.StagnationPressurePs;
 import edu.mit.civil.blastassessment.calculation.WaveLengthLw;
 import edu.mit.civil.columnassessment.calculation.ActualStiffnessK;
 import edu.mit.civil.columnassessment.calculation.AppliedLoadingToColumnQ;
@@ -33,6 +29,9 @@ import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFPlastic
 import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFPropertiesElastic;
 import edu.mit.civil.columnassessment.elasticplasticchecks.EquivalentSDOFPropertiesPlastic;
 import edu.mit.civil.columnassessment.elasticplasticchecks.UltimateUnitResistance;
+import edu.mit.civil.memberdesign.calculation.beamDesign;
+import edu.mit.civil.memberdesign.calculation.externalColumnForcesandDesign;
+import edu.mit.civil.memberdesign.calculation.internalColumnForcesAndDesign;
 import edu.mit.civil.sapoutputfile.fem.SapTextFile;
 
 /**
@@ -49,122 +48,90 @@ public class BlastAssessmentApp {
 	public static void main(String[] args) throws NumberFormatException,
 			IOException {
 
-		// Weight of TNT Input
-		double w = collectInputWithLabel("Blast Details - Weight of explosive (TNT equiv, lbs)");
+		/**
+		 * INPUT CRITERIA FROM SPREADSHEET
+		 */
+		String heading = "TrialA_FIXER";
 
-		// Weight of TNT Input
-		double blastfact = collectInputWithLabel("Factor of Safety for Blast (UFC indicate a 20% increase, i.e. 1.2)");
+		int targetcol = 3; // Target Column - From LHS of building
 
-		// Standoff Distance from Target Column
-		double r = collectInputWithLabel("Blast Details - Standoff distance from target column (ft)");
+		double w = 2000;
 
-		// Angle of Incidence
-		int angle = (int) collectInputWithLabel("Blast Details - Angle of Incidence");
+		double blastfact = 1.0;
 
-		// Building Height
-		double h = collectInputWithLabel("Building Height 'H' (ft)");
+		double r = 30;
 
-		// Building Width
-		double width = collectInputWithLabel("Building Width 'W' (ft))");
+		int angle = 20;
 
-		// Steel Modulus
-		double e = collectInputWithLabel("Youngs Modulous 'E' (ksi)");
+		double h = 72;
 
-		// Yield Stress
-		double yield = collectInputWithLabel("Steel Yield Strength (ksi)");
+		double width = 130;
 
-		// Ixx
-		double i = collectInputWithLabel("Column Details - Second Moment of Inertia 'I' (in^4)");
+		double e = 29000;
 
-		// S - Section Modulus
-		double s = collectInputWithLabel("Column Details - Section Modulous 'S' (in^3)");
+		double yield = 50;
 
-		// Z - Plastic Modulus
-		double zxx = collectInputWithLabel("Column Details - Plastic Section Modulus 'Z' (in^3)");
+		double i = 795;
 
-		// Steel Section - Linear Weight
-		double colweight = collectInputWithLabel("Column Details - Linear Weight (lbf/ft)");
+		double s = 112;
 
-		// Width of section in perpendicular to the blast
-		double colwidth = collectInputWithLabel("Column Details - width perpendicular to the blast (in)");
+		double zxx = 126;
 
-		// Height of Column
-		double colhgt = collectInputWithLabel("Column Details - Height (ft)");
+		double colweight = 74.0;
 
-		// Number of Storys
-		double numstorys = collectInputWithLabel("Number of storys incl. 1st floor excl. roof");
+		double colwidth = 10.1;
 
-		// Number of bays
-		double bays = collectInputWithLabel("Total number of bays");
+		double colhgt = 12;
 
-		// Span LHS
-		double spanlhs = collectInputWithLabel("Beam span, left hand side of target column (ft)");
+		int numstorys = 12;
 
-		// Span LHS
-		double spanrhs = collectInputWithLabel("Beam span, right hand side of target column (ft)");
+		double bays = 5;
 
-		// Tributary Width
-		double trib = collectInputWithLabel("Beam tributary width, perpindicular to beam span direction (ft)");
+		double span = 25;
 
-		// Dead Load
-		double dead = collectInputWithLabel("Typical floor dead load (psf)");
+		double trib = 20;
 
-		// Live Load
-		double live = collectInputWithLabel("Typical floor live load (psf)");
+		double dead = 120;
 
-		// Roof Dead Load
-		double roofdead = collectInputWithLabel("Typical roof dead load (psf)");
+		double live = 90;
 
-		// Roof Live Load
-		double rooflive = collectInputWithLabel("Typical roof live load (psf)");
+		double deadcombo = 1.1;
 
-		// Dead Load Combination
-		double deadcombo = collectInputWithLabel("Dead Load Combination for Blast Assessment (Generally 1.2 or 1.1)");
+		double livecombo = 0.25;
 
-		// Live Load Combination
-		double livecombo = collectInputWithLabel("Live Load Combination for Blast Assessment (Generally 0.25 - 0.5)");
+		double beamaxial = 10;
 
-		// Beam Axial
-		double beamaxial = collectInputWithLabel("Axial force in beam at time of explosion (i.e. trib area x 0.2Wind) - Kips");
+		double bf = 12;
 
-		// Beam Details : Flange Breadth
-		double bf = collectInputWithLabel("Beam Details - Breadth of Flange (in)");
+		double depth = 12.3;
 
-		// Beam Details : Beam Depth
-		double depth = collectInputWithLabel("Beam Details - Depth (in)");
+		double tf = 0.67;
 
-		// Beam Details : Flange thickness
-		double tf = collectInputWithLabel("Beam Details - Thickness of Flange (in)");
+		double tw = 0.43;
 
-		// Beam Details : Flange thickness
-		double tw = collectInputWithLabel("Beam Details - Thickness of Web (in)");
+		double beamarea = 21.1;
 
-		// Beam Details : Area
-		double beamarea = collectInputWithLabel("Beam Details - Cross Sectional Area (in^2)");
+		double beamzx = 108;
 
-		// Beam Details : Plastic Sectional Area Zx
-		double beamzx = collectInputWithLabel("Beam Details - Plastic Section Modulus 'Zx' (in^3)");
+		double beamrx = 5.31;
 
-		// // Beam Details : Plastic Sectional Area Zy
-		// double beamzy =
-		// collectInputWithLabel("Beam Details - Plastic Section Modulus 'Zy' (in^3)");
+		double beamry = 3.04;
 
-		// Beam Details : Radius of Gyration rx
-		double beamrx = collectInputWithLabel("Beam Details - Radius of Gyration 'rx' (in)");
+		double beamlx = 25;
 
-		// Beam Details : Radius of Gyration ry
-		double beamry = collectInputWithLabel("Beam Details - Radius of Gyration 'ry' (in)");
+		double beamly = 5;
 
-		// Beam Details : Effective Length Lx
-		double beamlx = collectInputWithLabel("Beam Details - Effective Length, Major Axis 'Lx' (ft)");
+		double daf = 2;
 
-		// Beam Details : Effective Length Ly
-		double beamly = collectInputWithLabel("Beam Details - Effective Length, Major Axis 'Ly' (ft)");
+		double mu = 1;
 
-		// Dynamic Amplification Factor
-		double daf = collectInputWithLabel("Dynamic Amplification Factor 'DAF' for static loads (approx. - 2.0)");
+		double k = 1;
+
+		double factCOMP = 1.7;
 
 		double z = (double) ((r) / Math.pow(w * blastfact, 0.33333));
+
+		System.out.println("BLAST ANALYSIS:");
 
 		System.out.println("Blast Analysis - Scaled Distance 'Z' " + z);
 
@@ -172,17 +139,17 @@ public class BlastAssessmentApp {
 				+ PeakIncidentOverPressurePso
 						.findPeakIncidentOverPressureWith(z) + " psi");
 
-		System.out.println("Blast Analysis - Peak Dynamic Pressure 'qo' = "
-				+ PeakDynamicPressureQo
-						.calculatQoWithPso(PeakIncidentOverPressurePso
-								.findPeakIncidentOverPressureWith(z)) + " psi");
+		// System.out.println("Blast Analysis - Peak Dynamic Pressure 'qo' = "
+		// + PeakDynamicPressureQo
+		// .calculatQoWithPso(PeakIncidentOverPressurePso
+		// .findPeakIncidentOverPressureWith(z)) + " psi");
+		//
+		// System.out.println("Blast Analysis - Sound Velocity 'Cr' = "
+		// + SoundVelocityCr.caculateCrWithPso(PeakIncidentOverPressurePso
+		// .findPeakIncidentOverPressureWith(z)) + " psi");
 
-		System.out.println("Blast Analysis - Sound Velocity 'Cr' = "
-				+ SoundVelocityCr.caculateCrWithPso(PeakIncidentOverPressurePso
-						.findPeakIncidentOverPressureWith(z)) + " psi");
-
-		System.out.println("Blast Analysis - Impulse 'is' = "
-				+ ImpulseIs.findPeakImpulseIsWith(z, w) + " ms");
+		// System.out.println("Blast Analysis - Impulse 'is' = "
+		// + ImpulseIs.findPeakImpulseIsWith(z, w) + " ms");
 
 		System.out.println("Blast Analysis - Clearing Time 'tc' = "
 				+ ClearingTimeTc.calculateclearingTimeTc(h, width,
@@ -195,23 +162,23 @@ public class BlastAssessmentApp {
 				+ PositivePhaseDurationTo.findPositivePhaseDurationForZ(z, w)
 				+ " ms");
 
-		System.out.println("Blast Analysis - Wave Length 'Lw' = REVIEW"
+		System.out.println("Blast Analysis - Wave Length 'Lw' = "
 				+ WaveLengthLw.findWaveLengthWithZ(z, w) + " ft");
 
-		System.out.println("Blast Analysis - Stagnation Pressure 'Ps' = "
-				+ StagnationPressurePs.calculateStagnationPressureWithPsoandqo(
-						PeakIncidentOverPressurePso
-								.findPeakIncidentOverPressureWith(z),
-						PeakDynamicPressureQo
-								.calculatQoWithPso(PeakIncidentOverPressurePso
-										.findPeakIncidentOverPressureWith(z)))
-				+ " psi");
-
-		System.out.println("Blast Analysis - Equivalent Duration 'te' = "
-				+ EquivalentDurationTe.calculateEquivalentDurationWithIsAndPso(
-						ImpulseIs.findPeakImpulseIsWith(z, w),
-						PeakIncidentOverPressurePso
-								.findPeakIncidentOverPressureWith(z)) + " ms");
+		// System.out.println("Blast Analysis - Stagnation Pressure 'Ps' = "
+		// + StagnationPressurePs.calculateStagnationPressureWithPsoandqo(
+		// PeakIncidentOverPressurePso
+		// .findPeakIncidentOverPressureWith(z),
+		// PeakDynamicPressureQo
+		// .calculatQoWithPso(PeakIncidentOverPressurePso
+		// .findPeakIncidentOverPressureWith(z)))
+		// + " psi");
+		//
+		// System.out.println("Blast Analysis - Equivalent Duration 'te' = "
+		// + EquivalentDurationTe.calculateEquivalentDurationWithIsAndPso(
+		// ImpulseIs.findPeakImpulseIsWith(z, w),
+		// PeakIncidentOverPressurePso
+		// .findPeakIncidentOverPressureWith(z)) + " ms");
 
 		System.out
 				.println("Blast Analysis - Peak Reflected Pressure 'Pr(alpha)' = "
@@ -239,6 +206,10 @@ public class BlastAssessmentApp {
 										PeakIncidentOverPressurePso
 												.findPeakIncidentOverPressureWith(z)))
 						+ " ms");
+
+		System.out.println();
+
+		System.out.println("COLUMN LOADING & CAPACITIES:");
 
 		System.out
 				.println("Target Column Analysis - Applied Column Loading 'Q*' = "
@@ -277,31 +248,9 @@ public class BlastAssessmentApp {
 						+ YieldDisplacementUy.calculateYieldDisplacementUy(
 								colhgt, s, yield, e, i) + " ft");
 
-		System.out
-				.println("Target Column Analysis - T/Tn used for UFC 3-340 graphs to determnine whether column remains elastic = "
-						+ ParameterForElasticCheck.tEquivDividedByTn(
-								EquivalentDurationTrAlpha
-										.calculateEquivalentDurationWithIsAndPr(
-												ImpulseIralpha
-														.calculateImpulseIsUFCGraph(
-																PeakIncidentOverPressurePso
-																		.findPeakIncidentOverPressureWith(z),
-																angle, w),
-												ReflectedPressurePr
-														.findReflectedPressureWith(
-																angle,
-																PeakIncidentOverPressurePso
-																		.findPeakIncidentOverPressureWith(z))),
-								EquivalentSDOFPropertiesElastic.naturalPeriodSDOF(
-										EquivalentSDOFPropertiesElastic
-												.massOfEquivSDOF(TotalActalMassM
-														.calculatingTotalActualMass(
-																colweight,
-																colhgt)),
-										EquivalentSDOFPropertiesElastic
-												.stiffnessOfEquivSDOF(ActualStiffnessK
-														.calculateColumnActualStiffness(
-																e, i, colhgt)))));
+		System.out.println();
+
+		System.out.println("COLUMN - ELASTIC ASSESSMENT:");
 
 		System.out
 				.println("Elastic Equivalent - Target Column Analysis - Stiffness of Equivalent SDOF 'ke' = "
@@ -327,6 +276,32 @@ public class BlastAssessmentApp {
 								EquivalentSDOFPropertiesElastic.stiffnessOfEquivSDOF(ActualStiffnessK
 										.calculateColumnActualStiffness(e, i,
 												colhgt))) + " s");
+
+		System.out
+				.println("Target Column Analysis - T/Tn used for UFC 3-340 graphs to determnine whether column remains elastic = "
+						+ ParameterForElasticCheck.tEquivDividedByTn(
+								EquivalentDurationTrAlpha
+										.calculateEquivalentDurationWithIsAndPr(
+												ImpulseIralpha
+														.calculateImpulseIsUFCGraph(
+																PeakIncidentOverPressurePso
+																		.findPeakIncidentOverPressureWith(z),
+																angle, w),
+												ReflectedPressurePr
+														.findReflectedPressureWith(
+																angle,
+																PeakIncidentOverPressurePso
+																		.findPeakIncidentOverPressureWith(z))),
+								EquivalentSDOFPropertiesElastic.naturalPeriodSDOF(
+										EquivalentSDOFPropertiesElastic
+												.massOfEquivSDOF(TotalActalMassM
+														.calculatingTotalActualMass(
+																colweight,
+																colhgt)),
+										EquivalentSDOFPropertiesElastic
+												.stiffnessOfEquivSDOF(ActualStiffnessK
+														.calculateColumnActualStiffness(
+																e, i, colhgt)))));
 
 		System.out
 				.println("Elastic Parameter - Peak Response Parameter 'um' = "
@@ -412,7 +387,7 @@ public class BlastAssessmentApp {
 		// + " ms");
 
 		System.out
-				.println("***Elastic Check*** - "
+				.println("|Elastic Check| - "
 						+ EquivalentSDOFElasticCheck.determiningDynamicLoadFactor(
 								EquivalentSDOFElasticResponseUm
 										.elasticResponseParameterCheck(
@@ -463,6 +438,52 @@ public class BlastAssessmentApp {
 								YieldDisplacementUy
 										.calculateYieldDisplacementUy(colhgt,
 												s, yield, e, i)));
+
+		System.out.println();
+
+		System.out
+				.println(EquivalentSDOFElasticCheck.programFinish(
+						EquivalentSDOFElasticResponseUm.elasticResponseParameterCheck(
+								(ParameterForElasticCheck
+										.tEquivDividedByTn(
+												EquivalentDurationTrAlpha
+														.calculateEquivalentDurationWithIsAndPr(
+																ImpulseIralpha
+																		.calculateImpulseIsUFCGraph(
+																				PeakIncidentOverPressurePso
+																						.findPeakIncidentOverPressureWith(z),
+																				angle,
+																				w),
+																ReflectedPressurePr
+																		.findReflectedPressureWith(
+																				angle,
+																				PeakIncidentOverPressurePso
+																						.findPeakIncidentOverPressureWith(z))),
+												EquivalentSDOFPropertiesElastic.naturalPeriodSDOF(
+														EquivalentSDOFPropertiesElastic
+																.massOfEquivSDOF(TotalActalMassM
+																		.calculatingTotalActualMass(
+																				colweight,
+																				colhgt)),
+														EquivalentSDOFPropertiesElastic
+																.stiffnessOfEquivSDOF(ActualStiffnessK
+																		.calculateColumnActualStiffness(
+																				e,
+																				i,
+																				colhgt))))),
+								StaticDisplacementUs.CalculateStaticDisplacement(
+										AppliedLoadingToColumnQ.calculateAppliedLoading(
+												ReflectedPressurePr
+														.findReflectedPressureWith(
+																angle,
+																PeakIncidentOverPressurePso
+																		.findPeakIncidentOverPressureWith(z)),
+												colwidth, colhgt),
+										ActualStiffnessK
+												.calculateColumnActualStiffness(
+														e, i, colhgt))),
+						YieldDisplacementUy.calculateYieldDisplacementUy(
+								colhgt, s, yield, e, i)));
 
 		System.out
 				.println("Plastic Equivalent - Target Column Analysis - Stiffness of Equivalent SDOF (k'e) = "
@@ -569,78 +590,6 @@ public class BlastAssessmentApp {
 								colwidth, colhgt));
 
 		System.out
-				.println("***Plastic Check*** -  = "
-						+ EquivalentSDOFPlasticResponseUm.plasticCheckFinal(
-								EquivalentDurationTrAlpha
-										.calculateEquivalentDurationWithIsAndPr(
-												ImpulseIralpha
-														.calculateImpulseIsUFCGraph(
-																PeakIncidentOverPressurePso
-																		.findPeakIncidentOverPressureWith(z),
-																angle, w),
-												ReflectedPressurePr
-														.findReflectedPressureWith(
-																angle,
-																PeakIncidentOverPressurePso
-																		.findPeakIncidentOverPressureWith(z))),
-								EquivalentSDOFPropertiesPlastic.naturalPeriodSDOF(
-										EquivalentSDOFPropertiesPlastic
-												.massOfEquivSDOF(TotalActalMassM
-														.calculatingTotalActualMass(
-																colweight,
-																colhgt)),
-										EquivalentSDOFPropertiesPlastic
-												.stiffnessOfEquivSDOF(ActualStiffnessK
-														.calculateColumnActualStiffness(
-																e, i, colhgt))),
-								UltimateUnitResistance
-										.calculatingPlasticMoment(yield, zxx,
-												colhgt),
-								YieldDisplacementUy
-										.calculateYieldDisplacementUy(colhgt,
-												s, yield, e, i),
-								ReflectedPressurePr.findReflectedPressureWith(
-										angle,
-										PeakIncidentOverPressurePso
-												.findPeakIncidentOverPressureWith(z)),
-								colwidth, colhgt)
-						+ ". Max Ductility Ratio Xm/Xe = "
-						+ EquivalentSDOFPlasticResponseUm.peakResponseParameterPlastic(
-								EquivalentDurationTrAlpha
-										.calculateEquivalentDurationWithIsAndPr(
-												ImpulseIralpha
-														.calculateImpulseIsUFCGraph(
-																PeakIncidentOverPressurePso
-																		.findPeakIncidentOverPressureWith(z),
-																angle, w),
-												ReflectedPressurePr
-														.findReflectedPressureWith(
-																angle,
-																PeakIncidentOverPressurePso
-																		.findPeakIncidentOverPressureWith(z))),
-								EquivalentSDOFPropertiesPlastic.naturalPeriodSDOF(
-										EquivalentSDOFPropertiesPlastic
-												.massOfEquivSDOF(TotalActalMassM
-														.calculatingTotalActualMass(
-																colweight,
-																colhgt)),
-										EquivalentSDOFPropertiesPlastic
-												.stiffnessOfEquivSDOF(ActualStiffnessK
-														.calculateColumnActualStiffness(
-																e, i, colhgt))),
-								UltimateUnitResistance
-										.calculatingPlasticMoment(yield, zxx,
-												colhgt),
-								YieldDisplacementUy
-										.calculateYieldDisplacementUy(colhgt,
-												s, yield, e, i),
-								ReflectedPressurePr.findReflectedPressureWith(
-										angle,
-										PeakIncidentOverPressurePso
-												.findPeakIncidentOverPressureWith(z)),
-								colwidth, colhgt));
-
-		System.out
 				.println("End Rotation of Column (Degrees)  = "
 						+ EquivalentSDOFPlasticResponseUm.equivalentElastDeflection(
 								EquivalentDurationTrAlpha
@@ -679,70 +628,168 @@ public class BlastAssessmentApp {
 										.calculateColumnActualStiffness(e, i,
 												colhgt)) + " degrees");
 
-		System.out.println("Max Shear with Column Removed = "
-				+ beamDesignForces.maxBeamShear(spanlhs, spanrhs, trib, dead,
-						live, roofdead, rooflive, daf, numstorys, deadcombo,
-						livecombo) + " Kips");
+		double ductilityRatio = EquivalentSDOFPlasticResponseUm
+				.peakResponseParameterPlastic(
+						EquivalentDurationTrAlpha
+								.calculateEquivalentDurationWithIsAndPr(
+										ImpulseIralpha.calculateImpulseIsUFCGraph(
+												PeakIncidentOverPressurePso
+														.findPeakIncidentOverPressureWith(z),
+												angle, w),
+										ReflectedPressurePr
+												.findReflectedPressureWith(
+														angle,
+														PeakIncidentOverPressurePso
+																.findPeakIncidentOverPressureWith(z))),
+						EquivalentSDOFPropertiesPlastic.naturalPeriodSDOF(
+								EquivalentSDOFPropertiesPlastic
+										.massOfEquivSDOF(TotalActalMassM
+												.calculatingTotalActualMass(
+														colweight, colhgt)),
+								EquivalentSDOFPropertiesPlastic.stiffnessOfEquivSDOF(ActualStiffnessK
+										.calculateColumnActualStiffness(e, i,
+												colhgt))),
+						UltimateUnitResistance.calculatingPlasticMoment(yield,
+								zxx, colhgt), YieldDisplacementUy
+								.calculateYieldDisplacementUy(colhgt, s, yield,
+										e, i),
+						ReflectedPressurePr.findReflectedPressureWith(angle,
+								PeakIncidentOverPressurePso
+										.findPeakIncidentOverPressureWith(z)),
+						colwidth, colhgt);
 
-		System.out.println("Max Bending Moment with Column Removed = "
-				+ beamDesignForces.maxBeamMoment(spanlhs, spanrhs, trib, dead,
-						live, roofdead, rooflive, daf, numstorys, deadcombo,
-						livecombo) + " Kip-ft");
+		System.out
+				.println("|Plastic Check| -  = "
+						+ EquivalentSDOFPlasticResponseUm.plasticCheckFinal(
+								EquivalentDurationTrAlpha
+										.calculateEquivalentDurationWithIsAndPr(
+												ImpulseIralpha
+														.calculateImpulseIsUFCGraph(
+																PeakIncidentOverPressurePso
+																		.findPeakIncidentOverPressureWith(z),
+																angle, w),
+												ReflectedPressurePr
+														.findReflectedPressureWith(
+																angle,
+																PeakIncidentOverPressurePso
+																		.findPeakIncidentOverPressureWith(z))),
+								EquivalentSDOFPropertiesPlastic.naturalPeriodSDOF(
+										EquivalentSDOFPropertiesPlastic
+												.massOfEquivSDOF(TotalActalMassM
+														.calculatingTotalActualMass(
+																colweight,
+																colhgt)),
+										EquivalentSDOFPropertiesPlastic
+												.stiffnessOfEquivSDOF(ActualStiffnessK
+														.calculateColumnActualStiffness(
+																e, i, colhgt))),
+								UltimateUnitResistance
+										.calculatingPlasticMoment(yield, zxx,
+												colhgt),
+								YieldDisplacementUy
+										.calculateYieldDisplacementUy(colhgt,
+												s, yield, e, i),
+								ReflectedPressurePr.findReflectedPressureWith(
+										angle,
+										PeakIncidentOverPressurePso
+												.findPeakIncidentOverPressureWith(z)),
+								colwidth, colhgt, mu)
+						+ ". Max Ductility Ratio Xm/Xe = " + ductilityRatio
+						+ " Allowable Ductility Ratio Specified by User = "
+						+ mu);
 
-		System.out.println(beamChecks.localBucklingCheck(bf, tf));
+		if (ductilityRatio > mu) {
 
-		System.out.println(beamChecks.localshearCheck(beamaxial, beamarea,
-				yield, bf, tf));
+			System.out.println();
 
-		System.out.println(beamChecks.shearcheck(yield, tf, tw, depth,
-				beamDesignForces.maxBeamShear(spanlhs, spanrhs, trib, dead,
-						live, roofdead, rooflive, daf, numstorys, deadcombo,
-						livecombo)));
+			System.out.println(SapTextFile.sapFile(span, trib, dead, live,
+					numstorys, bays, colhgt, heading, targetcol, deadcombo,
+					livecombo, 50, beamaxial, k, factCOMP));
 
-		System.out.println("Ultimate Axial Compressive Load "
-				+ beamChecks.flexuralCheck(beamzx, beamlx, beamly, yield,
-						beamrx, beamry, e, beamarea) + " Kips");
+			System.out.println("Beam Size = "
+					+ beamDesign.sectionDesign(span, trib, dead, live, 50,
+							beamaxial));
 
-		System.out.println("Factor for determining Mmx with Mpx"
-				+ beamChecks.momentMmxFactor(beamzx, beamlx, beamly, yield,
-						beamrx, beamry, e, beamarea));
+			System.out.println("Internal Column Size = "
+					+ internalColumnForcesAndDesign.columnSizing(span, trib,
+							dead, live, numstorys, colhgt, k, 50, factCOMP,
+							bays));
 
-		System.out.println(beamChecks.momentMmxCheck(beamzx, beamlx, beamly,
-				yield, beamrx, beamry, e, beamarea));
+			System.out.println("External Column Size = "
+					+ externalColumnForcesandDesign.columnSizing(span, trib,
+							dead, live, numstorys, colhgt, k, 50, factCOMP,
+							bays));
 
-		System.out.println("Ultimate Axial Compressive Load "
-				+ beamChecks.eulerBucklingStresses(e, beamlx, beamrx) + " Ksi");
+			System.out.println();
 
-		System.out.println("Euler Buckling Load about X-Axis "
-				+ beamChecks.eulerBucklingLoads(e, beamlx, beamrx, beamarea)
-				+ " Kips");
+			System.out.println("BEAM CHECK - COLUMN REMOVED:");
 
-		System.out.println("Ultimate Capacity for Dynamic Axial Load "
-				+ beamChecks.ultCapacityForDynAxialLoadPp(yield, beamarea)
-				+ " Kips");
+			System.out.println("Max Shear with Column Removed = "
+					+ beamDesignForces.maxBeamShear(span, trib, dead, live,
+							daf, numstorys, deadcombo, livecombo) + " Kips");
 
-		System.out.println("Combined Check One "
-				+ beamChecks.combinedChcekOne(beamzx, beamlx, beamly, yield,
-						beamrx, beamry, e, beamarea, beamaxial,
-						beamDesignForces.maxBeamMoment(spanlhs, spanrhs, trib,
-								dead, live, roofdead, rooflive, daf, numstorys,
-								deadcombo, livecombo)));
+			System.out.println("Max Bending Moment with Column Removed = "
+					+ beamDesignForces.maxBeamMoment(span, trib, dead, live,
+							daf, numstorys, deadcombo, livecombo) + " Kip-ft");
 
-		System.out.println("Combined Check Two "
-				+ beamChecks.combinedChcekTwo(beamzx, beamlx, beamly, yield,
-						beamrx, beamry, e, beamarea, beamaxial,
-						beamDesignForces.maxBeamMoment(spanlhs, spanrhs, trib,
-								dead, live, roofdead, rooflive, daf, numstorys,
-								deadcombo, livecombo)));
+			System.out.println(beamChecks.localBucklingCheck(bf, tf));
 
-		System.out.println(beamChecks.combinedChcekOnePassOrFail(beamzx,
-				beamlx, beamly, yield, beamrx, beamry, e, beamarea, beamaxial,
-				beamDesignForces.maxBeamMoment(spanlhs, spanrhs, trib, dead,
-						live, roofdead, rooflive, daf, numstorys, deadcombo,
-						livecombo)));
+			System.out.println(beamChecks.localshearCheck(beamaxial, beamarea,
+					yield, bf, tf));
 
-		System.out.println(SapTextFile.sapFile((int) numstorys, bays, colhgt,
-				width, live, dead, trib));
+			System.out.println(beamChecks.shearcheck(yield, tf, tw, depth,
+					beamDesignForces.maxBeamShear(span, trib, dead, live, daf,
+							numstorys, deadcombo, livecombo)));
+
+			System.out.println("Ultimate Axial Compressive Load "
+					+ beamChecks.flexuralCheck(beamzx, beamlx, beamly, yield,
+							beamrx, beamry, e, beamarea) + " Kips");
+
+			System.out.println("Factor for determining Mmx with Mpx"
+					+ beamChecks.momentMmxFactor(beamzx, beamlx, beamly, yield,
+							beamrx, beamry, e, beamarea));
+
+			System.out.println(beamChecks.momentMmxCheck(beamzx, beamlx,
+					beamly, yield, beamrx, beamry, e, beamarea));
+
+			System.out.println("Ultimate Axial Compressive Load "
+					+ beamChecks.eulerBucklingStresses(e, beamlx, beamrx)
+					+ " Ksi");
+
+			System.out.println("Euler Buckling Load about X-Axis "
+					+ beamChecks
+							.eulerBucklingLoads(e, beamlx, beamrx, beamarea)
+					+ " Kips");
+
+			System.out.println("Ultimate Capacity for Dynamic Axial Load "
+					+ beamChecks.ultCapacityForDynAxialLoadPp(yield, beamarea)
+					+ " Kips");
+
+			System.out.println("Combined Check One "
+					+ beamChecks
+							.combinedChcekOne(beamzx, beamlx, beamly, yield,
+									beamrx, beamry, e, beamarea, beamaxial,
+									beamDesignForces.maxBeamMoment(span, trib,
+											dead, live, daf, numstorys,
+											deadcombo, livecombo)));
+
+			System.out.println("Combined Check Two "
+					+ beamChecks
+							.combinedChcekTwo(beamzx, beamlx, beamly, yield,
+									beamrx, beamry, e, beamarea, beamaxial,
+									beamDesignForces.maxBeamMoment(span, trib,
+											dead, live, daf, numstorys,
+											deadcombo, livecombo)));
+
+			System.out.println(beamChecks.combinedChcekOnePassOrFail(beamzx,
+					beamlx, beamly, yield, beamrx, beamry, e, beamarea,
+					beamaxial, beamDesignForces.maxBeamMoment(span, trib, dead,
+							live, daf, numstorys, deadcombo, livecombo)));
+
+		} else if (ductilityRatio <= mu) {
+
+			System.exit(0);
+		}
 
 	}
 

@@ -18,7 +18,7 @@ public class beamDesignForcesTest {
 	public void test1() {
 
 		double result = beamDesignForces.maxBeamShear(20, 20, 12.5, 95, 80, 0,
-				0, 1.5, 4, 1.1, 0.1);
+				0, 1.5);
 
 		System.out.println("result: " + result);
 		assertTrue(result > 0);
@@ -29,7 +29,7 @@ public class beamDesignForcesTest {
 	public void test() {
 
 		double result = beamDesignForces.maxBeamMoment(20, 20, 12.5, 95, 80, 0,
-				0, 1.5, 4, 1.1, 0.1);
+				0, 1.5);
 
 		System.out.println("result: " + result);
 		assertTrue(result > 0);

@@ -366,8 +366,159 @@ public class ReflectedPressurePr {
 			// TODO add logging here
 			throw new RuntimeException(
 					"invalid ANGLE (must be increments of 5deg). Range of Pso 25 to 450");
+		} else if ((pso >= 450) && (pso < 550)) {
+			graph.put((double) 0, (double) 7.9);
+			graph.put((double) 5, (double) 7.6);
+			graph.put((double) 10, (double) 7.4);
+			graph.put((double) 15, (double) 7.1);
+			graph.put((double) 20, (double) 7);
+			graph.put((double) 25, (double) 6.6);
+			graph.put((double) 30, (double) 6.4);
+			graph.put((double) 35, (double) 6);
+			graph.put((double) 40, (double) 5.8);
+			graph.put((double) 45, (double) 7);
+			graph.put((double) 50, (double) 6);
+			graph.put((double) 55, (double) 4.3);
+			graph.put((double) 60, (double) 3);
+			graph.put((double) 65, (double) 2);
+			graph.put((double) 70, (double) 1.4);
+			graph.put((double) 75, (double) 1.2);
+			graph.put((double) 80, (double) 1);
+			if (angle >= 0) {
+				double cr = (graph.get(angle));
+				return cr * pso;
+			}
+			// TODO add logging here
+			throw new RuntimeException(
+					"invalid ANGLE (must be increments of 5deg). Range of Pso 25 to 450");
+		} else if ((pso >= 550) && (pso < 650)) {
+			graph.put((double) 0, (double) 8.04);
+			graph.put((double) 5, (double) 7.76);
+			graph.put((double) 10, (double) 7.56);
+			graph.put((double) 15, (double) 7.28);
+			graph.put((double) 20, (double) 7.12);
+			graph.put((double) 25, (double) 6.72);
+			graph.put((double) 30, (double) 6.48);
+			graph.put((double) 35, (double) 6.1);
+			graph.put((double) 40, (double) 5.86);
+			graph.put((double) 45, (double) 7.1);
+			graph.put((double) 50, (double) 6.12);
+			graph.put((double) 55, (double) 4.44);
+			graph.put((double) 60, (double) 3);
+			graph.put((double) 65, (double) 2);
+			graph.put((double) 70, (double) 1.4);
+			graph.put((double) 75, (double) 1.2);
+			graph.put((double) 80, (double) 1);
+			if (angle >= 0) {
+				double cr = (graph.get(angle));
+				return cr * pso;
+			}
+			// TODO add logging here
+			throw new RuntimeException(
+					"invalid ANGLE (must be increments of 5deg). Range of Pso 25 to 450");
+		} else if ((pso >= 650) && (pso < 750)) {
+			graph.put((double) 0, (double) 8.18);
+			graph.put((double) 5, (double) 7.92);
+			graph.put((double) 10, (double) 7.72);
+			graph.put((double) 15, (double) 7.46);
+			graph.put((double) 20, (double) 7.24);
+			graph.put((double) 25, (double) 6.84);
+			graph.put((double) 30, (double) 6.56);
+			graph.put((double) 35, (double) 6.2);
+			graph.put((double) 40, (double) 5.92);
+			graph.put((double) 45, (double) 7.2);
+			graph.put((double) 50, (double) 6.24);
+			graph.put((double) 55, (double) 4.58);
+			graph.put((double) 60, (double) 3);
+			graph.put((double) 65, (double) 2);
+			graph.put((double) 70, (double) 1.4);
+			graph.put((double) 75, (double) 1.2);
+			graph.put((double) 80, (double) 1);
+			if (angle >= 0) {
+				double cr = (graph.get(angle));
+				return cr * pso;
+			}
+			// TODO add logging here
+			throw new RuntimeException(
+					"invalid ANGLE (must be increments of 5deg). Range of Pso 25 to 450");
+		} else if ((pso >= 750) && (pso < 850)) {
+			graph.put((double) 0, (double) 8.32);
+			graph.put((double) 5, (double) 8.08);
+			graph.put((double) 10, (double) 7.88);
+			graph.put((double) 15, (double) 7.64);
+			graph.put((double) 20, (double) 7.36);
+			graph.put((double) 25, (double) 6.96);
+			graph.put((double) 30, (double) 6.64);
+			graph.put((double) 35, (double) 6.3);
+			graph.put((double) 40, (double) 5.98);
+			graph.put((double) 45, (double) 7.3);
+			graph.put((double) 50, (double) 6.36);
+			graph.put((double) 55, (double) 4.72);
+			graph.put((double) 60, (double) 3);
+			graph.put((double) 65, (double) 2);
+			graph.put((double) 70, (double) 1.4);
+			graph.put((double) 75, (double) 1.2);
+			graph.put((double) 80, (double) 1);
+			if (angle >= 0) {
+				double cr = (graph.get(angle));
+				return cr * pso;
+			}
+			// TODO add logging here
+			throw new RuntimeException(
+					"invalid ANGLE (must be increments of 5deg). Range of Pso 25 to 450");
+		} else if ((pso >= 850) && (pso < 950)) {
+			graph.put((double) 0, (double) 8.46);
+			graph.put((double) 5, (double) 8.24);
+			graph.put((double) 10, (double) 8.04);
+			graph.put((double) 15, (double) 7.82);
+			graph.put((double) 20, (double) 7.48);
+			graph.put((double) 25, (double) 7.08);
+			graph.put((double) 30, (double) 6.72);
+			graph.put((double) 35, (double) 6.4);
+			graph.put((double) 40, (double) 6.04);
+			graph.put((double) 45, (double) 7.4);
+			graph.put((double) 50, (double) 6.48);
+			graph.put((double) 55, (double) 4.86);
+			graph.put((double) 60, (double) 3);
+			graph.put((double) 65, (double) 2);
+			graph.put((double) 70, (double) 1.4);
+			graph.put((double) 75, (double) 1.2);
+			graph.put((double) 80, (double) 1);
+			if (angle >= 0) {
+				double cr = (graph.get(angle));
+				return cr * pso;
+			}
+			// TODO add logging here
+			throw new RuntimeException(
+					"invalid ANGLE (must be increments of 5deg). Range of Pso 25 to 450");
+		} else if ((pso >= 950) && (pso < 1100)) {
+			graph.put((double) 0, (double) 8.6);
+			graph.put((double) 5, (double) 8.4);
+			graph.put((double) 10, (double) 8.2);
+			graph.put((double) 15, (double) 8);
+			graph.put((double) 20, (double) 7.6);
+			graph.put((double) 25, (double) 7.2);
+			graph.put((double) 30, (double) 6.8);
+			graph.put((double) 35, (double) 6.5);
+			graph.put((double) 40, (double) 6.1);
+			graph.put((double) 45, (double) 7.5);
+			graph.put((double) 50, (double) 6.6);
+			graph.put((double) 55, (double) 5);
+			graph.put((double) 60, (double) 3);
+			graph.put((double) 65, (double) 2);
+			graph.put((double) 70, (double) 1.4);
+			graph.put((double) 75, (double) 1.2);
+			graph.put((double) 80, (double) 1);
+			if (angle >= 0) {
+				double cr = (graph.get(angle));
+				return cr * pso;
+			}
+			// TODO add logging here
+			throw new RuntimeException(
+					"invalid ANGLE (must be increments of 5deg). Range of Pso 25 to 450");
 		}
-		return pso;
+		// TODO add logging here
+		throw new RuntimeException("invalid Pso Value, Greter Than 1100psi");
 	}
 
 }
