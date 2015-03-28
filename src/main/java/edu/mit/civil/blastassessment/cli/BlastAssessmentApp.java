@@ -55,6 +55,8 @@ public class BlastAssessmentApp {
 
 		int targetcol = 3; // Target Column - From LHS of building
 
+		// double w = dataStorage.structure(w);
+
 		double w = 2000;
 
 		double blastfact = 1.0;
@@ -130,6 +132,37 @@ public class BlastAssessmentApp {
 		double factCOMP = 1.7;
 
 		double z = (double) ((r) / Math.pow(w * blastfact, 0.33333));
+
+		// double colnumber = retrievingSections.findColumn(span, trib, dead,
+		// live, numstorys, colhgt, k, 50, factCOMP, bays).doubleValue();
+		//
+		// if (colnumber < 12) {
+		// double colwidth = 8.03;
+		// double colweight = 48.0;
+		// double i = 484;
+		// double s = 70.2;
+		// double zxx = 78.4;
+		// }
+
+		System.out.println("FRAME DESIGN:");
+
+		System.out.println("Beam Size = "
+				+ beamDesign.sectionDesign(span, trib, dead, live, 50,
+						beamaxial));
+
+		System.out.println("Internal Column Size = "
+				+ internalColumnForcesAndDesign.columnSizing(span, trib, dead,
+						live, numstorys, colhgt, k, 50, factCOMP, bays));
+
+		System.out.println("External Column Size = "
+				+ externalColumnForcesandDesign.columnSizing(span, trib, dead,
+						live, numstorys, colhgt, k, 50, factCOMP, bays));
+
+		// System.out.println(extefficiencyColumnForcesandDesign.columnSizing(
+		// span, trib, dead, live, numstorys, colhgt, k, 50, factCOMP,
+		// bays));
+
+		System.out.println("");
 
 		System.out.println("BLAST ANALYSIS:");
 
@@ -705,20 +738,6 @@ public class BlastAssessmentApp {
 			System.out.println(SapTextFile.sapFile(span, trib, dead, live,
 					numstorys, bays, colhgt, heading, targetcol, deadcombo,
 					livecombo, 50, beamaxial, k, factCOMP));
-
-			System.out.println("Beam Size = "
-					+ beamDesign.sectionDesign(span, trib, dead, live, 50,
-							beamaxial));
-
-			System.out.println("Internal Column Size = "
-					+ internalColumnForcesAndDesign.columnSizing(span, trib,
-							dead, live, numstorys, colhgt, k, 50, factCOMP,
-							bays));
-
-			System.out.println("External Column Size = "
-					+ externalColumnForcesandDesign.columnSizing(span, trib,
-							dead, live, numstorys, colhgt, k, 50, factCOMP,
-							bays));
 
 			System.out.println();
 
