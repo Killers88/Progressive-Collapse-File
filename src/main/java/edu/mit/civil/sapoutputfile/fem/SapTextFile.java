@@ -17,30 +17,33 @@ import edu.mit.civil.memberdesign.calculation.internalColumnForcesAndDesign;
 public class SapTextFile {
 
 	public static String sapFile(final double width1, final double loadwidth,
-			final double sdl, final double live, final int numstorys,
+			final double sdl, final double live, final int numberOfStorys,
 			final double bays, final double colhgt, final String heading,
 			final int targetcolRem, double deadcombo, double livecombo,
-			double fy, double pr, final double k, final double factCOMP) {
+			double fy, double pr, final double k, final double factCOMP,
+			final double columnFoS, final double beamFoS) {
 
 		double width = width1;
 
 		double live1 = live / 1000;
 		double sdl1 = sdl / 1000;
 
-		double colEquivEnd = 0.5 * width1 * numstorys * loadwidth
+		double colEquivEnd = 0.5 * width1 * numberOfStorys * loadwidth
 				* ((deadcombo * sdl + livecombo * live) / 1000);
 
-		double colEquivInt = loadwidth * width1 * numstorys
+		double colEquivInt = loadwidth * width1 * numberOfStorys
 				* ((deadcombo * sdl + livecombo * live) / 1000);
 
 		String beam = beamDesign.sectionDesign(width1, loadwidth, sdl, live,
-				fy, pr);
+				fy, pr, beamFoS);
 
 		String intcolumn = internalColumnForcesAndDesign.columnSizing(width1,
-				loadwidth, sdl, live, numstorys, colhgt, k, fy, factCOMP, bays);
+				loadwidth, sdl, live, numberOfStorys, colhgt, k, fy, factCOMP,
+				bays, columnFoS);
 
 		String extcolumn = externalColumnForcesandDesign.columnSizing(width1,
-				loadwidth, sdl, live, numstorys, colhgt, k, fy, factCOMP, bays);
+				loadwidth, sdl, live, numberOfStorys, colhgt, k, fy, factCOMP,
+				bays, columnFoS);
 
 		try {
 
@@ -84,7 +87,7 @@ public class SapTextFile {
 
 			pw.println("CoordSys=GLOBAL   AxisDir=Y   GridID=y1   XRYZCoord=0   LineType=Primary   LineColor=Gray8Dark   Visible=Yes   BubbleLoc=Start AllVisible=Yes   BubbleSize=5");
 
-			for (int i = 0; i < (numstorys + 1); i++) {
+			for (int i = 0; i < (numberOfStorys + 1); i++) {
 
 				pw.println("CoordSys=GLOBAL   AxisDir=Z   GridID=z"
 						+ (i + 1)
@@ -428,8 +431,9 @@ public class SapTextFile {
 
 			pw.println("TABLE:  \"GROUPS 2 - ASSIGNMENTS\"");
 			pw.println("");
-			double FramesZDir = numstorys * (bays + 1);
-			double totFrames = (numstorys * (bays + 1) + numstorys * bays);
+			double FramesZDir = numberOfStorys * (bays + 1);
+			double totFrames = (numberOfStorys * (bays + 1) + numberOfStorys
+					* bays);
 
 			// for (int ff = 1; ff <= (totFrames + 1); ff++) {
 			//
@@ -548,7 +552,7 @@ public class SapTextFile {
 
 			double nodesX = (bays + 1);
 
-			double x = numstorys;
+			double x = numberOfStorys;
 
 			int joint = 0;
 
@@ -584,10 +588,10 @@ public class SapTextFile {
 			int j = 0;
 			int k1 = 0;
 
-			for (int l = 1; l <= (numstorys * (bays + 1)); l++) {
+			for (int l = 1; l <= (numberOfStorys * (bays + 1)); l++) {
 
 				a++;
-				if (l <= numstorys) {
+				if (l <= numberOfStorys) {
 
 					if (targetcolRem == 1) {
 
@@ -606,7 +610,7 @@ public class SapTextFile {
 								+ "    CentroidY=0   CentroidZ="
 								+ (colhgt / 2 + (colhgt * (a - 1))) + "");
 					}
-				} else if ((l > numstorys) && (l <= (2 * numstorys))) {
+				} else if ((l > numberOfStorys) && (l <= (2 * numberOfStorys))) {
 
 					b++;
 
@@ -633,7 +637,7 @@ public class SapTextFile {
 
 					}
 
-				} else if (l <= (3 * numstorys)) {
+				} else if (l <= (3 * numberOfStorys)) {
 					c++;
 
 					if (targetcolRem == 3) {
@@ -658,7 +662,7 @@ public class SapTextFile {
 								+ (colhgt / 2 + (colhgt * (c - 1))) + "");
 					}
 
-				} else if (l <= (4 * numstorys)) {
+				} else if (l <= (4 * numberOfStorys)) {
 					d++;
 
 					if (targetcolRem == 4) {
@@ -685,7 +689,7 @@ public class SapTextFile {
 
 					}
 
-				} else if (l <= (5 * numstorys)) {
+				} else if (l <= (5 * numberOfStorys)) {
 					e++;
 
 					if (targetcolRem == 5) {
@@ -709,7 +713,7 @@ public class SapTextFile {
 								+ (colhgt / 2 + (colhgt * (e - 1))) + "");
 					}
 
-				} else if (l <= (6 * numstorys)) {
+				} else if (l <= (6 * numberOfStorys)) {
 					f++;
 
 					if (targetcolRem == 6) {
@@ -736,7 +740,7 @@ public class SapTextFile {
 
 					}
 
-				} else if (l <= (7 * numstorys)) {
+				} else if (l <= (7 * numberOfStorys)) {
 					g++;
 
 					if (targetcolRem == 7) {
@@ -762,7 +766,7 @@ public class SapTextFile {
 								+ (colhgt / 2 + (colhgt * (g - 1))) + "");
 					}
 
-				} else if (l <= (8 * numstorys)) {
+				} else if (l <= (8 * numberOfStorys)) {
 					h++;
 					pw.println("   Frame=" + (l) + "   JointI=" + (l + 7)
 							+ "   JointJ=" + (l + 8)
@@ -771,7 +775,7 @@ public class SapTextFile {
 							+ (-width1 * bays * 0.5 + 7 * width)
 							+ "    CentroidY=0   CentroidZ="
 							+ (colhgt / 2 + (colhgt * (h - 1))) + "");
-				} else if (l <= (9 * numstorys)) {
+				} else if (l <= (9 * numberOfStorys)) {
 					i++;
 					pw.println("   Frame=" + (l) + "   JointI=" + (l + 8)
 							+ "   JointJ=" + (l + 9)
@@ -781,7 +785,7 @@ public class SapTextFile {
 							+ (-width1 * bays * 0.5 + 8 * width)
 							+ "    CentroidY=0   CentroidZ="
 							+ (colhgt / 2 + (colhgt * (i - 1))) + "");
-				} else if (l <= (10 * numstorys)) {
+				} else if (l <= (10 * numberOfStorys)) {
 					j++;
 					pw.println("   Frame=" + (l) + "   JointI=" + (l + 9)
 							+ "   JointJ=" + (l + 10)
@@ -791,7 +795,7 @@ public class SapTextFile {
 							+ (-width1 * bays * 0.5 + 9 * width)
 							+ "    CentroidY=0   CentroidZ="
 							+ (colhgt / 2 + (colhgt * (j - 1))) + "");
-				} else if (l <= (11 * numstorys)) {
+				} else if (l <= (11 * numberOfStorys)) {
 					k1++;
 					pw.println("   Frame=" + (l) + "   JointI=" + (l + 10)
 							+ "   JointJ=" + (l + 11)
@@ -820,117 +824,117 @@ public class SapTextFile {
 				q++;
 				int zCent = (int) (colhgt + colhgt * q);
 
-				if (zCent <= numstorys * colhgt) {
+				if (zCent <= numberOfStorys * colhgt) {
 					pw.println("   Frame=" + (s - 1) + "   JointI=" + (2 + q)
-							+ "   JointJ=" + (numstorys + 3 + q)
+							+ "   JointJ=" + (numberOfStorys + 3 + q)
 							+ "   IsCurved=No   Length=" + width
 							+ "   CentroidX="
 							+ (-width1 * bays * 0.5 + width * 0.5)
 							+ "    CentroidY=0   CentroidZ=" + zCent + "");
-				} else if ((zCent > numstorys * colhgt)
-						&& (zCent <= 2 * numstorys * colhgt)) {
+				} else if ((zCent > numberOfStorys * colhgt)
+						&& (zCent <= 2 * numberOfStorys * colhgt)) {
 
 					r++;
 					double hgtRest = (colhgt + colhgt * r);
 
 					pw.println("   Frame=" + (s - 1) + "   JointI=" + (3 + q)
-							+ "   JointJ=" + (numstorys + 4 + q)
+							+ "   JointJ=" + (numberOfStorys + 4 + q)
 							+ "   IsCurved=No   Length=" + width
 							+ "   CentroidX="
 							+ (-width1 * bays * 0.5 + width * 1.5)
 							+ "    CentroidY=0   CentroidZ=" + hgtRest + "");
-				} else if ((zCent > numstorys * colhgt)
-						&& (zCent <= 3 * numstorys * colhgt)) {
+				} else if ((zCent > numberOfStorys * colhgt)
+						&& (zCent <= 3 * numberOfStorys * colhgt)) {
 
 					p++;
 					double hgtRest = (colhgt + colhgt * p);
 
 					pw.println("   Frame=" + (s - 1) + "   JointI=" + (4 + q)
-							+ "   JointJ=" + (numstorys + 5 + q)
+							+ "   JointJ=" + (numberOfStorys + 5 + q)
 							+ "   IsCurved=No   Length=" + width
 							+ "   CentroidX="
 							+ (-width1 * bays * 0.5 + width * 2.5)
 							+ "    CentroidY=0   CentroidZ=" + hgtRest + "");
-				} else if ((zCent > numstorys * colhgt)
-						&& (zCent <= 4 * numstorys * colhgt)) {
+				} else if ((zCent > numberOfStorys * colhgt)
+						&& (zCent <= 4 * numberOfStorys * colhgt)) {
 
 					v++;
 					double hgtRest = (colhgt + colhgt * v);
 
 					pw.println("   Frame=" + (s - 1) + "   JointI=" + (5 + q)
-							+ "   JointJ=" + (numstorys + 6 + q)
+							+ "   JointJ=" + (numberOfStorys + 6 + q)
 							+ "   IsCurved=No   Length=" + width
 							+ "   CentroidX="
 							+ (-width1 * bays * 0.5 + width * 3.5)
 							+ "    CentroidY=0   CentroidZ=" + hgtRest + "");
-				} else if ((zCent > numstorys * colhgt)
-						&& (zCent <= 5 * numstorys * colhgt)) {
+				} else if ((zCent > numberOfStorys * colhgt)
+						&& (zCent <= 5 * numberOfStorys * colhgt)) {
 
 					t++;
 					double hgtRest = (colhgt + colhgt * t);
 
 					pw.println("   Frame=" + (s - 1) + "   JointI=" + (6 + q)
-							+ "   JointJ=" + (numstorys + 7 + q)
+							+ "   JointJ=" + (numberOfStorys + 7 + q)
 							+ "   IsCurved=No   Length=" + width
 							+ "   CentroidX="
 							+ (-width1 * bays * 0.5 + width * 4.5)
 							+ "    CentroidY=0   CentroidZ=" + hgtRest + "");
-				} else if ((zCent > numstorys * colhgt)
-						&& (zCent <= 6 * numstorys * colhgt)) {
+				} else if ((zCent > numberOfStorys * colhgt)
+						&& (zCent <= 6 * numberOfStorys * colhgt)) {
 
 					u++;
 					double hgtRest = (colhgt + colhgt * u);
 
 					pw.println("   Frame=" + (s - 1) + "   JointI=" + (7 + q)
-							+ "   JointJ=" + (numstorys + 8 + q)
+							+ "   JointJ=" + (numberOfStorys + 8 + q)
 							+ "   IsCurved=No   Length=" + width
 							+ "   CentroidX="
 							+ (-width1 * bays * 0.5 + width * 5.5)
 							+ "    CentroidY=0   CentroidZ=" + hgtRest + "");
-				} else if ((zCent > numstorys * colhgt)
-						&& (zCent <= 7 * numstorys * colhgt)) {
+				} else if ((zCent > numberOfStorys * colhgt)
+						&& (zCent <= 7 * numberOfStorys * colhgt)) {
 
 					w++;
 					double hgtRest = (colhgt + colhgt * w);
 
 					pw.println("   Frame=" + (s - 1) + "   JointI=" + (8 + q)
-							+ "   JointJ=" + (numstorys + 9 + q)
+							+ "   JointJ=" + (numberOfStorys + 9 + q)
 							+ "   IsCurved=No   Length=" + width
 							+ "   CentroidX="
 							+ (-width1 * bays * 0.5 + width * 6.5)
 							+ "    CentroidY=0   CentroidZ=" + hgtRest + "");
-				} else if ((zCent > numstorys * colhgt)
-						&& (zCent <= 8 * numstorys * colhgt)) {
+				} else if ((zCent > numberOfStorys * colhgt)
+						&& (zCent <= 8 * numberOfStorys * colhgt)) {
 
 					y++;
 					double hgtRest = (colhgt + colhgt * y);
 
 					pw.println("   Frame=" + (s - 1) + "   JointI=" + (9 + q)
-							+ "   JointJ=" + (numstorys + 10 + q)
+							+ "   JointJ=" + (numberOfStorys + 10 + q)
 							+ "   IsCurved=No   Length=" + width
 							+ "   CentroidX="
 							+ (-width1 * bays * 0.5 + width * 7.5)
 							+ "    CentroidY=0   CentroidZ=" + hgtRest + "");
-				} else if ((zCent > numstorys * colhgt)
-						&& (zCent <= 9 * numstorys * colhgt)) {
+				} else if ((zCent > numberOfStorys * colhgt)
+						&& (zCent <= 9 * numberOfStorys * colhgt)) {
 
 					aa++;
 					double hgtRest = (colhgt + colhgt * aa);
 
 					pw.println("   Frame=" + (s - 1) + "   JointI=" + (10 + q)
-							+ "   JointJ=" + (numstorys + 11 + q)
+							+ "   JointJ=" + (numberOfStorys + 11 + q)
 							+ "   IsCurved=No   Length=" + width
 							+ "   CentroidX="
 							+ (-width1 * bays * 0.5 + width * 8.5)
 							+ "    CentroidY=0   CentroidZ=" + hgtRest + "");
-				} else if ((zCent > numstorys * colhgt)
-						&& (zCent <= 10 * numstorys * colhgt)) {
+				} else if ((zCent > numberOfStorys * colhgt)
+						&& (zCent <= 10 * numberOfStorys * colhgt)) {
 
 					bb++;
 					double hgtRest = (colhgt + colhgt * bb);
 
 					pw.println("   Frame=" + (s - 1) + "   JointI=" + (11 + q)
-							+ "   JointJ=" + (numstorys + 12 + q)
+							+ "   JointJ=" + (numberOfStorys + 12 + q)
 							+ "   IsCurved=No   Length=" + width
 							+ "   CentroidX="
 							+ (-width1 * bays * 0.5 + width * 9.5)
@@ -943,7 +947,7 @@ public class SapTextFile {
 
 			pw.println("   Joint=" + 1
 					+ "   U1=Yes   U2=Yes   U3=Yes   R1=Yes   R2=No   R3=Yes");
-			pw.println("   Joint=" + (numstorys + 2)
+			pw.println("   Joint=" + (numberOfStorys + 2)
 					+ "   U1=Yes   U2=Yes   U3=Yes   R1=Yes   R2=No   R3=Yes");
 
 			int joint1 = 1;
@@ -952,7 +956,7 @@ public class SapTextFile {
 
 				joint1++;
 				pw.println("   Joint="
-						+ ((joint1 * (numstorys + 1)) + 1)
+						+ ((joint1 * (numberOfStorys + 1)) + 1)
 						+ "   U1=Yes   U2=Yes   U3=Yes   R1=Yes   R2=No   R3=Yes");
 
 			}
@@ -969,11 +973,11 @@ public class SapTextFile {
 
 			if (targetcolRem > 1) {
 				pw.println("Joint="
-						+ (targetcolRem + (numstorys * (targetcolRem - 1)) + 1)
+						+ (targetcolRem + (numberOfStorys * (targetcolRem - 1)) + 1)
 						+ "   LoadCase=COL_CANCEL   CoordSys=GLOBAL   F1=0   F2=0   F3=0   M1=0   M2=0   M3=-"
 						+ colEquivInt + "");
 				pw.println("Joint="
-						+ (targetcolRem + (numstorys * (targetcolRem - 1)) + 1)
+						+ (targetcolRem + (numberOfStorys * (targetcolRem - 1)) + 1)
 						+ "   LoadCase=COL_EQUIV   CoordSys=GLOBAL   F1=0   F2=0   F3=0   M1=0   M2=0   M3="
 						+ colEquivInt + "");
 			}
@@ -985,23 +989,23 @@ public class SapTextFile {
 
 			for (int ff1 = 1; ff1 <= (totFrames + 1); ff1++) {
 
-				if (ff1 <= (numstorys)) {
+				if (ff1 <= (numberOfStorys)) {
 					pw.println("   Frame="
 							+ ff1
 							+ "   SectionType=\"I/Wide Flange\"   AutoSelect=N.A.   AnalSect="
 							+ extcolumn + "   DesignSect=" + extcolumn
 							+ "   MatProp=Default");
 				}
-				if (ff1 > numstorys
-						&& ff1 <= (numstorys * (bays + 1) - numstorys)) {
+				if (ff1 > numberOfStorys
+						&& ff1 <= (numberOfStorys * (bays + 1) - numberOfStorys)) {
 					pw.println("   Frame="
 							+ ff1
 							+ "   SectionType=\"I/Wide Flange\"   AutoSelect=N.A.   AnalSect="
 							+ intcolumn + "   DesignSect=" + intcolumn
 							+ "   MatProp=Default");
 				}
-				if (ff1 > (numstorys * (bays + 1) - numstorys)
-						&& ff1 <= (numstorys * (bays + 1))) {
+				if (ff1 > (numberOfStorys * (bays + 1) - numberOfStorys)
+						&& ff1 <= (numberOfStorys * (bays + 1))) {
 					pw.println("   Frame="
 							+ ff1
 							+ "   SectionType=\"I/Wide Flange\"   AutoSelect=N.A.   AnalSect="
@@ -1009,7 +1013,7 @@ public class SapTextFile {
 							+ "   MatProp=Default");
 				}
 
-				else if (ff1 > (numstorys * (bays + 1))
+				else if (ff1 > (numberOfStorys * (bays + 1))
 						&& (ff1 <= totFrames + 1)) {
 					pw.println("   Frame="
 							+ ff1
