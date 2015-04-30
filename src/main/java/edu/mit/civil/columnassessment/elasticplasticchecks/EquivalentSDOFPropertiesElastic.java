@@ -32,4 +32,22 @@ public class EquivalentSDOFPropertiesElastic {
 		return CONSTANT_A * Math.PI * (Math.sqrt(M / K));
 	}
 
+	public static double stiffnessOfEquivSDOFFIX(final double k) {
+
+		return Load_Factor_ELASTIC * k;
+	}
+
+	public static double massOfEquivSDOFFIX(final double m) {
+
+		return Mass_Factor_ELASTIC * m;
+	}
+
+	public static double naturalPeriodSDOFFIX(final double m, final double k) {
+
+		double K = stiffnessOfEquivSDOF(k);
+		double M = massOfEquivSDOF(m);
+
+		return CONSTANT_A * Math.PI * (Math.sqrt(M / K));
+	}
+
 }

@@ -63,6 +63,20 @@ public class beamChecks {
 
 	}
 
+	public static Double test(final double fy, final double tf,
+			final double tw, final double d, final double vmax) {
+
+		double fds = 1.29 * 1.1 * fy;
+
+		double fdv = 0.55 * fds;
+
+		double aw = (d - (2 * tf)) * tw;
+
+		double vp = fdv * aw;
+		return vp;
+
+	}
+
 	public static String shearcheck(final double fy, final double tf,
 			final double tw, final double d, final double vmax) {
 
@@ -80,7 +94,8 @@ public class beamChecks {
 
 		} else {
 
-			return "Section fails for Shear, Vp < Vmax";
+			return "Section fails for Shear, Vp < Vmax" + ". Vp = " + vp
+					+ " kipf";
 
 		}
 	}
@@ -142,7 +157,7 @@ public class beamChecks {
 
 		if (mmx <= mpx) {
 
-			return "Mmx < Mpx, therefore beam is adaquate";
+			return "Mmx < Mpx, Passed Check";
 
 		} else {
 
@@ -155,10 +170,10 @@ public class beamChecks {
 	public static double eulerBucklingStresses(final double e, final double lx,
 			final double rx) {
 
-		double slendernessx = (0.75 * lx * 12) / rx;
+		double slendernessx = (0.75 * lx * 2 * 12) / rx;
 
-		double fex = (Math.pow((Math.PI), 2) * e * 0.521739)
-				/ (Math.pow(slendernessx, 2));
+		double fex = (Math.pow((Math.PI), 2) * e * 12)
+				/ (23 * Math.pow(slendernessx, 2));
 
 		return fex;
 

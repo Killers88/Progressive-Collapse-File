@@ -21,7 +21,8 @@ public class retrievingColumnSections {
 			final double sdl, final double live, final double numstorys,
 			final double colhgt, final double k, final double fy,
 			final double factCOMP, final double bays,
-			final double targetColumn, final double factorOfSafety) {
+			final double targetColumn, final double factorOfSafety,
+			final double windspeed) {
 
 		graph.put((String) "W14x48", (double) 1);
 		graph.put((String) "W14x53", (double) 2);
@@ -40,17 +41,23 @@ public class retrievingColumnSections {
 		graph.put((String) "W14x193", (double) 15);
 		graph.put((String) "W14x211", (double) 16);
 		graph.put((String) "W14x233", (double) 17);
+		graph.put((String) "W14x257", (double) 18);
+		graph.put((String) "W14x283", (double) 19);
+		graph.put((String) "W14x311", (double) 20);
+		graph.put((String) "W14x342", (double) 21);
+		graph.put((String) "W14x370", (double) 22);
+		graph.put((String) "W14x398", (double) 23);
 
 		if (targetColumn == 1) {
 			String Size = externalColumnForcesandDesign.columnSizing(span,
 					trib, sdl, live, numstorys, colhgt, k, fy, factCOMP, bays,
-					factorOfSafety);
+					factorOfSafety, windspeed);
 			return (graph.get(Size));
 		}
 		if (targetColumn > 1) {
 			String Size = internalColumnForcesAndDesign.columnSizing(span,
 					trib, sdl, live, numstorys, colhgt, k, fy, factCOMP, bays,
-					factorOfSafety);
+					factorOfSafety, windspeed);
 			return (graph.get(Size));
 		}
 
@@ -62,11 +69,12 @@ public class retrievingColumnSections {
 			final double sdl, final double live, final double numstorys,
 			final double colhgt, final double k, final double fy,
 			final double factCOMP, final double bays,
-			final double targetColumn, final double factorOfSafety) {
+			final double targetColumn, final double factorOfSafety,
+			final double windspeed) {
 
 		double sectionNumber = retrievingColumnSections.findColumn(span, trib,
 				sdl, live, numstorys, colhgt, k, fy, factCOMP, bays,
-				targetColumn, factorOfSafety);
+				targetColumn, factorOfSafety, windspeed);
 
 		if (sectionNumber == 1) {
 			return 484.0;
@@ -119,6 +127,24 @@ public class retrievingColumnSections {
 		if (sectionNumber == 17) {
 			return 3010.0;
 		}
+		if (sectionNumber == 18) {
+			return 3400.0;
+		}
+		if (sectionNumber == 19) {
+			return 3840.0;
+		}
+		if (sectionNumber == 20) {
+			return 4330.0;
+		}
+		if (sectionNumber == 21) {
+			return 4900.0;
+		}
+		if (sectionNumber == 22) {
+			return 5440.0;
+		}
+		if (sectionNumber == 23) {
+			return 6000.0;
+		}
 
 		return 0.0;
 
@@ -128,11 +154,12 @@ public class retrievingColumnSections {
 			final double sdl, final double live, final double numstorys,
 			final double colhgt, final double k, final double fy,
 			final double factCOMP, final double bays,
-			final double targetColumn, final double factorOfSafety) {
+			final double targetColumn, final double factorOfSafety,
+			final double windspeed) {
 
 		double sectionNumber = retrievingColumnSections.findColumn(span, trib,
 				sdl, live, numstorys, colhgt, k, fy, factCOMP, bays,
-				targetColumn, factorOfSafety);
+				targetColumn, factorOfSafety, windspeed);
 
 		if (sectionNumber == 1) {
 			return 70.2;
@@ -185,6 +212,24 @@ public class retrievingColumnSections {
 		if (sectionNumber == 17) {
 			return 375.0;
 		}
+		if (sectionNumber == 18) {
+			return 415.0;
+		}
+		if (sectionNumber == 19) {
+			return 459.0;
+		}
+		if (sectionNumber == 20) {
+			return 506.0;
+		}
+		if (sectionNumber == 21) {
+			return 558.0;
+		}
+		if (sectionNumber == 22) {
+			return 607.0;
+		}
+		if (sectionNumber == 23) {
+			return 656.0;
+		}
 
 		return 0.0;
 
@@ -194,11 +239,12 @@ public class retrievingColumnSections {
 			final double sdl, final double live, final double numstorys,
 			final double colhgt, final double k, final double fy,
 			final double factCOMP, final double bays,
-			final double targetColumn, final double factorOfSafety) {
+			final double targetColumn, final double factorOfSafety,
+			final double windspeed) {
 
 		double sectionNumber = retrievingColumnSections.findColumn(span, trib,
 				sdl, live, numstorys, colhgt, k, fy, factCOMP, bays,
-				targetColumn, factorOfSafety);
+				targetColumn, factorOfSafety, windspeed);
 
 		if (sectionNumber == 1) {
 			return 78.4;
@@ -251,6 +297,24 @@ public class retrievingColumnSections {
 		if (sectionNumber == 17) {
 			return 436.0;
 		}
+		if (sectionNumber == 18) {
+			return 487.0;
+		}
+		if (sectionNumber == 19) {
+			return 542.0;
+		}
+		if (sectionNumber == 20) {
+			return 603.0;
+		}
+		if (sectionNumber == 21) {
+			return 672.0;
+		}
+		if (sectionNumber == 22) {
+			return 736.0;
+		}
+		if (sectionNumber == 23) {
+			return 801.0;
+		}
 
 		return 0.0;
 
@@ -260,11 +324,12 @@ public class retrievingColumnSections {
 			final double sdl, final double live, final double numstorys,
 			final double colhgt, final double k, final double fy,
 			final double factCOMP, final double bays,
-			final double targetColumn, final double factorOfSafety) {
+			final double targetColumn, final double factorOfSafety,
+			final double windspeed) {
 
 		double sectionNumber = retrievingColumnSections.findColumn(span, trib,
 				sdl, live, numstorys, colhgt, k, fy, factCOMP, bays,
-				targetColumn, factorOfSafety);
+				targetColumn, factorOfSafety, windspeed);
 
 		if (sectionNumber == 1) {
 			return 48.0;
@@ -317,6 +382,24 @@ public class retrievingColumnSections {
 		if (sectionNumber == 17) {
 			return 233.0;
 		}
+		if (sectionNumber == 18) {
+			return 257.0;
+		}
+		if (sectionNumber == 19) {
+			return 283.0;
+		}
+		if (sectionNumber == 20) {
+			return 311.0;
+		}
+		if (sectionNumber == 21) {
+			return 342.0;
+		}
+		if (sectionNumber == 22) {
+			return 370.0;
+		}
+		if (sectionNumber == 23) {
+			return 398.0;
+		}
 
 		return 0.0;
 
@@ -326,11 +409,12 @@ public class retrievingColumnSections {
 			final double sdl, final double live, final double numstorys,
 			final double colhgt, final double k, final double fy,
 			final double factCOMP, final double bays,
-			final double targetColumn, final double factorOfSafety) {
+			final double targetColumn, final double factorOfSafety,
+			final double windspeed) {
 
 		double sectionNumber = retrievingColumnSections.findColumn(span, trib,
 				sdl, live, numstorys, colhgt, k, fy, factCOMP, bays,
-				targetColumn, factorOfSafety);
+				targetColumn, factorOfSafety, windspeed);
 
 		if (sectionNumber == 1) {
 			return 8.03;
@@ -382,6 +466,24 @@ public class retrievingColumnSections {
 		}
 		if (sectionNumber == 17) {
 			return 15.9;
+		}
+		if (sectionNumber == 18) {
+			return 16.0;
+		}
+		if (sectionNumber == 19) {
+			return 16.1;
+		}
+		if (sectionNumber == 20) {
+			return 16.2;
+		}
+		if (sectionNumber == 21) {
+			return 16.4;
+		}
+		if (sectionNumber == 22) {
+			return 16.5;
+		}
+		if (sectionNumber == 23) {
+			return 16.6;
 		}
 
 		return 0.0;

@@ -10,45 +10,53 @@ package edu.mit.civil.sapoutputfile.fem;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
-import edu.mit.civil.memberdesign.calculation.beamDesign;
-import edu.mit.civil.memberdesign.calculation.externalColumnForcesandDesign;
-import edu.mit.civil.memberdesign.calculation.internalColumnForcesAndDesign;
+import edu.mit.civil.memberdesign.calculation.externalColumnForcesandDesignA;
+import edu.mit.civil.memberdesign.calculation.internalColumnForcesAndDesignA;
 
 public class SapTextFile {
 
-	public static String sapFile(final double width1, final double loadwidth,
+	public static String sapFile(final double bayWidth, final double loadwidth,
 			final double sdl, final double live, final int numberOfStorys,
 			final double bays, final double colhgt, final String heading,
 			final int targetcolRem, double deadcombo, double livecombo,
 			double fy, double pr, final double k, final double factCOMP,
-			final double columnFoS, final double beamFoS) {
+			final double columnFoS, final double beamFoS, final double windspeed) {
 
-		double width = width1;
+		double width = bayWidth;
 
 		double live1 = live / 1000;
 		double sdl1 = sdl / 1000;
 
-		double colEquivEnd = 0.5 * width1 * numberOfStorys * loadwidth
+		double colEquivEnd = 0.5 * bayWidth * numberOfStorys * loadwidth
 				* ((deadcombo * sdl + livecombo * live) / 1000);
 
-		double colEquivInt = loadwidth * width1 * numberOfStorys
+		double colEquivInt = loadwidth * bayWidth * numberOfStorys
 				* ((deadcombo * sdl + livecombo * live) / 1000);
 
-		String beam = beamDesign.sectionDesign(width1, loadwidth, sdl, live,
-				fy, pr, beamFoS);
+		// String beam = beamDesign.sectionDesign(width, loadwidth, sdl, live,
+		// fy,
+		// pr, beamFoS, colhgt, numberOfStorys, bays, windspeed);
 
-		String intcolumn = internalColumnForcesAndDesign.columnSizing(width1,
-				loadwidth, sdl, live, numberOfStorys, colhgt, k, fy, factCOMP,
-				bays, columnFoS);
+		String beam = "W21x62";
 
-		String extcolumn = externalColumnForcesandDesign.columnSizing(width1,
-				loadwidth, sdl, live, numberOfStorys, colhgt, k, fy, factCOMP,
-				bays, columnFoS);
+		String intcolumn = "W14x"
+				+ internalColumnForcesAndDesignA.columnSizing(bayWidth,
+						loadwidth, sdl, live, numberOfStorys, colhgt, k, fy,
+						factCOMP, bays, columnFoS, windspeed);
+
+		String extcolumn = "W14x"
+				+ externalColumnForcesandDesignA.columnSizing(bayWidth,
+						loadwidth, sdl, live, numberOfStorys, colhgt, k, fy,
+						factCOMP, bays, columnFoS, windspeed);
 
 		try {
 
-			String filePath = "///Users/koleary/Desktop/Spring Semester/Thesis/SAP_Txt_Files/"
-					+ heading + ".txt";
+			String filePath = "///Users/koleary/Desktop/SAP/" + heading
+					+ ".txt";
+
+			// String filePath =
+			// "///Users/koleary/Desktop/Spring Semester/Thesis/SAP_Txt_Files/"
+			// + heading + ".txt";
 
 			PrintWriter pw = new PrintWriter(filePath);
 
@@ -57,7 +65,7 @@ public class SapTextFile {
 			pw.println("ColdCode=AISI-ASD96   RegenHinge=Yes");
 			pw.println("");
 			pw.println("TABLE:  \"ACTIVE DEGREES OF FREEDOM\"");
-			pw.println("UX=Yes   UY=Yes   UZ=Yes   RX=Yes   RY=Yes   RZ=Yes");
+			pw.println("UX=Yes   UY=No   UZ=Yes   RX=No   RY=Yes   RZ=No");
 			pw.println("");
 			pw.println("TABLE:  \"ANALYSIS OPTIONS\"");
 			pw.println("Solver=Advanced   Force32Bit=No   StiffCase=None   GeomMod=No");
@@ -81,7 +89,7 @@ public class SapTextFile {
 				pw.println("CoordSys=GLOBAL   AxisDir=X   GridID=x"
 						+ (i + 1)
 						+ "   XRYZCoord= "
-						+ ((i * width1) - width1 * bays * 0.5)
+						+ ((i * bayWidth) - bayWidth * bays * 0.5)
 						+ ",   LineType=Primary   LineColor=Gray8Dark   Visible=Yes   BubbleLoc=End");
 			}
 
@@ -265,6 +273,60 @@ public class SapTextFile {
 			pw.println("	        Z22=4.83796287465979E-02   R33=0.514675797339641   R22=0.309731433940473   ConcCol=No   ConcBeam=No   Color=Red   TotalWt=0   TotalMass=0   FromFile=Yes   AMod=1   A2Mod=1   A3Mod=1   JMod=1   I2Mod=1   I3Mod=1   MMod=1   WMod=1 _	");
 			pw.println("	        SectInFile=W14X99   	");
 			pw.println("		");
+
+			pw.println("		SectionName=W14X109   Material=A992Fy50   Shape=\"I/Wide Flange\"   t3=1.19333330790202   t2=1.21708329518636   tf=7.16666678587596E-02   tw=4.37499980131785E-02   t2b=1.21708329518636   tfb=7.16666678587596E-02   Area=0.222222222222222 _");
+			pw.println("			TorsConst=3.43364192011916E-04   I33=5.97993827160494E-02   I22=0.021556712962963   AS2=5.22083342075348E-02   AS3=0.145375000105964   S33=0.1002224312689   S22=3.54235622955653E-02   Z33=0.111111111111111   Z22=5.36458315672698E-02 _");
+			pw.println("			R33=0.518745816582864   R22=0.311456591410959   ConcCol=No   ConcBeam=No   Color=White   TotalWt=0   TotalMass=0   FromFile=Yes   AMod=1   A2Mod=1   A3Mod=1   JMod=1   I2Mod=1   I3Mod=1   MMod=1   WMod=1   SectInFile=W14X109 _");
+			pw.println("		");
+			pw.println("SectionName=W14X120   Material=A992Fy50   Shape=\"I/Wide Flange\"   t3=1.20666662851969   t2=1.22250000635783   tf=7.83333331346512E-02   tw=0.049166664481163   t2b=1.22250000635783   tfb=7.83333331346512E-02   Area=0.245138883590698 _");
+			pw.println("TorsConst=4.5187113645636E-04   I33=6.65509259259259E-02   I22=2.38715277777778E-02   AS2=5.93277745776706E-02   AS3=0.159604165289137   S33=0.110305405574311   S22=3.90536239732182E-02   Z33=0.122685185185185 _");
+			pw.println("Z22=5.90277777777778E-02   R33=0.521039860813821   R22=0.312057054885962   ConcCol=No   ConcBeam=No   Color=Red   TotalWt=0   TotalMass=0   FromFile=Yes   AMod=1   A2Mod=1   A3Mod=1   JMod=1   I2Mod=1   I3Mod=1   MMod=1   WMod=1 _");
+			pw.println("SectInFile=W14X120   ");
+			pw.println("		");
+			pw.println("SectionName=W14X132   Material=A992Fy50   Shape=\"I/Wide Flange\"   t3=1.22166665395101   t2=1.22708336512248   tf=8.58333309491475E-02   tw=5.37499984105428E-02   t2b=1.22708336512248   tfb=8.58333309491475E-02   Area=0.269444439146254 _");
+			pw.println("TorsConst=5.93171305494544E-04   I33=7.37847222222222E-02   I22=2.64274691358025E-02   AS2=6.56645827823215E-02   AS3=0.175541665818956   S33=0.120793543776601   S22=4.30736327896755E-02   Z33=0.135416666666667 _");
+			pw.println("Z22=6.53935185185185E-02   R33=0.523297440821368   R22=0.313179390573587   ConcCol=No   ConcBeam=No   Color=Magenta   TotalWt=0   TotalMass=0   FromFile=Yes   AMod=1   A2Mod=1   A3Mod=1   JMod=1   I2Mod=1   I3Mod=1   MMod=1   WMod=1 _");
+			pw.println("SectInFile=W14X132   ");
+			pw.println("		");
+			pw.println("SectionName=W14X145   Material=A992Fy50   Shape=\"I/Wide Flange\"   t3=1.23166664441427   t2=1.29166666666667   tf=9.08333361148834E-02   tw=5.66666672627131E-02   t2b=1.29166666666667   tfb=9.08333361148834E-02   Area=0.296527783075968 _");
+			pw.println("TorsConst=7.33024682159777E-04   I33=8.24652777777778E-02   I22=3.26485339506173E-02   AS2=6.97916679912143E-02   AS3=0.195541673236423   S33=0.133908437241142   S22=0.05055256869773   Z33=0.150462962962963 _");
+			pw.println("Z22=7.69675925925926E-02   R33=0.527354756807502   R22=0.331817393027939   ConcCol=No   ConcBeam=No   Color=Yellow   TotalWt=0   TotalMass=0   FromFile=Yes   AMod=1   A2Mod=1   A3Mod=1   JMod=1   I2Mod=1   I3Mod=1   MMod=1   WMod=1 _");
+			pw.println("SectInFile=W14X145   ");
+			pw.println("		");
+			pw.println("SectionName=W14X159   Material=A992Fy50   Shape=\"I/Wide Flange\"   t3=1.24833329518636   t2=1.29708329836527   tf=9.91666714350382E-02   tw=6.20833337306976E-02   t2b=1.29708329836527   tfb=9.91666714350382E-02   Area=0.324305560853746 _");
+			pw.println("TorsConst=9.5486107431812E-04   I33=9.16280864197531E-02   I22=3.60725308641975E-02   AS2=7.74999989403619E-02   AS3=0.214381946457757   S33=0.14680067698759   S22=5.56209935162376E-02   Z33=0.166087962962963 _");
+			pw.println("Z22=8.44907407407407E-02   R33=0.531541417945152   R22=0.333511726839808   ConcCol=No   ConcBeam=No   Color=White   TotalWt=0   TotalMass=0   FromFile=Yes   AMod=1   A2Mod=1   A3Mod=1   JMod=1   I2Mod=1   I3Mod=1   MMod=1   WMod=1 _");
+			pw.println("SectInFile=W14X159");
+			pw.println("		");
+			pw.println("SectionName=W14X176   Material=A992Fy50   Shape=\"I/Wide Flange\"   t3=1.26833335558573   t2=1.30416663487752   tf=0.109166661898295   tw=6.91666652758916E-02   t2b=1.30416663487752   tfb=0.109166661898295   Area=0.359722216924032 _");
+			pw.println("TorsConst=1.27797067901235E-03   I33=0.103202160493827   I22=4.04128086419753E-02   AS2=8.77291692627801E-02   AS3=0.237284713321262   S33=0.162736649697535   S22=6.19749157219784E-02   Z33=0.185185185185185 _");
+			pw.println("Z22=9.43287037037037E-02   R33=0.535624907112779   R22=0.335178294343712   ConcCol=No   ConcBeam=No   Color=Gray8Dark   TotalWt=0   TotalMass=0   FromFile=Yes   AMod=1   A2Mod=1   A3Mod=1   JMod=1   I2Mod=1   I3Mod=1   MMod=1 _");
+			pw.println("WMod=1   SectInFile=W14X176  ");
+			pw.println("		");
+			pw.println("		SectionName=W14X193   Material=A992Fy50   Shape=\"I/Wide Flange\"   t3=1.28999996185303   t2=1.30916666984558   tf=0.120000004768372   tw=7.41666654745738E-02   t2b=1.30916666984558   tfb=0.120000004768372   Area=0.394444439146254 _");
+			pw.println("			TorsConst=1.67824070394775E-03   I33=0.115740740740741   I22=0.044897762345679   AS2=9.56736140780979E-02   AS3=0.261833323372735   S33=0.179443014206736   S22=6.85898340980141E-02   Z33=0.205439814814815   Z22=0.104166666666667 _");
+			pw.println("			R33=0.541689241159793   R22=0.337380074275217   ConcCol=No   ConcBeam=No   Color=Magenta   TotalWt=0   TotalMass=0   FromFile=Yes   AMod=1   A2Mod=1   A3Mod=1   JMod=1   I2Mod=1   I3Mod=1   MMod=1   WMod=1   SectInFile=W14X193 _");
+			pw.println("		");
+			pw.println("		SectionName=W14X211   Material=A992Fy50   Shape=\"I/Wide Flange\"   t3=1.3100000222524   t2=1.31666668256124   tf=0.129999995231628   tw=8.16666682561239E-02   t2b=1.31666668256124   tfb=0.129999995231628   Area=0.430555555555556 _");
+			pw.println("			TorsConst=2.15084869184612E-03   I33=0.128279320987654   I22=4.96720679012346E-02   AS2=0.106986112064785   AS3=0.285277790493435   S33=0.195846288257449   S22=7.54512414707878E-02   Z33=0.225694444444444   Z22=0.114583333333333 _");
+			pw.println("			R33=0.545837950403193   R22=0.3396577446674   ConcCol=No   ConcBeam=No   Color=Yellow   TotalWt=0   TotalMass=0   FromFile=Yes   AMod=1   A2Mod=1   A3Mod=1   JMod=1   I2Mod=1   I3Mod=1   MMod=1   WMod=1   SectInFile=W14X211 _");
+			pw.println("		");
+			pw.println("		SectionName=W14X233   Material=A992Fy50   Shape=\"I/Wide Flange\"   t3=1.33666674296061   t2=1.3241666952769   tf=0.143333335717519   tw=0.089166671037674   t2b=1.3241666952769   tfb=0.143333335717519   Area=0.475694444444444 _");
+			pw.println("			TorsConst=2.86940586419753E-03   I33=0.145158179012346   I22=5.54591049382716E-02   AS2=0.119187500741747   AS3=0.316326379776001   S33=0.217194270414526   S22=0.083764536800519   Z33=0.252314814814815   Z22=0.127893518518519 _");
+			pw.println("			R33=0.552403874489943   R22=0.341446282255138   ConcCol=No   ConcBeam=No   Color=White   TotalWt=0   TotalMass=0   FromFile=Yes   AMod=1   A2Mod=1   A3Mod=1   JMod=1   I2Mod=1   I3Mod=1   MMod=1   WMod=1   SectInFile=W14X233 _");
+			pw.println("		");
+			pw.println("		SectionName=W14X257   Material=A992Fy50   Shape=\"I/Wide Flange\"   t3=1.36499993006388   t2=1.33291665712992   tf=0.157499998807907   tw=9.79166626930237E-02   t2b=1.33291665712992   tfb=0.157499998807907   Area=0.524999989403619 _");
+			pw.println("			TorsConst=3.81462183999427E-03   I33=0.163966049382716   I22=6.22106481481481E-02   AS2=0.13365277979109   AS3=0.349888881047567   S33=0.240243308107777   S22=9.33451432471435E-02   Z33=0.281828703703704   Z22=0.142361111111111 _");
+			pw.println("			R33=0.558852655752989   R22=0.344233169602848   ConcCol=No   ConcBeam=No   Color=Gray8Dark   TotalWt=0   TotalMass=0   FromFile=Yes   AMod=1   A2Mod=1   A3Mod=1   JMod=1   I2Mod=1   I3Mod=1   MMod=1   WMod=1   SectInFile=W14X257 _");
+			pw.println("		");
+			pw.println("		SectionName=W14X283   Material=A992Fy50   Shape=\"I/Wide Flange\"   t3=1.39499998092651   t2=1.34250005086263   tf=0.1724999944369   tw=0.107499996821086   t2b=1.34250005086263   tfb=0.1724999944369   Area=0.578472243414985 _");
+			pw.println("			TorsConst=5.01543209876543E-03   I33=0.185185185185185   I22=6.94444444444444E-02   AS2=0.149965273009406   AS3=0.38597223493788   S33=0.265498477013872   S22=0.103455406798417   Z33=0.313657407407407   Z22=0.158564814814815 _");
+			pw.println("			R33=0.565798585622444   R22=0.346479457990852   ConcCol=No   ConcBeam=No   Color=Blue   TotalWt=0   TotalMass=0   FromFile=Yes   AMod=1   A2Mod=1   A3Mod=1   JMod=1   I2Mod=1   I3Mod=1   MMod=1   WMod=1   SectInFile=W14X283 _");
+			pw.println("		");
+			pw.println("		SectionName=W14X311   Material=A992Fy50   Shape=\"I/Wide Flange\"   t3=1.42666673660278   t2=1.35249996185303   tf=0.188333332538605   tw=0.11749999721845   t2b=1.35249996185303   tfb=0.188333332538605   Area=0.634722232818604 _");
+			pw.println("			TorsConst=6.55864197530864E-03   I33=0.208815586419753   I22=7.76427469135802E-02   AS2=0.167631944020589   AS3=0.424534718195597   S33=0.292732116145065   S22=0.114813677047656   Z33=0.348958333333333   Z22=0.175925925925926 _");
+			pw.println("			R33=0.573574190203794   R22=0.349750698472604   ConcCol=No   ConcBeam=No   Color=Yellow   TotalWt=0   TotalMass=0   FromFile=Yes   AMod=1   A2Mod=1   A3Mod=1   JMod=1   I2Mod=1   I3Mod=1   MMod=1   WMod=1   SectInFile=W14X311 _");
+			pw.println("		");
 			pw.println("	   SectionName=W16X50   Material=A992Fy50   Shape=\"I/Wide Flange\"   t3=1.35500001907349   t2=0.589166680971781   tf=5.24999996026357E-02   tw=3.16666662693024E-02   t2b=0.589166680971781   tfb=5.24999996026357E-02   Area=0.102083332008786 _	");
 			pw.println("	        TorsConst=7.33024682159777E-05   I33=3.17804783950617E-02   I22=1.79398151827447E-03   AS2=4.29083340697818E-02   AS3=5.15520837571886E-02   S33=4.69084545353621E-02   S22=6.08989468079033E-03   Z33=5.32407407407407E-02 _	");
 			pw.println("	        Z22=9.43286992885448E-03   R33=0.557959654520532   R22=0.132565820382055   ConcCol=No   ConcBeam=No   Color=Magenta   TotalWt=0   TotalMass=0   FromFile=Yes   AMod=1   A2Mod=1   A3Mod=1   JMod=1   I2Mod=1   I3Mod=1   MMod=1   WMod=1 _	");
@@ -335,6 +397,56 @@ public class SapTextFile {
 			pw.println("	        Z22=3.20023143732989E-02   R33=0.653003258307816   R22=0.221306593184963   ConcCol=No   ConcBeam=No   Color=Blue   TotalWt=0   TotalMass=0   FromFile=Yes   AMod=1   A2Mod=1   A3Mod=1   JMod=1   I2Mod=1   I3Mod=1   MMod=1   WMod=1 _	");
 			pw.println("	        SectInFile=W18X97  	");
 			pw.println("	 	");
+			pw.println("SectionName=W21X50   Material=A992Fy50   Shape=\"I/Wide Flange\"   t3=1.7358333269755   t2=0.544166684150696   tf=0.044583335518837   tw=3.16666662693024E-02   t2b=0.544166684150696   tfb=0.044583335518837   Area=0.102083332008786 _");
+			pw.println("TorsConst=5.49768511619833E-05   I33=4.74537037037037E-02   I22=1.20081016678869E-03   AS2=5.49680557515886E-02   AS3=4.04347214433882E-02   S33=5.46754149332833E-02   S22=4.4133909765639E-03   Z33=6.36574074074074E-02 _");
+			pw.println("Z22=7.06018507480621E-03   R33=0.681801007436398   R22=0.108457542481699   ConcCol=No   ConcBeam=No   Color=White   TotalWt=0   TotalMass=0   FromFile=Yes   AMod=1   A2Mod=1   A3Mod=1   JMod=1   I2Mod=1   I3Mod=1   MMod=1   WMod=1 _");
+			pw.println("SectInFile=W21X50  ");
+			pw.println("	 	");
+			pw.println("SectionName=W21X57   Material=A992Fy50   Shape=\"I/Wide Flange\"   t3=1.7549999554952   t2=0.546249985694885   tf=5.41666646798452E-02   tw=3.37500000993411E-02   t2b=0.546249985694885   tfb=5.41666646798452E-02   Area=0.115972227520413 _");
+			pw.println("TorsConst=8.53587953764715E-05   I33=5.64236111111111E-02   I22=1.47569446284094E-03   AS2=0.059231248166826   AS3=4.93138896094428E-02   S33=0.064300413153219   S22=5.40300046310741E-03   Z33=7.46527777777778E-02 _");
+			pw.println("Z22=8.56481492519379E-03   R33=0.6975148198288   R22=0.112803149226921   ConcCol=No   ConcBeam=No   Color=Gray8Dark   TotalWt=0   TotalMass=0   FromFile=Yes   AMod=1   A2Mod=1   A3Mod=1   JMod=1   I2Mod=1   I3Mod=1   MMod=1   WMod=1 _");
+			pw.println("SectInFile=W21X57  ");
+			pw.println("	 	");
+			pw.println("SectionName=W21X62   Material=A992Fy50   Shape=\"I/Wide Flange\"   t3=1.74916664759318   t2=0.68666664759318   tf=5.12500007947286E-02   tw=3.33333338300387E-02   t2b=0.68666664759318   tfb=5.12500007947286E-02   Area=0.127083328035143 _");
+			pw.println("TorsConst=8.82523168844205E-05   I33=6.41396604938272E-02   I22=2.77295524691358E-03   AS2=5.83055549197727E-02   AS3=5.86527784665426E-02   S33=7.33373925029752E-02   S22=8.07656890467304E-03   Z33=8.33333333333333E-02 _");
+			pw.println("Z22=1.25578708118863E-02   R33=0.710426313025388   R22=0.147715864493656   ConcCol=No   ConcBeam=No   Color=Yellow   TotalWt=0   TotalMass=0   FromFile=Yes   AMod=1   A2Mod=1   A3Mod=1   JMod=1   I2Mod=1   I3Mod=1   MMod=1   WMod=1 _");
+			pw.println("SectInFile=W21X62  ");
+			pw.println("		");
+			pw.println("SectionName=W21X68   Material=A992Fy50   Shape=\"I/Wide Flange\"   t3=1.76083326339722   t2=0.689166704813639   tf=5.70833335320155E-02   tw=3.58333339293798E-02   t2b=0.689166704813639   tfb=5.70833335320155E-02   Area=0.138888888888889 _");
+			pw.println("TorsConst=1.18152008472401E-04   I33=7.13734567901235E-02   I22=3.12017732196384E-03   AS2=6.30965299076504E-02   AS3=6.55666655964322E-02   S33=8.10678197348691E-02   S22=9.0549276399172E-03   Z33=9.25925925925926E-02 _");
+			pw.println("Z22=1.41203701496124E-02   R33=0.716860438920219   R22=0.149884211036852   ConcCol=No   ConcBeam=No   Color=White   TotalWt=0   TotalMass=0   FromFile=Yes   AMod=1   A2Mod=1   A3Mod=1   JMod=1   I2Mod=1   I3Mod=1   MMod=1   WMod=1 _");
+			pw.println("SectInFile=W21X68");
+			pw.println("		");
+			pw.println("SectionName=W21X73   Material=A992Fy50   Shape=\"I/Wide Flange\"   t3=1.76999998092651   t2=0.691250006357829   tf=6.16666674613953E-02   tw=3.79166677594185E-02   t2b=0.691250006357829   tfb=6.16666674613953E-02   Area=0.149305555555556 _");
+			pw.println("TorsConst=1.45640431178941E-04   I33=7.71604938271605E-02   I22=3.40470671653748E-03   AS2=6.71124988132053E-02   AS3=7.10486107402378E-02   S33=8.71869996142831E-02   S22=9.85086925199973E-03   Z33=0.099537037037037 _");
+			pw.println("Z22=1.53935187392765E-02   R33=0.718885154689589   R22=0.15100866557322   ConcCol=No   ConcBeam=No   Color=Gray8Dark   TotalWt=0   TotalMass=0   FromFile=Yes   AMod=1   A2Mod=1   A3Mod=1   JMod=1   I2Mod=1   I3Mod=1   MMod=1 _");
+			pw.println("WMod=1   SectInFile=W21X73");
+			pw.println("		");
+			pw.println("SectionName=W21X83   Material=A992Fy50   Shape=\"I/Wide Flange\"   t3=1.78583335876465   t2=0.696249961853027   tf=0.069583331545194   tw=4.29166654745738E-02   t2b=0.696249961853027   tfb=0.069583331545194   Area=0.168749994701809 _");
+			pw.println("TorsConst=2.09297846864771E-04   I33=8.82523148148148E-02   I22=3.92554019704277E-03   AS2=7.66388906372918E-02   AS3=8.07430545488993E-02   S33=9.88360021182082E-02   S22=1.12762381676695E-02   Z33=0.113425925925926 _");
+			pw.println("Z22=0.017650462962963   R33=0.723171277640244   R22=0.152520363090586   ConcCol=No   ConcBeam=No   Color=Blue   TotalWt=0   TotalMass=0   FromFile=Yes   AMod=1   A2Mod=1   A3Mod=1   JMod=1   I2Mod=1   I3Mod=1   MMod=1   WMod=1 _");
+			pw.println("SectInFile=W21X83");
+			pw.println("		");
+			pw.println("SectionName=W21X93   Material=A992Fy50   Shape=\"I/Wide Flange\"   t3=1.80166673660278   t2=0.701666673024495   tf=7.75000005960464E-02   tw=4.83333319425583E-02   t2b=0.701666673024495   tfb=7.75000005960464E-02   Area=0.189583328035143 _");
+			pw.println("TorsConst=2.90798621229184E-04   I33=9.98263888888889E-02   I22=4.48013124642549E-03   AS2=8.70833330684238E-02   AS3=9.06319419542948E-02   S33=0.1108155985353   S22=1.27699701828908E-02   Z33=0.127893518518519 _");
+			pw.println("Z22=2.00810189600344E-02   R33=0.725642330127037   R22=0.15372528152527   ConcCol=No   ConcBeam=No   Color=Green   TotalWt=0   TotalMass=0   FromFile=Yes   AMod=1   A2Mod=1   A3Mod=1   JMod=1   I2Mod=1   I3Mod=1   MMod=1   WMod=1 _");
+			pw.println("SectInFile=W21X93");
+			pw.println("		");
+			pw.println("SectionName=W21X101   Material=A992Fy50   Shape=\"I/Wide Flange\"   t3=1.78000005086263   t2=1.02416666348775   tf=6.66666676600774E-02   tw=4.16666666666667E-02   t2b=1.02416666348775   tfb=6.66666676600774E-02   Area=0.206944439146254 _");
+			pw.println("TorsConst=2.51253859864341E-04   I33=0.11670524691358   I22=1.19598765432099E-02   AS2=7.41666687859429E-02   AS3=0.113798605071174   S33=0.131129487167174   S22=2.33553326222923E-02   Z33=0.146412037037037 _");
+			pw.println("Z22=3.57060189600344E-02   R33=0.750962603422191   R22=0.24040110960744   ConcCol=No   ConcBeam=No   Color=Cyan   TotalWt=0   TotalMass=0   FromFile=Yes   AMod=1   A2Mod=1   A3Mod=1   JMod=1   I2Mod=1   I3Mod=1   MMod=1   WMod=1 _");
+			pw.println("SectInFile=W21X101");
+			pw.println("		");
+			pw.println("SectionName=W21X111   Material=A992Fy50   Shape=\"I/Wide Flange\"   t3=1.79250001907349   t2=1.02833334604899   tf=7.29166666666667E-02   tw=4.58333343267441E-02   t2b=1.02833334604899   tfb=7.29166666666667E-02   Area=0.227083338631524 _");
+			pw.println("TorsConst=3.29378854345392E-04   I33=0.128761574074074   I22=1.32137345679012E-02   AS2=8.21597245004442E-02   AS3=0.124972224235535   S33=0.143667026726871   S22=2.56993213701965E-02   Z33=0.161458333333333   Z22=0.039467590826529 _");
+			pw.println("R33=0.753009583095936   R22=0.241223799634672   ConcCol=No   ConcBeam=No   Color=Red   TotalWt=0   TotalMass=0   FromFile=Yes   AMod=1   A2Mod=1   A3Mod=1   JMod=1   I2Mod=1   I3Mod=1   MMod=1   WMod=1   SectInFile=W21X111 _");
+			pw.println("		");
+			pw.println("SectionName=W21X122   Material=A992Fy50   Shape=\"I/Wide Flange\"   t3=1.80666669209798   t2=1.03250002861023   tf=7.99999982118607E-02   tw=5.00000019868215E-02   t2b=1.03250002861023   tfb=7.99999982118607E-02   Area=0.249305566151937 _");
+			pw.println("TorsConst=4.33063249529144E-04   I33=0.142746913580247   I22=1.47087191358025E-02   AS2=9.03333359294467E-02   AS3=0.137666662534078   S33=0.158022411333086   S22=2.84914648488693E-02   Z33=0.177662037037037 _");
+			pw.println("Z22=4.37499991169682E-02   R33=0.756688922109472   R22=0.242896602457778   ConcCol=No   ConcBeam=No   Color=Yellow   TotalWt=0   TotalMass=0   FromFile=Yes   AMod=1   A2Mod=1   A3Mod=1   JMod=1   I2Mod=1   I3Mod=1   MMod=1   WMod=1 _");
+			pw.println("SectInFile=W21X122");
+			pw.println("		");
+
 			// pw.println("	TABLE:  \"FRAME SECTION PROPERTIES 04 - AUTO SELECT\"	");
 
 			// pw.println("	   ListName=Beams   SectionName=W10X22	");
@@ -420,6 +532,7 @@ public class SapTextFile {
 			// pw.println("   LoadCase=LR   DesignType=LIVE   SelfWtMult=0");
 			pw.println("   LoadCase=LL   DesignType=LIVE   SelfWtMult=0");
 			pw.println("   LoadCase=SDL   DesignType=DEAD   SelfWtMult=0");
+			pw.println("  LoadCase=WIND   DesignType=WIND   SelfWtMult=0   AutoLoad=USER");
 			// pw.println("   LoadCase=SDL_R   DesignType=DEAD   SelfWtMult=0");
 			pw.println("   LoadCase=COL_EQUIV   DesignType=OTHER   SelfWtMult=0");
 			pw.println("   LoadCase=COL_CANCEL   DesignType=OTHER   SelfWtMult=0");
@@ -455,22 +568,25 @@ public class SapTextFile {
 			 * COMBINATIONS
 			 */
 			pw.println("TABLE:  \"COMBINATION DEFINITIONS\"");
-			pw.println(" ComboName=UDSTL1   ComboType=\"Linear Add\"   AutoDesign=No   CaseType=\"Linear Static\"   CaseName=DEAD   ScaleFactor=1.4   SteelDesign=Yes   ConcDesign=No   AlumDesign=No   ColdDesign=No");
-			pw.println("   ComboName=UDSTL1   CaseType=\"Linear Static\"   CaseName=SDL   ScaleFactor=1.4");
-			// pw.println("   ComboName=UDSTL1   CaseType=\"Linear Static\"   CaseName=SDL_R   ScaleFactor=1.4");
-			pw.println("ComboName=UDSTL2   ComboType=\"Linear Add\"   AutoDesign=No   CaseType=\"Linear Static\"   CaseName=DEAD   ScaleFactor=1.2   SteelDesign=Yes   ConcDesign=No   AlumDesign=No   ColdDesign=No");
-			pw.println("   ComboName=UDSTL2   CaseType=\"Linear Static\"   CaseName=LL   ScaleFactor=1.6");
-			// pw.println("   ComboName=UDSTL2   CaseType=\"Linear Static\"   CaseName=LR   ScaleFactor=1.6");
-			pw.println("   ComboName=UDSTL2   CaseType=\"Linear Static\"   CaseName=SDL   ScaleFactor=1.2");
-			// pw.println("   ComboName=UDSTL2   CaseType=\"Linear Static\"   CaseName=SDL_R   ScaleFactor=1.2");
+			pw.println(" ComboName=ULT,1.4D   ComboType=\"Linear Add\"   AutoDesign=No   CaseType=\"Linear Static\"   CaseName=DEAD   ScaleFactor=1.4   SteelDesign=Yes   ConcDesign=No   AlumDesign=No   ColdDesign=No");
+			pw.println("   ComboName=ULT,1.4D   CaseType=\"Linear Static\"   CaseName=SDL   ScaleFactor=1.4");
+			pw.println("ComboName=ULT,1.2D,1.6L   ComboType=\"Linear Add\"   AutoDesign=No   CaseType=\"Linear Static\"   CaseName=DEAD   ScaleFactor=1.2   SteelDesign=Yes   ConcDesign=No   AlumDesign=No   ColdDesign=No");
+			pw.println("   ComboName=ULT,1.2D,1.0W   ComboType=\"Linear Add\"   AutoDesign=No   CaseType=\"Linear Static\"   CaseName=SDL   ScaleFactor=1.2   SteelDesign=Yes   ConcDesign=No   AlumDesign=No ColdDesign=No");
+			pw.println("   ComboName=ULT,1.2D,1.6L   CaseType=\"Linear Static\"   CaseName=LL   ScaleFactor=1.6");
+			pw.println("   ComboName=ULT,1.2D,1.6L   CaseType=\"Linear Static\"   CaseName=SDL   ScaleFactor=1.2");
+			// pw.println("   ComboName=ULT,1.2D,1.0W   CaseType=\"Linear Static\"   CaseName=SDL   ScaleFactor=1.2");
+			pw.println("   ComboName=ULT,1.2D,1.0W   CaseType=\"Linear Static\"   CaseName=WIND   ScaleFactor=1.0");
+			pw.println("   ComboName=SERV,1.0D,0.6W   CaseType=\"Linear Static\"   CaseName=SDL   ScaleFactor=1.0");
+			pw.println("   ComboName=SERV,1.0D,0.6W   CaseType=\"Linear Static\"   CaseName=WIND   ScaleFactor=0.6");
+
 			pw.println("");
 
 			/*
 			 * RAMP FUNCTION
 			 */
 			pw.println("TABLE:  \"FUNCTION - TIME HISTORY - RAMP\"");
-			pw.println("   Name=COL_REM   Time=0   Value=0   RampTime=0.3333   Amplitude=1   MaxTime=5");
-			pw.println("   Name=COL_REM   Time=0.3333   Value=1");
+			pw.println("   Name=COL_REM   Time=0   Value=0   RampTime=0.01   Amplitude=1   MaxTime=5");
+			pw.println("   Name=COL_REM   Time=0.01   Value=1");
 			pw.println("   Name=COL_REM   Time=5   Value=1");
 			pw.println("");
 
@@ -478,44 +594,39 @@ public class SapTextFile {
 			 * CASE DEFINITIONS
 			 */
 			pw.println("TABLE:  \"ANALYSIS CASE DEFINITIONS\"");
+			pw.println("Case=MODAL   Type=LinModal   InitialCond=Zero   RunCase=Yes");
 			pw.println("   Case=DEAD   Type=LinStatic   InitialCond=Zero   RunCase=Yes");
 			pw.println("   Case=LL   Type=LinStatic   InitialCond=Zero   RunCase=Yes");
 			// pw.println("   Case=LR   Type=LinStatic   InitialCond=Zero   RunCase=Yes");
 			pw.println("   Case=SDL   Type=LinStatic   InitialCond=Zero   RunCase=Yes");
+			pw.println("   Case=WIND   Type=LinStatic   InitialCond=Zero   RunCase=Yes");
 			// pw.println("   Case=SDL_R   Type=LinStatic   InitialCond=Zero   RunCase=Yes");
-			pw.println("   Case=COL_EQUIV   Type=LinStatic   InitialCond=Zero   RunCase=No");
-			pw.println("   Case=COL_CANCEL   Type=LinStatic   InitialCond=Zero   RunCase=No");
-			pw.println("   Case=NLD_PC   Type=NonDirHist   InitialCond=NLS_PC   RunCase=No");
-			pw.println("   Case=NLS_PC   Type=NonStatic   InitialCond=Zero   RunCase=No");
-			pw.println("   Case=Col_Equiv_Check   Type=LinStatic   InitialCond=Zero   RunCase=No");
+			pw.println("   Case=COL_EQUIV   Type=LinStatic   InitialCond=Zero   RunCase=Yes");
+			pw.println("   Case=COL_CANCEL   Type=LinStatic   InitialCond=Zero   RunCase=Yes");
+			pw.println("   Case=NLD_PC   Type=NonDirHist   InitialCond=NLS_PC   RunCase=Yes");
+			pw.println("   Case=NLS_PC   Type=NonStatic   InitialCond=Zero   RunCase=Yes");
+			pw.println("   Case=Col_Equiv_Check   Type=LinStatic   InitialCond=Zero   RunCase=Yes");
+			pw.println("   Case=LYN_DYN   Type=LinDirHis   InitialCond=NLS_PC   RunCase=Yes");
 
 			/*
 			 * LOAD ASSIGNMENTS
 			 */
 			pw.println("TABLE:  \"CASE - STATIC 1 - LOAD ASSIGNMENTS\"");
-			// pw.println("   Case=DEAD   LoadType=\"Load case\"   LoadName=DEAD   LoadSF=1");
 			pw.println("   Case=LL   LoadType=\"Load case\"   LoadName=LL   LoadSF=1");
-			// pw.println("   Case=LR   LoadType=\"Load case\"   LoadName=LR   LoadSF=1");
 			pw.println("   Case=SDL   LoadType=\"Load case\"   LoadName=SDL   LoadSF=1");
-			// pw.println("   Case=SDL_R   LoadType=\"Load case\"   LoadName=SDL_R   LoadSF=1");
+			pw.println("   Case=WIND   LoadType=\"Load case\"   LoadName=WIND   LoadSF=1");
 			pw.println("   Case=COL_EQUIV   LoadType=\"Load case\"   LoadName=COL_EQUIV   LoadSF=1");
 			pw.println("   Case=COL_CANCEL   LoadType=\"Load case\"   LoadName=COL_CANCEL   LoadSF=1");
-			// pw.println("   Case=NLS_PC   LoadType=\"Load case\"   LoadName=DEAD   LoadSF="
-			// + deadcombo + "");
 			pw.println("   Case=NLS_PC   LoadType=\"Load case\"   LoadName=SDL   LoadSF="
 					+ deadcombo + "");
-			// pw.println("   Case=NLS_PC   LoadType=\"Load case\"   LoadName=SDL_R   LoadSF=1.2");
 			pw.println("   Case=NLS_PC   LoadType=\"Load case\"   LoadName=LL   LoadSF="
 					+ livecombo + "");
-			// pw.println("   Case=NLS_PC   LoadType=\"Load case\"   LoadName=LR   LoadSF=0.5");
 			pw.println("   Case=NLS_PC   LoadType=\"Load case\"   LoadName=COL_EQUIV   LoadSF=1.0");
-			// pw.println("   Case=Col_Equiv_Check   LoadType=\"Load case\"   LoadName=DEAD  LoadSF="
-			// + deadcombo + "");
 			pw.println("   Case=Col_Equiv_Check   LoadType=\"Load case\"   LoadName=SDL  LoadSF="
 					+ deadcombo + "");
 			pw.println("   Case=Col_Equiv_Check   LoadType=\"Load case\"   LoadName=LL  LoadSF="
 					+ livecombo + "");
-			pw.println("   Case=Col_Equiv_Check   LoadType=\"Load case\"   LoadName=COL_EQUIV  LoadSF=1");
+			pw.println("   Case=Col_Equiv_Check   LoadType=\"Load case\"   LoadName=COL_EQUIV  LoadSF=0");
 
 			/*
 			 * NON LINEAR DATA
@@ -532,18 +643,23 @@ public class SapTextFile {
 			 */
 			pw.println("TABLE:  \"CASE - DIRECT HISTORY 1 - GENERAL\"");
 			pw.println("   Case=NLD_PC   OutSteps=500   StepSize=0.01");
+			pw.println("   Case=LYN_DYN   OutSteps=500   StepSize=0.01");
 			pw.println("");
 			pw.println("TABLE:  \"CASE - DIRECT HISTORY 2 - LOAD ASSIGNMENTS\"");
 			pw.println("   Case=NLD_PC   LoadType=\"Load case\"   LoadName=COL_CANCEL   Function=COL_REM   LoadSF=1   TimeFactor=1   ArrivalTime=0");
+			pw.println("   Case=LYN_DYN   LoadType=\"Load case\"   LoadName=COL_CANCEL   Function=COL_REM   LoadSF=1   TimeFactor=1   ArrivalTime=0");
 			pw.println("");
 			pw.println("TABLE:  \"CASE - DIRECT HISTORY 3 - PROPORTIONAL DAMPING\"");
-			pw.println("   Case=NLD_PC   SpecifyType=Period   MassCoeff=0.228479465715621   StiffCoeff=5.78745247606892E-04   Period1=1   Damping1=0.02   Period2=0.1   Damping2=0.02");
+			pw.println("  Case=NLD_PC   SpecifyType=Frequency   MassCoeff=0.228479465715621   StiffCoeff=5.78745247606892E-04   Frequency1=1   Damping1=0.02   Frequency2=10   Damping2=0.02");
+			pw.println("  Case=LYN_DYN   SpecifyType=Frequency   MassCoeff=0.228479465715621   StiffCoeff=5.78745247606892E-04   Frequency1=1   Damping1=0.02   Frequency2=10   Damping2=0.02");
 			pw.println("");
 			pw.println("TABLE:  \"CASE - DIRECT HISTORY 4 - INTEGRATION PARAMETERS\"");
-			pw.println("   Case=NLD_PC   IntMethod=HilberHughesTaylor   Gamma=0   Beta=0   Alpha=0");
+			pw.println("   Case=NLD_PC   IntMethod=HilberHughesTaylor   Gamma=0.5   Beta=0.25   Alpha=0");
+			pw.println("   Case=LYN_DYN   IntMethod=HilberHughesTaylor   Gamma=0.5   Beta=0.25   Alpha=0");
+
 			pw.println("");
 			pw.println("TABLE:  \"CASE - DIRECT HISTORY 5 - NONLINEAR PARAMETERS\"");
-			pw.println("   Case=NLD_PC   GeoNonLin=\"Large Displ\"   DTMax=0   DTMin=0   MaxIterCS=10   MaxIterNR=40   ItConvTol=0.0001   UseEvStep=Yes   EvLumpTol=0.01   LSPerIter=20   LSTol=0.1   LSStepFact=1.618   FrameTC=Yes   FrameHinge=Yes   CableTC=Yes   LinkTC=Yes   LinkOther=Yes");
+			pw.println("   Case=NLD_PC   GeoNonLin=P-Delta   DTMax=0   DTMin=0   MaxIterCS=10   MaxIterNR=40   ItConvTol=0.0001   UseEvStep=Yes   EvLumpTol=0.01   LSPerIter=20   LSTol=0.1   LSStepFact=1.618   FrameTC=Yes   FrameHinge=Yes   CableTC=Yes   LinkTC=Yes   LinkOther=Yes");
 
 			/*
 			 * JOINT/NODE DATA
@@ -565,10 +681,10 @@ public class SapTextFile {
 					pw.println("Joint="
 							+ (joint)
 							+ "   CoordSys=GLOBAL   CoordType=Cartesian   XorR="
-							+ (-width1 * bays * 0.5 + (i * width))
+							+ (-bayWidth * bays * 0.5 + (i * width))
 							+ "   Y=0   Z=" + (j * colhgt)
 							+ "   SpecialJt=No   GlobalX="
-							+ (-width1 * bays * 0.5 + (i * width))
+							+ (-bayWidth * bays * 0.5 + (i * width))
 							+ "   GlobalY=0   GlobalZ=" + (j * colhgt) + "");
 				}
 
@@ -588,6 +704,9 @@ public class SapTextFile {
 			int j = 0;
 			int k1 = 0;
 
+			// If you want to remove the target column, change joint below to l
+			// + 1 to l + 2 and xo on
+
 			for (int l = 1; l <= (numberOfStorys * (bays + 1)); l++) {
 
 				a++;
@@ -595,10 +714,10 @@ public class SapTextFile {
 
 					if (targetcolRem == 1) {
 
-						pw.println("   Frame=" + (l) + "   JointI=" + (l + 1)
-								+ "   JointJ=" + (l + 2)
+						pw.println("   Frame=" + (l) + "   JointI=" + (l)
+								+ "   JointJ=" + (l + 1)
 								+ "   IsCurved=No   Length=" + colhgt
-								+ "   CentroidX=" + (-width1 * bays * 0.5)
+								+ "   CentroidX=" + (-bayWidth * bays * 0.5)
 								+ "    CentroidY=0   CentroidZ="
 								+ (colhgt / 2 + (colhgt * (a))) + "");
 
@@ -606,7 +725,7 @@ public class SapTextFile {
 						pw.println("   Frame=" + (l) + "   JointI=" + l
 								+ "   JointJ=" + (l + 1)
 								+ "   IsCurved=No   Length=" + colhgt
-								+ "   CentroidX=" + (-width1 * bays * 0.5)
+								+ "   CentroidX=" + (-bayWidth * bays * 0.5)
 								+ "    CentroidY=0   CentroidZ="
 								+ (colhgt / 2 + (colhgt * (a - 1))) + "");
 					}
@@ -616,11 +735,11 @@ public class SapTextFile {
 
 					if (targetcolRem == 2) {
 
-						pw.println("   Frame=" + (l) + "   JointI=" + (l + 2)
-								+ "   JointJ=" + (l + 3)
+						pw.println("   Frame=" + (l) + "   JointI=" + (l + 1)
+								+ "   JointJ=" + (l + 2)
 								+ "   IsCurved=No   Length=" + colhgt
 								+ "   CentroidX="
-								+ (-width1 * bays * 0.5 + width)
+								+ (-bayWidth * bays * 0.5 + width)
 								+ "    CentroidY=0   CentroidZ="
 								+ (colhgt / 2 + (colhgt * (b))) + "");
 
@@ -631,7 +750,7 @@ public class SapTextFile {
 								+ "   IsCurved=No   Length="
 
 								+ colhgt + "   CentroidX="
-								+ (-width1 * bays * 0.5 + width)
+								+ (-bayWidth * bays * 0.5 + width)
 								+ "    CentroidY=0   CentroidZ="
 								+ (colhgt / 2 + (colhgt * (b - 1))) + "");
 
@@ -641,12 +760,12 @@ public class SapTextFile {
 					c++;
 
 					if (targetcolRem == 3) {
-						pw.println("   Frame=" + (l) + "   JointI=" + (l + 3)
-								+ "   JointJ=" + (l + 4)
+						pw.println("   Frame=" + (l) + "   JointI=" + (l + 2)
+								+ "   JointJ=" + (l + 3)
 								+ "   IsCurved=No   Length="
 
 								+ colhgt + "   CentroidX="
-								+ (-width1 * bays * 0.5 + 2 * width)
+								+ (-bayWidth * bays * 0.5 + 2 * width)
 								+ "    CentroidY=0   CentroidZ="
 								+ (colhgt / 2 + (colhgt * (c))) + "");
 
@@ -657,7 +776,7 @@ public class SapTextFile {
 								+ "   IsCurved=No   Length="
 
 								+ colhgt + "   CentroidX="
-								+ (-width1 * bays * 0.5 + 2 * width)
+								+ (-bayWidth * bays * 0.5 + 2 * width)
 								+ "    CentroidY=0   CentroidZ="
 								+ (colhgt / 2 + (colhgt * (c - 1))) + "");
 					}
@@ -672,7 +791,7 @@ public class SapTextFile {
 								+ "   IsCurved=No   Length="
 
 								+ colhgt + "   CentroidX="
-								+ (-width1 * bays * 0.5 + 3 * width)
+								+ (-bayWidth * bays * 0.5 + 3 * width)
 								+ "    CentroidY=0   CentroidZ="
 								+ (colhgt / 2 + (colhgt * (d))) + "");
 
@@ -683,7 +802,7 @@ public class SapTextFile {
 								+ "   IsCurved=No   Length="
 
 								+ colhgt + "   CentroidX="
-								+ (-width1 * bays * 0.5 + 3 * width)
+								+ (-bayWidth * bays * 0.5 + 3 * width)
 								+ "    CentroidY=0   CentroidZ="
 								+ (colhgt / 2 + (colhgt * (d - 1))) + "");
 
@@ -723,7 +842,7 @@ public class SapTextFile {
 								+ "   IsCurved=No   Length="
 
 								+ colhgt + "   CentroidX="
-								+ (-width1 * bays * 0.5 + 5 * width)
+								+ (-bayWidth * bays * 0.5 + 5 * width)
 								+ "    CentroidY=0   CentroidZ="
 								+ (colhgt / 2 + (colhgt * (f))) + "");
 
@@ -734,7 +853,7 @@ public class SapTextFile {
 								+ "   IsCurved=No   Length="
 
 								+ colhgt + "   CentroidX="
-								+ (-width1 * bays * 0.5 + 5 * width)
+								+ (-bayWidth * bays * 0.5 + 5 * width)
 								+ "    CentroidY=0   CentroidZ="
 								+ (colhgt / 2 + (colhgt * (f - 1))) + "");
 
@@ -750,7 +869,7 @@ public class SapTextFile {
 								+ "   IsCurved=No   Length="
 
 								+ colhgt + "   CentroidX="
-								+ (-width1 * bays * 0.5 + 6 * width)
+								+ (-bayWidth * bays * 0.5 + 6 * width)
 								+ "    CentroidY=0   CentroidZ="
 								+ (colhgt / 2 + (colhgt * (g))) + "");
 
@@ -761,7 +880,7 @@ public class SapTextFile {
 								+ "   IsCurved=No   Length="
 
 								+ colhgt + "   CentroidX="
-								+ (-width1 * bays * 0.5 + 6 * width)
+								+ (-bayWidth * bays * 0.5 + 6 * width)
 								+ "    CentroidY=0   CentroidZ="
 								+ (colhgt / 2 + (colhgt * (g - 1))) + "");
 					}
@@ -772,7 +891,7 @@ public class SapTextFile {
 							+ "   JointJ=" + (l + 8)
 							+ "   IsCurved=No   Length=" + colhgt
 							+ "   CentroidX="
-							+ (-width1 * bays * 0.5 + 7 * width)
+							+ (-bayWidth * bays * 0.5 + 7 * width)
 							+ "    CentroidY=0   CentroidZ="
 							+ (colhgt / 2 + (colhgt * (h - 1))) + "");
 				} else if (l <= (9 * numberOfStorys)) {
@@ -782,7 +901,7 @@ public class SapTextFile {
 							+ "   IsCurved=No   Length="
 
 							+ colhgt + "   CentroidX="
-							+ (-width1 * bays * 0.5 + 8 * width)
+							+ (-bayWidth * bays * 0.5 + 8 * width)
 							+ "    CentroidY=0   CentroidZ="
 							+ (colhgt / 2 + (colhgt * (i - 1))) + "");
 				} else if (l <= (10 * numberOfStorys)) {
@@ -792,7 +911,7 @@ public class SapTextFile {
 							+ "   IsCurved=No   Length="
 
 							+ colhgt + "   CentroidX="
-							+ (-width1 * bays * 0.5 + 9 * width)
+							+ (-bayWidth * bays * 0.5 + 9 * width)
 							+ "    CentroidY=0   CentroidZ="
 							+ (colhgt / 2 + (colhgt * (j - 1))) + "");
 				} else if (l <= (11 * numberOfStorys)) {
@@ -802,7 +921,7 @@ public class SapTextFile {
 							+ "   IsCurved=No   Length="
 
 							+ colhgt + "   CentroidX="
-							+ (-width1 * bays * 0.5 + 10 * width)
+							+ (-bayWidth * bays * 0.5 + 10 * width)
 							+ "    CentroidY=0   CentroidZ="
 							+ (colhgt / 2 + (colhgt * (k1 - 1))) + "");
 				}
@@ -829,7 +948,7 @@ public class SapTextFile {
 							+ "   JointJ=" + (numberOfStorys + 3 + q)
 							+ "   IsCurved=No   Length=" + width
 							+ "   CentroidX="
-							+ (-width1 * bays * 0.5 + width * 0.5)
+							+ (-bayWidth * bays * 0.5 + width * 0.5)
 							+ "    CentroidY=0   CentroidZ=" + zCent + "");
 				} else if ((zCent > numberOfStorys * colhgt)
 						&& (zCent <= 2 * numberOfStorys * colhgt)) {
@@ -841,7 +960,7 @@ public class SapTextFile {
 							+ "   JointJ=" + (numberOfStorys + 4 + q)
 							+ "   IsCurved=No   Length=" + width
 							+ "   CentroidX="
-							+ (-width1 * bays * 0.5 + width * 1.5)
+							+ (-bayWidth * bays * 0.5 + width * 1.5)
 							+ "    CentroidY=0   CentroidZ=" + hgtRest + "");
 				} else if ((zCent > numberOfStorys * colhgt)
 						&& (zCent <= 3 * numberOfStorys * colhgt)) {
@@ -853,7 +972,7 @@ public class SapTextFile {
 							+ "   JointJ=" + (numberOfStorys + 5 + q)
 							+ "   IsCurved=No   Length=" + width
 							+ "   CentroidX="
-							+ (-width1 * bays * 0.5 + width * 2.5)
+							+ (-bayWidth * bays * 0.5 + width * 2.5)
 							+ "    CentroidY=0   CentroidZ=" + hgtRest + "");
 				} else if ((zCent > numberOfStorys * colhgt)
 						&& (zCent <= 4 * numberOfStorys * colhgt)) {
@@ -865,7 +984,7 @@ public class SapTextFile {
 							+ "   JointJ=" + (numberOfStorys + 6 + q)
 							+ "   IsCurved=No   Length=" + width
 							+ "   CentroidX="
-							+ (-width1 * bays * 0.5 + width * 3.5)
+							+ (-bayWidth * bays * 0.5 + width * 3.5)
 							+ "    CentroidY=0   CentroidZ=" + hgtRest + "");
 				} else if ((zCent > numberOfStorys * colhgt)
 						&& (zCent <= 5 * numberOfStorys * colhgt)) {
@@ -877,7 +996,7 @@ public class SapTextFile {
 							+ "   JointJ=" + (numberOfStorys + 7 + q)
 							+ "   IsCurved=No   Length=" + width
 							+ "   CentroidX="
-							+ (-width1 * bays * 0.5 + width * 4.5)
+							+ (-bayWidth * bays * 0.5 + width * 4.5)
 							+ "    CentroidY=0   CentroidZ=" + hgtRest + "");
 				} else if ((zCent > numberOfStorys * colhgt)
 						&& (zCent <= 6 * numberOfStorys * colhgt)) {
@@ -889,7 +1008,7 @@ public class SapTextFile {
 							+ "   JointJ=" + (numberOfStorys + 8 + q)
 							+ "   IsCurved=No   Length=" + width
 							+ "   CentroidX="
-							+ (-width1 * bays * 0.5 + width * 5.5)
+							+ (-bayWidth * bays * 0.5 + width * 5.5)
 							+ "    CentroidY=0   CentroidZ=" + hgtRest + "");
 				} else if ((zCent > numberOfStorys * colhgt)
 						&& (zCent <= 7 * numberOfStorys * colhgt)) {
@@ -901,7 +1020,7 @@ public class SapTextFile {
 							+ "   JointJ=" + (numberOfStorys + 9 + q)
 							+ "   IsCurved=No   Length=" + width
 							+ "   CentroidX="
-							+ (-width1 * bays * 0.5 + width * 6.5)
+							+ (-bayWidth * bays * 0.5 + width * 6.5)
 							+ "    CentroidY=0   CentroidZ=" + hgtRest + "");
 				} else if ((zCent > numberOfStorys * colhgt)
 						&& (zCent <= 8 * numberOfStorys * colhgt)) {
@@ -913,7 +1032,7 @@ public class SapTextFile {
 							+ "   JointJ=" + (numberOfStorys + 10 + q)
 							+ "   IsCurved=No   Length=" + width
 							+ "   CentroidX="
-							+ (-width1 * bays * 0.5 + width * 7.5)
+							+ (-bayWidth * bays * 0.5 + width * 7.5)
 							+ "    CentroidY=0   CentroidZ=" + hgtRest + "");
 				} else if ((zCent > numberOfStorys * colhgt)
 						&& (zCent <= 9 * numberOfStorys * colhgt)) {
@@ -925,7 +1044,7 @@ public class SapTextFile {
 							+ "   JointJ=" + (numberOfStorys + 11 + q)
 							+ "   IsCurved=No   Length=" + width
 							+ "   CentroidX="
-							+ (-width1 * bays * 0.5 + width * 8.5)
+							+ (-bayWidth * bays * 0.5 + width * 8.5)
 							+ "    CentroidY=0   CentroidZ=" + hgtRest + "");
 				} else if ((zCent > numberOfStorys * colhgt)
 						&& (zCent <= 10 * numberOfStorys * colhgt)) {
@@ -937,7 +1056,7 @@ public class SapTextFile {
 							+ "   JointJ=" + (numberOfStorys + 12 + q)
 							+ "   IsCurved=No   Length=" + width
 							+ "   CentroidX="
-							+ (-width1 * bays * 0.5 + width * 9.5)
+							+ (-bayWidth * bays * 0.5 + width * 9.5)
 							+ "    CentroidY=0   CentroidZ=" + hgtRest + "");
 				}
 
@@ -965,21 +1084,59 @@ public class SapTextFile {
 			pw.println("TABLE:  \"JOINT LOADS - FORCE\"");
 
 			if (targetcolRem == 1) {
-				pw.println("Joint=2   LoadCase=COL_CANCEL   CoordSys=GLOBAL   F1=0   F2=0   F3=0   M1=0   M2=0   M3=-"
-						+ colEquivEnd + "");
-				pw.println("Joint=2   LoadCase=COL_EQUIV   CoordSys=GLOBAL   F1=0   F2=0   F3=0   M1=0   M2=0   M3="
-						+ colEquivEnd + "");
+				pw.println("Joint=2   LoadCase=COL_CANCEL   CoordSys=GLOBAL   F1=0   F2=0   F3=-"
+						+ colEquivEnd + "   M1=0   M2=0   M3=0");
+				pw.println("Joint=2   LoadCase=COL_EQUIV   CoordSys=GLOBAL   F1=0   F2=0   F3="
+						+ colEquivEnd + "   M1=0   M2=0   M3=0");
 			}
 
 			if (targetcolRem > 1) {
 				pw.println("Joint="
 						+ (targetcolRem + (numberOfStorys * (targetcolRem - 1)) + 1)
-						+ "   LoadCase=COL_CANCEL   CoordSys=GLOBAL   F1=0   F2=0   F3=0   M1=0   M2=0   M3=-"
-						+ colEquivInt + "");
+						+ "   LoadCase=COL_CANCEL   CoordSys=GLOBAL   F1=0   F2=0   F3=-"
+						+ colEquivInt + "   M1=0   M2=0   M3=0");
 				pw.println("Joint="
 						+ (targetcolRem + (numberOfStorys * (targetcolRem - 1)) + 1)
-						+ "   LoadCase=COL_EQUIV   CoordSys=GLOBAL   F1=0   F2=0   F3=0   M1=0   M2=0   M3="
-						+ colEquivInt + "");
+						+ "   LoadCase=COL_EQUIV   CoordSys=GLOBAL   F1=0   F2=0   F3="
+						+ colEquivInt + "   M1=0   M2=0   M3=0");
+			}
+
+			// TODO
+			double designPressure = 0;
+			int zz = 1;
+
+			while (zz < numberOfStorys) {
+
+				double floorHgt = zz * colhgt;
+
+				double floorLoad = 0.0000037614 * Math.pow(windspeed, 2)
+						* Math.pow((floorHgt / 1200), 0.2857) * colhgt
+						* loadwidth;
+
+				designPressure = floorLoad;
+
+				pw.println("Joint=" + (zz + 1)
+						+ "   LoadCase=WIND   CoordSys=GLOBAL   F1="
+						+ designPressure
+						+ "   F2=0   F3=0   M1=0   M2=0   M3=0");
+
+				zz++;
+			}
+
+			if (zz == numberOfStorys) {
+
+				double floorHgt = numberOfStorys * colhgt;
+
+				double floorLoad = 0.0000037614 * Math.pow(windspeed, 2)
+						* Math.pow((floorHgt / 1200), 0.2857) * colhgt
+						* loadwidth * 0.5;
+
+				designPressure = floorLoad;
+
+				pw.println("Joint=" + (zz + 1)
+						+ "   LoadCase=WIND   CoordSys=GLOBAL   F1="
+						+ designPressure
+						+ "   F2=0   F3=0   M1=0   M2=0   M3=0");
 			}
 
 			pw.println("");
@@ -1080,7 +1237,7 @@ public class SapTextFile {
 
 			pw.println("        Highlight=Red   Selection=White   AreaFillBot=Red   AreaFillTop=16744703   AreaFillSd=Red   AreaEdge=DarkRed   SolidF1=Red   SolidF2=Blue   SolidF3=Green   SolidF4=Yellow   SolidF5=White   SolidF6=Cyan   SolidEdge=DarkRed _");
 
-			pw.println("        Floor=Gray4   Background=14671839   BGLowLeft=14671839   BGLowRight=14671839   BGUpRight=14671839   Darkness=0.5");
+			pw.println("        Floor=Gray4   Background=White   BGLowLeft=14671839   BGLowRight=14671839   BGUpRight=14671839   Darkness=0.5");
 
 			pw.println("   DeviceType=Printer   Points=Gray8Dark   LinesFrame=Black   LinesFrmExt=Gray4   LinesCable=Black   LinesTendon=Black   SpringLinks=Gray8Dark   Restraints=Gray8Dark   Releases=Gray4   Axes=Black   Text=Black   ShadowLines=Gray4 _");
 

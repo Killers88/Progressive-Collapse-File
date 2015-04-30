@@ -37,14 +37,15 @@ public class internalColumnForcesAndDesign {
 			final double sdl, final double live, final double numstorys,
 			final double colhgt, final double k, final double fy,
 			final double factCOMP, final double bays,
-			final double factorOfSafety) {
+			final double factorOfSafety, final double windspeed) {
 
 		double ultAxial = maxAxial(span, trib, sdl, live, numstorys);
 
 		double deadAxial = windForces
 				.axialExt(span, trib, sdl, live, numstorys);
 
-		double windMoment = windForces.extMoment(colhgt, numstorys, trib, bays);
+		double windMoment = windForces.extMoment(colhgt, numstorys, trib, bays,
+				windspeed);
 
 		/**
 		 * W14x48

@@ -10,7 +10,7 @@ package edu.mit.civil.columnassessment.elasticplasticchecks;
 public class EquivalentSDOFPropertiesPlastic {
 
 	public static double Load_Factor_PLASTIC = 0.5;
-	public static double Mass_Factor_PLASTIC = 0.33;
+	public static double Mass_Factor_PLASTIC = (0.33 + 0.5) / 2;
 	public static double CONSTANT_A = 2;
 
 	public static double stiffnessOfEquivSDOF(final double k) {

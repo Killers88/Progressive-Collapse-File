@@ -20,4 +20,13 @@ public class ActualStiffnessK {
 		return (CONSTANT_A * (e / UNIT_CONVERSIONA) * (i * UNIT_CONVERSIONB))
 				/ (5 * (Math.pow(l, 3)));
 	}
+
+	public static double stiffnessFIX(final double e, final double i,
+			final double l) {
+
+		return (CONSTANT_A * (e / UNIT_CONVERSIONA) * (i * UNIT_CONVERSIONB))
+				/ ((Math.pow(l, 3)));
+
+	}
+
 }

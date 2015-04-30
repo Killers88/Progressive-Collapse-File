@@ -75,11 +75,11 @@ public class EquivalentSDOFElasticResponseTm {
 		if ((x > 0) && (x <= 3)) {
 			// http://stackoverflow.com/questions/5419123/how-to-round-a-float-to-the-nearest-quarter
 			float coeff = 10f;
-			double nearestTenthValue = Math.round(x * coeff) / coeff;
+			double nearestTenthValue = Math.round(x * coeff) / 10.0;
 			return (graph.get(nearestTenthValue));
 		} else if ((x > 3) && (x < 10.1)) {
 			float coeff = 1f;
-			double nearestTenthValue = Math.round(x * coeff) / coeff;
+			double nearestTenthValue = Math.round(x * coeff) / 1.0;
 			return (graph.get(nearestTenthValue));
 		}
 
@@ -92,7 +92,7 @@ public class EquivalentSDOFElasticResponseTm {
 
 		double A = findPeakResponseParameter(x);
 
-		return A * t;
+		return A * t / 1000;
 	}
 
 }

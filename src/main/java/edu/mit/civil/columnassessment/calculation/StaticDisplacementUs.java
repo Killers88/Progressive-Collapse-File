@@ -23,7 +23,7 @@ public class StaticDisplacementUs {
 		double Q = calculateAppliedLoading(q);
 		double K = calculateColumnActualStiffness(k);
 
-		return Q / K;
+		return (Q / K) * 12;
 
 	}
 

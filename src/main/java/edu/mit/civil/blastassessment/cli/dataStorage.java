@@ -25,45 +25,56 @@ public class dataStorage {
 	}
 
 	public static int blastAngle() {
-		return 30;
+		return 0;
 	}
 
 	/**
 	 * Building Geometry
 	 */
 	public static int numbStorys() {
-		return 14;
+		return 12;
 	}
 
 	public static int numbBays() {
-		return 8;
+		return 6;
 	}
 
 	public static double floorHeight() {
-		return 14;
+		return 13.5;
 	}
 
 	public static double bayWidth() {
 		return 25;
 	}
 
+	public static String heading() {
+		return "Standard";
+	}
+
 	public static double tribWidth() {
-		return 10;
+		return 12.5;
 	}
 
 	public static int targetColumn() {
-		return 3;
+		return 1;
 	}
 
 	/**
 	 * Loading
 	 */
 	public static double deadLoad() {
-		return 120;
+		return 120 * 1.1 + 10;// 10% Cladding, 11lbs/ft2 beam s/w
 	}
 
 	public static double liveLoad() {
 		return 90;
+	}
+
+	/**
+	 * Wind Speed
+	 */
+	public static double windspeed() {
+		return 150;
 	}
 
 	/**
@@ -97,7 +108,7 @@ public class dataStorage {
 	}
 
 	public static double ductilityLimit() {
-		return 3;
+		return 2.5;
 	}
 
 	public static double kFactor() {
@@ -106,6 +117,14 @@ public class dataStorage {
 
 	public static double compressionFactor() {
 		return 1.7;
+	}
+
+	public static double noOfFloorsBeamSupports() {
+		return 1;
+	}
+
+	public static double windDisplacementFactor() {
+		return 0.2;
 	}
 
 	/**
@@ -118,5 +137,4 @@ public class dataStorage {
 	public static double steelYield() {
 		return 50;
 	}
-
 }

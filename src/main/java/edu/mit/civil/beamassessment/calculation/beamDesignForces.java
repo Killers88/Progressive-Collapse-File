@@ -40,14 +40,17 @@ public class beamDesignForces {
 
 	public static double maxBeamMoment(final double span, final double trib,
 			final double dead, final double live, final double daf,
-			final double numstorys, final double dlfact, final double llfact) {
+			final double numstorys, final double dlfact, final double llfact,
+			final double noOfFloorsBeamSupports) {
 
-		double totptunfactdead = span * numstorys * dead * trib / 1000;
+		double totptunfactdead = span * noOfFloorsBeamSupports * dead * trib
+				/ 1000;
 
-		double totptcolfactlive = span * numstorys * live * trib / 1000;
+		double totptcolfactlive = span * noOfFloorsBeamSupports * live * trib
+				/ 1000;
 
 		double totfactloadwherecolremoved = totptunfactdead * dlfact
-				+ totptcolfactlive * llfact;
+				+ totptcolfactlive * llfact;// Point Load from Removed Column
 
 		double firstdl = (dead * trib) / 1000;
 

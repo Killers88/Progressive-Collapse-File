@@ -15,6 +15,16 @@ public class EquivalentSDOFPlasticResponseUm {
 	public static double maxDeflectionPlasticInputsTeDivideTn(final double te,
 			final double tn) {
 
+		if ((te / 1000) / tn < 0.1) {
+			return 0.1;
+		}
+
+		return (te / 1000) / tn;
+
+	}
+
+	public static double TeDivideTn(final double te, final double tn) {
+
 		return (te / 1000) / tn;
 
 	}
@@ -35,7 +45,8 @@ public class EquivalentSDOFPlasticResponseUm {
 		double graphinput = maxDeflectionPlasticInputsRuDivideP(ru, pr, width,
 				colhgt);
 
-		double tDivideTn = (te / 1000) / tn;
+		double tDivideTn = EquivalentSDOFPlasticResponseUm
+				.maxDeflectionPlasticInputsTeDivideTn(te, tn);
 
 		if ((graphinput > 0.099) && (graphinput <= 0.105)) {
 			graph.put((double) 0.1, (double) 5.5);
@@ -50,7 +61,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 0.19, (double) 17);
 			graph.put((double) 0.2, (double) 19);
 
-			if ((tDivideTn > 0.09) && (tDivideTn <= 0.2)) {
+			if ((tDivideTn > 0.05) && (tDivideTn <= 0.2)) {
 				float coeff = 100f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 100.0);
 				return (graph.get(nearestValue));
@@ -81,7 +92,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 0.4, (double) 100);
 			graph.put((double) 0.45, (double) 100);
 
-			if ((tDivideTn > 0.09) && (tDivideTn <= 0.2)) {
+			if ((tDivideTn > 0.05) && (tDivideTn <= 0.2)) {
 				float coeff = 100f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 100.0);
 				return (graph.get(nearestValue));
@@ -112,7 +123,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 0.4, (double) 100);
 			graph.put((double) 0.45, (double) 100);
 
-			if ((tDivideTn > 0.09) && (tDivideTn <= 0.2)) {
+			if ((tDivideTn > 0.05) && (tDivideTn <= 0.2)) {
 				float coeff = 100f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 100.0);
 				return (graph.get(nearestValue));
@@ -143,7 +154,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 0.4, (double) 100);
 			graph.put((double) 0.45, (double) 100);
 
-			if ((tDivideTn > 0.09) && (tDivideTn <= 0.2)) {
+			if ((tDivideTn > 0.05) && (tDivideTn <= 0.2)) {
 				float coeff = 100f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 100.0);
 				return (graph.get(nearestValue));
@@ -174,7 +185,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 0.4, (double) 100);
 			graph.put((double) 0.45, (double) 100);
 
-			if ((tDivideTn > 0.09) && (tDivideTn <= 0.2)) {
+			if ((tDivideTn > 0.05) && (tDivideTn <= 0.2)) {
 				float coeff = 100f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 100.0);
 				return (graph.get(nearestValue));
@@ -205,7 +216,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 0.4, (double) 100);
 			graph.put((double) 0.45, (double) 100);
 
-			if ((tDivideTn > 0.09) && (tDivideTn <= 0.2)) {
+			if ((tDivideTn > 0.05) && (tDivideTn <= 0.2)) {
 				float coeff = 100f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 100.0);
 				return (graph.get(nearestValue));
@@ -236,7 +247,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 0.4, (double) 100);
 			graph.put((double) 0.45, (double) 100);
 
-			if ((tDivideTn > 0.09) && (tDivideTn <= 0.2)) {
+			if ((tDivideTn > 0.05) && (tDivideTn <= 0.2)) {
 				float coeff = 100f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 100.0);
 				return (graph.get(nearestValue));
@@ -267,7 +278,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 0.4, (double) 100);
 			graph.put((double) 0.45, (double) 100);
 
-			if ((tDivideTn > 0.09) && (tDivideTn <= 0.2)) {
+			if ((tDivideTn > 0.05) && (tDivideTn <= 0.2)) {
 				float coeff = 100f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 100.0);
 				return (graph.get(nearestValue));
@@ -298,7 +309,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 0.4, (double) 100);
 			graph.put((double) 0.45, (double) 100);
 
-			if ((tDivideTn > 0.09) && (tDivideTn <= 0.2)) {
+			if ((tDivideTn > 0.05) && (tDivideTn <= 0.2)) {
 				float coeff = 100f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 100.0);
 				return (graph.get(nearestValue));
@@ -329,7 +340,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 0.4, (double) 100);
 			graph.put((double) 0.45, (double) 100);
 
-			if ((tDivideTn > 0.09) && (tDivideTn <= 0.2)) {
+			if ((tDivideTn > 0.05) && (tDivideTn <= 0.2)) {
 				float coeff = 100f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 100.0);
 				return (graph.get(nearestValue));
@@ -360,7 +371,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 0.4, (double) 100);
 			graph.put((double) 0.45, (double) 100);
 
-			if ((tDivideTn > 0.09) && (tDivideTn <= 0.2)) {
+			if ((tDivideTn > 0.05) && (tDivideTn <= 0.2)) {
 				float coeff = 100f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 100.0);
 				return (graph.get(nearestValue));
@@ -394,7 +405,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 0.95, (double) 87);
 			graph.put((double) 1, (double) 100);
 
-			if ((tDivideTn > 0.1) && (tDivideTn <= 1.0)) {
+			if ((tDivideTn > 0.05) && (tDivideTn <= 1.0)) {
 				float coeff = 20f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 20.0);
 				return (graph.get(nearestValue));
@@ -441,7 +452,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 1.6, (double) 85);
 			graph.put((double) 1.7, (double) 100);
 
-			if ((tDivideTn > 0.1) && (tDivideTn <= 1.0)) {
+			if ((tDivideTn > 0.05) && (tDivideTn <= 1.0)) {
 				float coeff = 20f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 20.0);
 				return (graph.get(nearestValue));
@@ -491,7 +502,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 1.9, (double) 60);
 			graph.put((double) 2, (double) 67);
 
-			if ((tDivideTn > 0.1) && (tDivideTn <= 1.0)) {
+			if ((tDivideTn > 0.05) && (tDivideTn <= 1.0)) {
 				float coeff = 20f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 20.0);
 				return (graph.get(nearestValue));
@@ -552,7 +563,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 2.9, (double) 65);
 			graph.put((double) 3, (double) 70);
 			graph.put((double) 3.5, (double) 90);
-			if ((tDivideTn > 0.1) && (tDivideTn <= 1.0)) {
+			if ((tDivideTn > 0.05) && (tDivideTn <= 1.0)) {
 				float coeff = 20f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 20.0);
 				return (graph.get(nearestValue));
@@ -618,7 +629,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 5, (double) 87);
 			graph.put((double) 5.5, (double) 100);
 
-			if ((tDivideTn > 0.1) && (tDivideTn <= 1.0)) {
+			if ((tDivideTn > 0.05) && (tDivideTn <= 1.0)) {
 				float coeff = 20f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 20.0);
 				return (graph.get(nearestValue));
@@ -688,7 +699,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 7, (double) 70);
 			graph.put((double) 8, (double) 90);
 
-			if ((tDivideTn > 0.1) && (tDivideTn <= 1.0)) {
+			if ((tDivideTn > 0.05) && (tDivideTn <= 1.0)) {
 				float coeff = 20f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 20.0);
 				return (graph.get(nearestValue));
@@ -757,7 +768,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 7, (double) 70);
 			graph.put((double) 8, (double) 90);
 
-			if ((tDivideTn > 0.1) && (tDivideTn <= 1.0)) {
+			if ((tDivideTn > 0.05) && (tDivideTn <= 1.0)) {
 				float coeff = 20f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 20.0);
 				return (graph.get(nearestValue));
@@ -836,7 +847,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 16, (double) 92.85714286);
 			graph.put((double) 17, (double) 100);
 
-			if ((tDivideTn > 0.1) && (tDivideTn <= 1.0)) {
+			if ((tDivideTn > 0.05) && (tDivideTn <= 1.0)) {
 				float coeff = 20f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 20.0);
 				return (graph.get(nearestValue));
@@ -918,7 +929,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 19, (double) 36);
 			graph.put((double) 20, (double) 38);
 
-			if ((tDivideTn > 0.1) && (tDivideTn <= 1.0)) {
+			if ((tDivideTn > 0.05) && (tDivideTn <= 1.0)) {
 				float coeff = 20f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 20.0);
 				return (graph.get(nearestValue));
@@ -1000,7 +1011,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 19, (double) 22.85);
 			graph.put((double) 20, (double) 24);
 
-			if ((tDivideTn > 0.1) && (tDivideTn <= 1.0)) {
+			if ((tDivideTn > 0.05) && (tDivideTn <= 1.0)) {
 				float coeff = 20f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 20.0);
 				return (graph.get(nearestValue));
@@ -1082,7 +1093,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 19, (double) 9.7);
 			graph.put((double) 20, (double) 10);
 
-			if ((tDivideTn > 0.1) && (tDivideTn <= 1.0)) {
+			if ((tDivideTn > 0.05) && (tDivideTn <= 1.0)) {
 				float coeff = 20f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 20.0);
 				return (graph.get(nearestValue));
@@ -1164,7 +1175,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 19, (double) 2.087);
 			graph.put((double) 20, (double) 2.1);
 
-			if ((tDivideTn > 0.1) && (tDivideTn <= 1.0)) {
+			if ((tDivideTn > 0.08) && (tDivideTn <= 1.0)) {
 				float coeff = 20f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 20.0);
 				return (graph.get(nearestValue));
@@ -1246,7 +1257,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 19, (double) 2.785);
 			graph.put((double) 20, (double) 2.8);
 
-			if ((tDivideTn > 0.1) && (tDivideTn <= 1.0)) {
+			if ((tDivideTn > 0.08) && (tDivideTn <= 1.0)) {
 				float coeff = 20f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 20.0);
 				return (graph.get(nearestValue));
@@ -1328,7 +1339,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 19, (double) 2.18875);
 			graph.put((double) 20, (double) 2.2);
 
-			if ((tDivideTn > 0.1) && (tDivideTn <= 1.0)) {
+			if ((tDivideTn > 0.08) && (tDivideTn <= 1.0)) {
 				float coeff = 20f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 20.0);
 				return (graph.get(nearestValue));
@@ -1409,7 +1420,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 18, (double) 1.585);
 			graph.put((double) 19, (double) 1.5925);
 			graph.put((double) 20, (double) 1.6);
-			if ((tDivideTn > 0.1) && (tDivideTn <= 1.0)) {
+			if ((tDivideTn > 0.08) && (tDivideTn <= 1.0)) {
 				float coeff = 20f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 20.0);
 				return (graph.get(nearestValue));
@@ -1491,7 +1502,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 19, (double) 1.2935);
 			graph.put((double) 20, (double) 1.2975);
 
-			if ((tDivideTn > 0.1) && (tDivideTn <= 1.0)) {
+			if ((tDivideTn > 0.08) && (tDivideTn <= 1.0)) {
 				float coeff = 20f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 20.0);
 				return (graph.get(nearestValue));
@@ -1573,7 +1584,7 @@ public class EquivalentSDOFPlasticResponseUm {
 			graph.put((double) 19, (double) 0.9945);
 			graph.put((double) 20, (double) 0.995);
 
-			if ((tDivideTn > 0.1) && (tDivideTn <= 1.0)) {
+			if ((tDivideTn > 0.08) && (tDivideTn <= 1.0)) {
 				float coeff = 20f;
 				double nearestValue = (Math.round(tDivideTn * coeff) / 20.0);
 				return (graph.get(nearestValue));
@@ -1594,7 +1605,7 @@ public class EquivalentSDOFPlasticResponseUm {
 
 			throw new RuntimeException("Review T/Tn & ru/P");
 		}
-		return graphinput;
+		return 6.5;
 	}
 
 	// public static double peakResponseParameterPlastic(final double te,
@@ -1627,6 +1638,34 @@ public class EquivalentSDOFPlasticResponseUm {
 		return ((Math.atan(((2 * xm) / colhgt))) * 180) / Math.PI;
 	}
 
+	public static double maximumPlasticDeflection(final double te,
+			final double tn, final double ru, final double uy, final double pr,
+			final double width, final double colhgt, final double k) {
+
+		double ductratio = peakResponseParameterPlastic(te, tn, ru, uy, pr,
+				width, colhgt);
+
+		double xe = ru / k;
+
+		return ductratio * xe * 12;
+
+	}
+
+	public static double beamPlasticRotation(final double te, final double tn,
+			final double ru, final double uy, final double pr,
+			final double width, final double colhgt, final double k) {
+
+		double ductratio = peakResponseParameterPlastic(te, tn, ru, uy, pr,
+				width, colhgt);
+
+		double xe = ru / k;
+
+		double u = ductratio * xe;
+
+		return ((Math.atan(((2 * u) / colhgt))) * 180) / Math.PI;
+
+	}
+
 	public static String plasticCheckFinal(final double te, final double tn,
 			final double ru, final double uy, final double pr,
 			final double width, final double colhgt, final double mu) {
@@ -1647,17 +1686,38 @@ public class EquivalentSDOFPlasticResponseUm {
 
 	}
 
-	public static String programCheck(final double te, final double tn,
-			final double ru, final double uy, final double pr,
+	public static Double plasticCheckFinal_Number(final double te,
+			final double tn, final double ru, final double uy, final double pr,
 			final double width, final double colhgt, final double mu) {
 
-		double x = peakResponseParameterPlastic(te, tn, ru, uy, pr, width,
+		double du = peakResponseParameterPlastic(te, tn, ru, uy, pr, width,
 				colhgt);
 
-		if ((x <= mu)) {
+		if (du / mu <= 1) {
 
-			System.exit(0);
+			return 1.00;
+
+		} else if (du / mu > 1) {
+
+			return 0.00;
+
 		}
-		return "Finish";
+		return 100.00;
+
 	}
 }
+
+// public static String programCheck(final double te, final double tn,
+// final double ru, final double uy, final double pr,
+// final double width, final double colhgt, final double mu) {
+//
+// double x = peakResponseParameterPlastic(te, tn, ru, uy, pr, width,
+// colhgt);
+//
+// if ((x <= mu)) {
+//
+// System.exit(0);
+// }
+// return "Finish";
+// }
+// }
