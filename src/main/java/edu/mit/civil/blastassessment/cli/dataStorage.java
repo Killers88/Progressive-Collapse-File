@@ -13,7 +13,7 @@ public class dataStorage {
 	 * Blast Input Details
 	 */
 	public static double weightTNT() {
-		return 2000;
+		return 1000;
 	}
 
 	public static double blastFactor() {
@@ -21,11 +21,11 @@ public class dataStorage {
 	}
 
 	public static double standoffDist() {
-		return 30;
+		return 32.5;
 	}
 
 	public static int blastAngle() {
-		return 0;
+		return 30;
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class dataStorage {
 	}
 
 	public static double floorHeight() {
-		return 13.5;
+		return 12.5;
 	}
 
 	public static double bayWidth() {
@@ -108,7 +108,7 @@ public class dataStorage {
 	}
 
 	public static double ductilityLimit() {
-		return 2.5;
+		return 3.75;
 	}
 
 	public static double kFactor() {

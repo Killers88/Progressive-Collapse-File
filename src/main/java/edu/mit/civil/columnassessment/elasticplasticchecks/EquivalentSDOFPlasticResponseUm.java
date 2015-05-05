@@ -352,7 +352,7 @@ public class EquivalentSDOFPlasticResponseUm {
 				return tDivideTn;
 
 			}
-		} else if ((graphinput > 0.195) && (graphinput <= 0.195)) {
+		} else if ((graphinput > 0.195) && (graphinput <= 0.2)) {
 
 			graph.put((double) 0.1, (double) 1.8);
 			graph.put((double) 0.11, (double) 2);
@@ -383,7 +383,7 @@ public class EquivalentSDOFPlasticResponseUm {
 				return tDivideTn;
 
 			}
-		} else if ((graphinput > 0.195) && (graphinput <= 0.25)) {
+		} else if ((graphinput > 0.2) && (graphinput <= 0.25)) {
 
 			graph.put((double) 0.1, (double) 1.75);
 			graph.put((double) 0.15, (double) 3);

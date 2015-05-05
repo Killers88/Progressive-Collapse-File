@@ -26,13 +26,13 @@ public class EquivalentSDOFElasticCheck {
 		}
 	}
 
-	public static String programFinish(final double um, final double uy) {
-
-		if ((um < uy)) {
-
-			System.exit(0);
-
-		}
-		return "COLUMN - PLASTIC ASSESSMENT:";
-	}
+	// public static String programFinish(final double um, final double uy) {
+	//
+	// if ((um < uy)) {
+	//
+	// System.exit(0);
+	//
+	// }
+	// return "COLUMN - PLASTIC ASSESSMENT:";
+	// }
 }

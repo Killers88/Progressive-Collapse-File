@@ -46,7 +46,7 @@ public class BlastAssessmentApp {
 		// /**
 		// * SYSTEM EXIT - TEMPORARY
 		// */
-		// Dada.Varying_Weight.scenario();
+		// Dada.BlastAssessmentAppWork.scenario();
 		// System.exit(0);
 
 		/**
@@ -339,7 +339,7 @@ public class BlastAssessmentApp {
 
 		System.out
 				.println("Target Column Analysis - Static Displacement 'us' = "
-						+ StaticDisplacementUs.CalculateStaticDisplacement(
+						+ StaticDisplacementUs.CalculateStaticDisplacementPIN_PIN(
 								AppliedLoadingToColumnQ.calculateAppliedLoading(
 										ReflectedPressurePr
 												.findReflectedPressureWith(
@@ -357,6 +357,8 @@ public class BlastAssessmentApp {
 						+ YieldDisplacementUy.calculateYieldDisplacementUy(
 								floorHeight, columnSx, yieldStrength,
 								youngsMod, columnIxx) + " in");
+
+		System.out.println();
 
 		System.out.println("Fixed - Fixed:");
 
@@ -381,7 +383,7 @@ public class BlastAssessmentApp {
 
 		System.out
 				.println("Target Column Analysis - Static Displacement 'us' = "
-						+ StaticDisplacementUs.CalculateStaticDisplacement(
+						+ StaticDisplacementUs.CalculateStaticDisplacementFIXED_FIXED(
 								AppliedLoadingToColumnQ.calculateAppliedLoading(
 										ReflectedPressurePr
 												.findReflectedPressureWith(
@@ -389,8 +391,7 @@ public class BlastAssessmentApp {
 														PeakIncidentOverPressurePso
 																.findPeakIncidentOverPressureWith(z)),
 										columnFlangeWidth, floorHeight),
-								ActualStiffnessK.stiffnessFIX(youngsMod,
-										columnIxx, floorHeight)) + " in");
+								youngsMod, columnIxx, floorHeight) + " in");
 
 		System.out
 				.println("Target Column Analysis - Yield Displacement 'uy' = "
@@ -398,6 +399,48 @@ public class BlastAssessmentApp {
 								.calculateYieldDisplacementUyFIXED(floorHeight,
 										columnSx, yieldStrength, youngsMod,
 										columnIxx) + " in");
+
+		System.out.println();
+
+		System.out.println("Fixed - Pin:");
+
+		System.out
+				.println("Target Column Analysis - Applied Column Loading 'Q*' = "
+						+ AppliedLoadingToColumnQ.calculateAppliedLoading(
+								ReflectedPressurePr
+										.findReflectedPressureWith(
+												blastAngle,
+												PeakIncidentOverPressurePso
+														.findPeakIncidentOverPressureWith(z)),
+								columnFlangeWidth, floorHeight) + " kipf");
+
+		System.out
+				.println("Target Column Analysis - Actual Column Stiffness 'k' = "
+						+ ActualStiffnessK.stiffnessPIN_FIXED(youngsMod,
+								columnIxx, floorHeight) + " kipf.ft^-1");
+
+		System.out.println("Target Column Analysis - Total Actual Mass 'm' = "
+				+ TotalActalMassM.calculatingTotalActualMass(
+						columnLinearWeight, floorHeight) + " kipf.s^2.ft^-1");
+
+		System.out
+				.println("Target Column Analysis - Static Displacement 'us' = "
+						+ StaticDisplacementUs.CalculateStaticDisplacementPIN_FIXED(
+								AppliedLoadingToColumnQ.calculateAppliedLoading(
+										ReflectedPressurePr
+												.findReflectedPressureWith(
+														blastAngle,
+														PeakIncidentOverPressurePso
+																.findPeakIncidentOverPressureWith(z)),
+										columnFlangeWidth, floorHeight),
+								youngsMod, columnIxx, floorHeight) + " in");
+
+		System.out
+				.println("Target Column Analysis - Yield Displacement 'uy' = "
+						+ YieldDisplacementUy
+								.calculateYieldDisplacementUyPIN_FIXED(
+										floorHeight, columnSx, yieldStrength,
+										youngsMod, columnIxx) + " in");
 
 		System.out.println();
 
@@ -489,7 +532,7 @@ public class BlastAssessmentApp {
 																				youngsMod,
 																				columnIxx,
 																				floorHeight))))),
-								StaticDisplacementUs.CalculateStaticDisplacement(
+								StaticDisplacementUs.CalculateStaticDisplacementPIN_PIN(
 										AppliedLoadingToColumnQ
 												.calculateAppliedLoading(
 														ReflectedPressurePr
@@ -504,274 +547,94 @@ public class BlastAssessmentApp {
 														youngsMod, columnIxx,
 														floorHeight))) + " in");
 
-		// System.out
-		// .println("Elastic Parameter - Peak Response Parameter 'tm' = "
-		// + EquivalentSDOFElasticResponseA.elasticResponseParameterCheck(
-		// (ParameterForElasticCheck
-		// .tEquivDividedByTn(
-		// EquivalentDurationTe
-		// .calculateEquivalentDurationWithIsAndPr(
-		// ImpulseIs
-		// .calculateImpulseIsUFCGraph(
-		// PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z),
-		// angle,
-		// w),
-		// ReflectedPressurePr
-		// .findingPrWithZAndAngle(
-		// z,
-		// angle)),
-		// EquivalentSDOFPropertiesElastic.naturalPeriodSDOF(
-		// EquivalentSDOFPropertiesElastic
-		// .massOfEquivSDOF(TotalActalMassM
-		// .calculatingTotalActualMass(
-		// colweight,
-		// colhgt)),
-		// EquivalentSDOFPropertiesElastic
-		// .stiffnessOfEquivSDOF(ActualStiffnessK
-		// .calculateColumnActualStiffness(
-		// e,
-		// i,
-		// colhgt))))),
-		// EquivalentDurationTe
-		// .calculateEquivalentDurationWithIsAndPr(
-		// ImpulseIs
-		// .calculateImpulseIsUFCGraph(
-		// PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z),
-		// angle, w),
-		// ReflectedPressurePr
-		// .findingPrWithZAndAngle(
-		// z, angle)))
-		// + " ms");
-
 		System.out
 				.println("|Elastic Check| - "
 						+ EquivalentSDOFElasticCheck.determiningDynamicLoadFactor(
-								EquivalentSDOFElasticResponseUm.elasticResponseParameterCheck(
-										(ParameterForElasticCheck
-												.tEquivDividedByTn(
-														EquivalentDurationTrAlpha
-																.calculateEquivalentDurationWithIsAndPr(
-																		ImpulseIralpha
-																				.calculateImpulseIsUFCGraph(
-																						PeakIncidentOverPressurePso
-																								.findPeakIncidentOverPressureWith(z),
-																						blastAngle,
-																						weightTNT),
-																		ReflectedPressurePr
-																				.findReflectedPressureWith(
-																						blastAngle,
-																						PeakIncidentOverPressurePso
-																								.findPeakIncidentOverPressureWith(z))),
-														EquivalentSDOFPropertiesElastic
-																.naturalPeriodSDOF(
-																		EquivalentSDOFPropertiesElastic
-																				.massOfEquivSDOF(TotalActalMassM
-																						.calculatingTotalActualMass(
-																								columnLinearWeight,
-																								floorHeight)),
-																		EquivalentSDOFPropertiesElastic
-																				.stiffnessOfEquivSDOF(ActualStiffnessK
-																						.calculateColumnActualStiffness(
-																								youngsMod,
-																								columnIxx,
-																								floorHeight))))),
-										StaticDisplacementUs.CalculateStaticDisplacement(
-												AppliedLoadingToColumnQ
-														.calculateAppliedLoading(
-																ReflectedPressurePr
-																		.findReflectedPressureWith(
-																				blastAngle,
-																				PeakIncidentOverPressurePso
-																						.findPeakIncidentOverPressureWith(z)),
-																columnFlangeWidth,
-																floorHeight),
-												ActualStiffnessK
-														.calculateColumnActualStiffness(
-																youngsMod,
-																columnIxx,
-																floorHeight))),
+								EquivalentSDOFElasticResponseUm
+										.elasticResponseParameterCheck(
+												(ParameterForElasticCheck
+														.tEquivDividedByTn(
+																EquivalentDurationTrAlpha
+																		.calculateEquivalentDurationWithIsAndPr(
+																				ImpulseIralpha
+																						.calculateImpulseIsUFCGraph(
+																								PeakIncidentOverPressurePso
+																										.findPeakIncidentOverPressureWith(z),
+																								blastAngle,
+																								weightTNT),
+																				ReflectedPressurePr
+																						.findReflectedPressureWith(
+																								blastAngle,
+																								PeakIncidentOverPressurePso
+																										.findPeakIncidentOverPressureWith(z))),
+																EquivalentSDOFPropertiesElastic
+																		.naturalPeriodSDOF(
+																				EquivalentSDOFPropertiesElastic
+																						.massOfEquivSDOF(TotalActalMassM
+																								.calculatingTotalActualMass(
+																										columnLinearWeight,
+																										floorHeight)),
+																				EquivalentSDOFPropertiesElastic
+																						.stiffnessOfEquivSDOF(ActualStiffnessK
+																								.calculateColumnActualStiffness(
+																										youngsMod,
+																										columnIxx,
+																										floorHeight))))),
+												StaticDisplacementUs
+														.CalculateStaticDisplacementPIN_PIN(
+																AppliedLoadingToColumnQ
+																		.calculateAppliedLoading(
+																				ReflectedPressurePr
+																						.findReflectedPressureWith(
+																								blastAngle,
+																								PeakIncidentOverPressurePso
+																										.findPeakIncidentOverPressureWith(z)),
+																				columnFlangeWidth,
+																				floorHeight),
+																ActualStiffnessK
+																		.calculateColumnActualStiffness(
+																				youngsMod,
+																				columnIxx,
+																				floorHeight))),
 								YieldDisplacementUy
 										.calculateYieldDisplacementUy(
 												floorHeight, columnSx,
 												yieldStrength, youngsMod,
 												columnIxx)));
 
-		// System.out.println("COLUMN - ELASTIC ASSESSMENT (FIX - FIX):");
-		//
-		// System.out
-		// .println("Elastic Equivalent - Target Column Analysis - Stiffness of Equivalent SDOF 'ke' = "
-		// + EquivalentSDOFPropertiesElastic
-		// .stiffnessOfEquivSDOF(ActualStiffnessK
-		// .stiffnessFIX(youngsMod, columnIxx,
-		// floorHeight)) + " kipf.ft^-1");
-		//
-		// System.out
-		// .println("Elastic Equivalent - Target Column Analysis - Mass of Equivalent SDOF 'me' = "
-		// + EquivalentSDOFPropertiesElastic.massOfEquivSDOF(TotalActalMassM
-		// .calculatingTotalActualMass(columnLinearWeight,
-		// floorHeight)) + " kipf.s^2.ft^-1");
-		//
-		// System.out
-		// .println("Elastic Equivalent - Target Column Analysis - Natural Period of Equivalent SDOF 'Tn' = "
-		// + EquivalentSDOFPropertiesElastic.naturalPeriodSDOF(
-		// EquivalentSDOFPropertiesElastic
-		// .massOfEquivSDOF(TotalActalMassM
-		// .calculatingTotalActualMass(
-		// columnLinearWeight,
-		// floorHeight)),
-		// EquivalentSDOFPropertiesElastic.stiffnessOfEquivSDOF(ActualStiffnessK
-		// .stiffnessFIX(youngsMod, columnIxx,
-		// floorHeight))) + " s");
-		//
-		// System.out
-		// .println("Target Column Analysis - T/Tn used for UFC 3-340 graphs to determnine whether column remains elastic = "
-		// + ParameterForElasticCheck.tEquivDividedByTnFIX(
-		// EquivalentDurationTrAlpha
-		// .calculateEquivalentDurationWithIsAndPr(
-		// ImpulseIralpha
-		// .calculateImpulseIsUFCGraph(
-		// PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z),
-		// blastAngle,
-		// weightTNT),
-		// ReflectedPressurePr
-		// .findReflectedPressureWith(
-		// blastAngle,
-		// PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z))),
-		// EquivalentSDOFPropertiesElastic.naturalPeriodSDOF(
-		// EquivalentSDOFPropertiesElastic
-		// .massOfEquivSDOF(TotalActalMassM
-		// .calculatingTotalActualMass(
-		// columnLinearWeight,
-		// floorHeight)),
-		// EquivalentSDOFPropertiesElastic
-		// .stiffnessOfEquivSDOF(ActualStiffnessK
-		// .stiffnessFIX(
-		// youngsMod,
-		// columnIxx,
-		// floorHeight)))));
-		//
-		// System.out
-		// .println("Elastic Parameter - Peak Response Parameter 'um' = "
-		// + EquivalentSDOFElasticResponseUm.elasticResponseParameterCheck(
-		// (ParameterForElasticCheck
-		// .tEquivDividedByTn(
-		// EquivalentDurationTrAlpha
-		// .calculateEquivalentDurationWithIsAndPr(
-		// ImpulseIralpha
-		// .calculateImpulseIsUFCGraph(
-		// PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z),
-		// blastAngle,
-		// weightTNT),
-		// ReflectedPressurePr
-		// .findReflectedPressureWith(
-		// blastAngle,
-		// PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z))),
-		// EquivalentSDOFPropertiesElastic.naturalPeriodSDOF(
-		// EquivalentSDOFPropertiesElastic
-		// .massOfEquivSDOF(TotalActalMassM
-		// .calculatingTotalActualMass(
-		// columnLinearWeight,
-		// floorHeight)),
-		// EquivalentSDOFPropertiesElastic
-		// .stiffnessOfEquivSDOF(ActualStiffnessK
-		// .stiffnessFIX(
-		// youngsMod,
-		// columnIxx,
-		// floorHeight))))),
-		// StaticDisplacementUs.CalculateStaticDisplacement(
-		// AppliedLoadingToColumnQ
-		// .calculateAppliedLoading(
-		// ReflectedPressurePr
-		// .findReflectedPressureWith(
-		// blastAngle,
-		// PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z)),
-		// columnFlangeWidth,
-		// floorHeight),
-		// ActualStiffnessK.stiffnessFIX(
-		// youngsMod, columnIxx,
-		// floorHeight))) + " in");
+		System.out.println();
 
 		// System.out
-		// .println("Elastic Parameter - Peak Response Parameter 'tm' = "
-		// + EquivalentSDOFElasticResponseA.elasticResponseParameterCheck(
+		// .println(EquivalentSDOFElasticCheck.programFinish(
+		// EquivalentSDOFElasticResponseUm.elasticResponseParameterCheck(
 		// (ParameterForElasticCheck
 		// .tEquivDividedByTn(
-		// EquivalentDurationTe
+		// EquivalentDurationTrAlpha
 		// .calculateEquivalentDurationWithIsAndPr(
-		// ImpulseIs
+		// ImpulseIralpha
 		// .calculateImpulseIsUFCGraph(
 		// PeakIncidentOverPressurePso
 		// .findPeakIncidentOverPressureWith(z),
-		// angle,
-		// w),
+		// blastAngle,
+		// weightTNT),
 		// ReflectedPressurePr
-		// .findingPrWithZAndAngle(
-		// z,
-		// angle)),
+		// .findReflectedPressureWith(
+		// blastAngle,
+		// PeakIncidentOverPressurePso
+		// .findPeakIncidentOverPressureWith(z))),
 		// EquivalentSDOFPropertiesElastic.naturalPeriodSDOF(
 		// EquivalentSDOFPropertiesElastic
 		// .massOfEquivSDOF(TotalActalMassM
 		// .calculatingTotalActualMass(
-		// colweight,
-		// colhgt)),
+		// columnLinearWeight,
+		// floorHeight)),
 		// EquivalentSDOFPropertiesElastic
 		// .stiffnessOfEquivSDOF(ActualStiffnessK
 		// .calculateColumnActualStiffness(
-		// e,
-		// i,
-		// colhgt))))),
-		// EquivalentDurationTe
-		// .calculateEquivalentDurationWithIsAndPr(
-		// ImpulseIs
-		// .calculateImpulseIsUFCGraph(
-		// PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z),
-		// angle, w),
-		// ReflectedPressurePr
-		// .findingPrWithZAndAngle(
-		// z, angle)))
-		// + " ms");
-
-		// System.out
-		// .println("|Elastic Check| - "
-		// + EquivalentSDOFElasticCheck.determiningDynamicLoadFactor(
-		// EquivalentSDOFElasticResponseUm.elasticResponseParameterCheck(
-		// (ParameterForElasticCheck
-		// .tEquivDividedByTnFIX(
-		// EquivalentDurationTrAlpha
-		// .calculateEquivalentDurationWithIsAndPr(
-		// ImpulseIralpha
-		// .calculateImpulseIsUFCGraph(
-		// PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z),
-		// blastAngle,
-		// weightTNT),
-		// ReflectedPressurePr
-		// .findReflectedPressureWith(
-		// blastAngle,
-		// PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z))),
-		// EquivalentSDOFPropertiesElastic
-		// .naturalPeriodSDOF(
-		// EquivalentSDOFPropertiesElastic
-		// .massOfEquivSDOF(TotalActalMassM
-		// .calculatingTotalActualMass(
-		// columnLinearWeight,
-		// floorHeight)),
-		// EquivalentSDOFPropertiesElastic
-		// .stiffnessOfEquivSDOF(ActualStiffnessK
-		// .stiffnessFIX(
 		// youngsMod,
 		// columnIxx,
 		// floorHeight))))),
-		// StaticDisplacementUs.CalculateStaticDisplacement(
+		// StaticDisplacementUs.CalculateStaticDisplacementPIN_PIN(
 		// AppliedLoadingToColumnQ
 		// .calculateAppliedLoading(
 		// ReflectedPressurePr
@@ -781,64 +644,15 @@ public class BlastAssessmentApp {
 		// .findPeakIncidentOverPressureWith(z)),
 		// columnFlangeWidth,
 		// floorHeight),
-		// ActualStiffnessK.stiffnessFIX(
+		// ActualStiffnessK
+		// .calculateColumnActualStiffness(
 		// youngsMod, columnIxx,
 		// floorHeight))),
-		// YieldDisplacementUy
-		// .calculateYieldDisplacementUyFIXED(
-		// floorHeight, columnSx,
-		// yieldStrength, youngsMod,
-		// columnIxx)));
+		// YieldDisplacementUy.calculateYieldDisplacementUy(
+		// floorHeight, columnSx, yieldStrength,
+		// youngsMod, columnIxx)));
 
-		System.out.println();
-
-		System.out
-				.println(EquivalentSDOFElasticCheck.programFinish(
-						EquivalentSDOFElasticResponseUm.elasticResponseParameterCheck(
-								(ParameterForElasticCheck
-										.tEquivDividedByTn(
-												EquivalentDurationTrAlpha
-														.calculateEquivalentDurationWithIsAndPr(
-																ImpulseIralpha
-																		.calculateImpulseIsUFCGraph(
-																				PeakIncidentOverPressurePso
-																						.findPeakIncidentOverPressureWith(z),
-																				blastAngle,
-																				weightTNT),
-																ReflectedPressurePr
-																		.findReflectedPressureWith(
-																				blastAngle,
-																				PeakIncidentOverPressurePso
-																						.findPeakIncidentOverPressureWith(z))),
-												EquivalentSDOFPropertiesElastic.naturalPeriodSDOF(
-														EquivalentSDOFPropertiesElastic
-																.massOfEquivSDOF(TotalActalMassM
-																		.calculatingTotalActualMass(
-																				columnLinearWeight,
-																				floorHeight)),
-														EquivalentSDOFPropertiesElastic
-																.stiffnessOfEquivSDOF(ActualStiffnessK
-																		.calculateColumnActualStiffness(
-																				youngsMod,
-																				columnIxx,
-																				floorHeight))))),
-								StaticDisplacementUs.CalculateStaticDisplacement(
-										AppliedLoadingToColumnQ
-												.calculateAppliedLoading(
-														ReflectedPressurePr
-																.findReflectedPressureWith(
-																		blastAngle,
-																		PeakIncidentOverPressurePso
-																				.findPeakIncidentOverPressureWith(z)),
-														columnFlangeWidth,
-														floorHeight),
-										ActualStiffnessK
-												.calculateColumnActualStiffness(
-														youngsMod, columnIxx,
-														floorHeight))),
-						YieldDisplacementUy.calculateYieldDisplacementUy(
-								floorHeight, columnSx, yieldStrength,
-								youngsMod, columnIxx)));
+		System.out.println("COLUMN - PLASTIC ASSESSMENT");
 
 		System.out
 				.println("Plastic Equivalent - Target Column Analysis - Stiffness of Equivalent SDOF (k'e) = "
@@ -1128,291 +942,6 @@ public class BlastAssessmentApp {
 						+ ". Max Ductility Ratio Xm/Xe = " + ductilityRatio
 						+ " Allowable Ductility Ratio Specified by User = "
 						+ ductilityLimit);
-
-		// System.out.println("COLUMN - PLASTIC ASSESSMENT FIX-FIX");
-		//
-		// System.out
-		// .println("Plastic Equivalent - Target Column Analysis - Stiffness of Equivalent SDOF (k'e) = "
-		// + EquivalentSDOFPropertiesPlastic
-		// .stiffnessOfEquivSDOF(ActualStiffnessK
-		// .stiffnessFIX(youngsMod, columnIxx,
-		// floorHeight)) + " kipf.ft^-1");
-		//
-		// System.out
-		// .println("Plastic Equivalent - Target Column Analysis - Mass of Equivalent SDOF (m'e) = "
-		// + EquivalentSDOFPropertiesPlastic.massOfEquivSDOF(TotalActalMassM
-		// .calculatingTotalActualMass(columnLinearWeight,
-		// floorHeight)) + " kipf.s^2.ft^-1");
-		//
-		// System.out
-		// .println("Plastic Equivalent - Target Column Analysis - Natural Period of Equivalent SDOF (T'n) = "
-		// + EquivalentSDOFPropertiesPlastic.naturalPeriodSDOF(
-		// EquivalentSDOFPropertiesPlastic
-		// .massOfEquivSDOF(TotalActalMassM
-		// .calculatingTotalActualMass(
-		// columnLinearWeight,
-		// floorHeight)),
-		// EquivalentSDOFPropertiesPlastic.stiffnessOfEquivSDOF(ActualStiffnessK
-		// .stiffnessFIX(youngsMod, columnIxx,
-		// floorHeight))) + " s");
-		//
-		// System.out.println("Plastic Parameter - Ultimate Resistance = "
-		// + UltimateUnitResistance.calculatingPlasticMoment(
-		// yieldStrength, columnZx, floorHeight) + " kipf.ft^-1");
-		//
-		// System.out
-		// .println("Plastic Parameter - T/T'n = "
-		// + EquivalentSDOFPlasticResponseUm.TeDivideTn(
-		// EquivalentDurationTrAlpha
-		// .calculateEquivalentDurationWithIsAndPr(
-		// ImpulseIralpha
-		// .calculateImpulseIsUFCGraph(
-		// PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z),
-		// blastAngle,
-		// weightTNT),
-		// ReflectedPressurePr
-		// .findReflectedPressureWith(
-		// blastAngle,
-		// PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z))),
-		// EquivalentSDOFPropertiesPlastic.naturalPeriodSDOF(
-		// EquivalentSDOFPropertiesPlastic
-		// .massOfEquivSDOF(TotalActalMassM
-		// .calculatingTotalActualMass(
-		// columnLinearWeight,
-		// floorHeight)),
-		// EquivalentSDOFPropertiesPlastic
-		// .stiffnessOfEquivSDOF(ActualStiffnessK
-		// .stiffnessFIX(
-		// youngsMod,
-		// columnIxx,
-		// floorHeight)))));
-		//
-		// System.out
-		// .println("Plastic Parameter - Ultimate Resistance ru / Peak Reflected Pressure = "
-		// +
-		// EquivalentSDOFPlasticResponseUm.maxDeflectionPlasticInputsRuDivideP(
-		// UltimateUnitResistance
-		// .calculatingPlasticMoment(
-		// yieldStrength, columnZx,
-		// floorHeight),
-		// ReflectedPressurePr.findReflectedPressureWith(
-		// blastAngle,
-		// PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z)),
-		// columnFlangeWidth, floorHeight));
-		//
-		// System.out
-		// .println("Plastic Parameter - Max Ductility Ratio 'Xm/Xe'  = "
-		// + EquivalentSDOFPlasticResponseUm.peakResponseParameterPlastic(
-		// EquivalentDurationTrAlpha
-		// .calculateEquivalentDurationWithIsAndPr(
-		// ImpulseIralpha
-		// .calculateImpulseIsUFCGraph(
-		// PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z),
-		// blastAngle,
-		// weightTNT),
-		// ReflectedPressurePr
-		// .findReflectedPressureWith(
-		// blastAngle,
-		// PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z))),
-		// EquivalentSDOFPropertiesPlastic.naturalPeriodSDOF(
-		// EquivalentSDOFPropertiesPlastic
-		// .massOfEquivSDOF(TotalActalMassM
-		// .calculatingTotalActualMass(
-		// columnLinearWeight,
-		// floorHeight)),
-		// EquivalentSDOFPropertiesPlastic
-		// .stiffnessOfEquivSDOF(ActualStiffnessK
-		// .stiffnessFIX(
-		// youngsMod,
-		// columnIxx,
-		// floorHeight))),
-		// UltimateUnitResistance
-		// .calculatingPlasticMoment(
-		// yieldStrength, columnZx,
-		// floorHeight),
-		// YieldDisplacementUy
-		// .calculateYieldDisplacementUyFIXED(
-		// floorHeight, columnSx,
-		// yieldStrength, youngsMod,
-		// columnIxx),
-		// ReflectedPressurePr.findReflectedPressureWith(
-		// blastAngle,
-		// PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z)),
-		// columnFlangeWidth, floorHeight));
-		//
-		// System.out
-		// .println("Peak Displacement  = "
-		// + EquivalentSDOFPlasticResponseUm.maximumPlasticDeflection(
-		// EquivalentDurationTrAlpha
-		// .calculateEquivalentDurationWithIsAndPr(
-		// ImpulseIralpha
-		// .calculateImpulseIsUFCGraph(
-		// PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z),
-		// blastAngle,
-		// weightTNT),
-		// ReflectedPressurePr
-		// .findReflectedPressureWith(
-		// blastAngle,
-		// PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z))),
-		// EquivalentSDOFPropertiesPlastic.naturalPeriodSDOF(
-		// EquivalentSDOFPropertiesPlastic
-		// .massOfEquivSDOF(TotalActalMassM
-		// .calculatingTotalActualMass(
-		// columnLinearWeight,
-		// floorHeight)),
-		// EquivalentSDOFPropertiesPlastic
-		// .stiffnessOfEquivSDOF(ActualStiffnessK
-		// .stiffnessFIX(
-		// youngsMod,
-		// columnIxx,
-		// floorHeight))),
-		// UltimateUnitResistance
-		// .calculatingPlasticMoment(
-		// yieldStrength, columnZx,
-		// floorHeight),
-		// YieldDisplacementUy
-		// .calculateYieldDisplacementUyFIXED(
-		// floorHeight, columnSx,
-		// yieldStrength, youngsMod,
-		// columnIxx),
-		// ReflectedPressurePr.findReflectedPressureWith(
-		// blastAngle,
-		// PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z)),
-		// columnFlangeWidth, floorHeight,
-		// ActualStiffnessK.stiffnessFIX(youngsMod,
-		// columnIxx, floorHeight)) + " in");
-		//
-		// System.out
-		// .println("End Rotation of Column (Degrees)  = "
-		// + EquivalentSDOFPlasticResponseUm.beamPlasticRotation(
-		// EquivalentDurationTrAlpha
-		// .calculateEquivalentDurationWithIsAndPr(
-		// ImpulseIralpha
-		// .calculateImpulseIsUFCGraph(
-		// PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z),
-		// blastAngle,
-		// weightTNT),
-		// ReflectedPressurePr
-		// .findReflectedPressureWith(
-		// blastAngle,
-		// PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z))),
-		// EquivalentSDOFPropertiesPlastic.naturalPeriodSDOF(
-		// EquivalentSDOFPropertiesPlastic
-		// .massOfEquivSDOF(TotalActalMassM
-		// .calculatingTotalActualMass(
-		// columnLinearWeight,
-		// floorHeight)),
-		// EquivalentSDOFPropertiesPlastic
-		// .stiffnessOfEquivSDOF(ActualStiffnessK
-		// .stiffnessFIX(
-		// youngsMod,
-		// columnIxx,
-		// floorHeight))),
-		// UltimateUnitResistance
-		// .calculatingPlasticMoment(
-		// yieldStrength, columnZx,
-		// floorHeight),
-		// YieldDisplacementUy
-		// .calculateYieldDisplacementUyFIXED(
-		// floorHeight, columnSx,
-		// yieldStrength, youngsMod,
-		// columnIxx),
-		// ReflectedPressurePr.findReflectedPressureWith(
-		// blastAngle,
-		// PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z)),
-		// columnFlangeWidth, floorHeight,
-		// ActualStiffnessK.stiffnessFIX(youngsMod,
-		// columnIxx, floorHeight)) + " degrees");
-		//
-		// double ductilityRatioF = EquivalentSDOFPlasticResponseUm
-		// .peakResponseParameterPlastic(
-		// EquivalentDurationTrAlpha
-		// .calculateEquivalentDurationWithIsAndPr(
-		// ImpulseIralpha.calculateImpulseIsUFCGraph(
-		// PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z),
-		// blastAngle, weightTNT),
-		// ReflectedPressurePr
-		// .findReflectedPressureWith(
-		// blastAngle,
-		// PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z))),
-		// EquivalentSDOFPropertiesPlastic.naturalPeriodSDOF(
-		// EquivalentSDOFPropertiesPlastic
-		// .massOfEquivSDOF(TotalActalMassM
-		// .calculatingTotalActualMass(
-		// columnLinearWeight,
-		// floorHeight)),
-		// EquivalentSDOFPropertiesPlastic.stiffnessOfEquivSDOF(ActualStiffnessK
-		// .stiffnessFIX(youngsMod, columnIxx,
-		// floorHeight))),
-		// UltimateUnitResistance.calculatingPlasticMoment(
-		// yieldStrength, columnZx, floorHeight),
-		// YieldDisplacementUy.calculateYieldDisplacementUyFIXED(
-		// floorHeight, columnSx, yieldStrength,
-		// youngsMod, columnIxx),
-		// ReflectedPressurePr.findReflectedPressureWith(
-		// blastAngle, PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z)),
-		// columnFlangeWidth, floorHeight);
-		//
-		// System.out
-		// .println("|Plastic Check| -  = "
-		// + EquivalentSDOFPlasticResponseUm.plasticCheckFinal(
-		// EquivalentDurationTrAlpha
-		// .calculateEquivalentDurationWithIsAndPr(
-		// ImpulseIralpha
-		// .calculateImpulseIsUFCGraph(
-		// PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z),
-		// blastAngle,
-		// weightTNT),
-		// ReflectedPressurePr
-		// .findReflectedPressureWith(
-		// blastAngle,
-		// PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z))),
-		// EquivalentSDOFPropertiesPlastic.naturalPeriodSDOF(
-		// EquivalentSDOFPropertiesPlastic
-		// .massOfEquivSDOF(TotalActalMassM
-		// .calculatingTotalActualMass(
-		// columnLinearWeight,
-		// floorHeight)),
-		// EquivalentSDOFPropertiesPlastic
-		// .stiffnessOfEquivSDOF(ActualStiffnessK
-		// .stiffnessFIX(
-		// youngsMod,
-		// columnIxx,
-		// floorHeight))),
-		// UltimateUnitResistance
-		// .calculatingPlasticMoment(
-		// yieldStrength, columnZx,
-		// floorHeight),
-		// YieldDisplacementUy
-		// .calculateYieldDisplacementUyFIXED(
-		// floorHeight, columnSx,
-		// yieldStrength, youngsMod,
-		// columnIxx),
-		// ReflectedPressurePr.findReflectedPressureWith(
-		// blastAngle,
-		// PeakIncidentOverPressurePso
-		// .findPeakIncidentOverPressureWith(z)),
-		// columnFlangeWidth, floorHeight, ductilityLimit)
-		// + ". Max Ductility Ratio Xm/Xe = " + ductilityRatioF
-		// + " Allowable Ductility Ratio Specified by User = "
-		// + ductilityLimit);
 
 		if (ductilityRatio > ductilityLimit) {
 
@@ -1865,3 +1394,43 @@ public class BlastAssessmentApp {
 // return input;
 // }
 
+// System.out
+// .println("Elastic Parameter - Peak Response Parameter 'tm' = "
+// + EquivalentSDOFElasticResponseA.elasticResponseParameterCheck(
+// (ParameterForElasticCheck
+// .tEquivDividedByTn(
+// EquivalentDurationTe
+// .calculateEquivalentDurationWithIsAndPr(
+// ImpulseIs
+// .calculateImpulseIsUFCGraph(
+// PeakIncidentOverPressurePso
+// .findPeakIncidentOverPressureWith(z),
+// angle,
+// w),
+// ReflectedPressurePr
+// .findingPrWithZAndAngle(
+// z,
+// angle)),
+// EquivalentSDOFPropertiesElastic.naturalPeriodSDOF(
+// EquivalentSDOFPropertiesElastic
+// .massOfEquivSDOF(TotalActalMassM
+// .calculatingTotalActualMass(
+// colweight,
+// colhgt)),
+// EquivalentSDOFPropertiesElastic
+// .stiffnessOfEquivSDOF(ActualStiffnessK
+// .calculateColumnActualStiffness(
+// e,
+// i,
+// colhgt))))),
+// EquivalentDurationTe
+// .calculateEquivalentDurationWithIsAndPr(
+// ImpulseIs
+// .calculateImpulseIsUFCGraph(
+// PeakIncidentOverPressurePso
+// .findPeakIncidentOverPressureWith(z),
+// angle, w),
+// ReflectedPressurePr
+// .findingPrWithZAndAngle(
+// z, angle)))
+// + " ms");

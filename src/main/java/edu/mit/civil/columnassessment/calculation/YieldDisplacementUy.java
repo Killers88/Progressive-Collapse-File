@@ -25,4 +25,11 @@ public class YieldDisplacementUy {
 		return ((Math.pow(colhgt * 12, 2) * s * yield) / (32 * e * i));
 	}
 
+	public static double calculateYieldDisplacementUyPIN_FIXED(
+			final double colhgt, final double s, final double yield,
+			final double e, final double i) {
+
+		return ((Math.pow(colhgt * 12, 2) * s * yield * 8) / (185 * e * i));
+	}
+
 }

@@ -17,11 +17,31 @@ public class StaticDisplacementUs {
 		return k;
 	}
 
-	public static double CalculateStaticDisplacement(final double q,
+	public static double CalculateStaticDisplacementPIN_PIN(final double q,
 			final double k) {
 
 		double Q = calculateAppliedLoading(q);
 		double K = calculateColumnActualStiffness(k);
+
+		return (Q / K) * 12;
+
+	}
+
+	public static double CalculateStaticDisplacementPIN_FIXED(final double q,
+			final double e, final double i, final double l) {
+
+		double Q = calculateAppliedLoading(q);
+		double K = ActualStiffnessK.stiffnessPIN_FIXED(e, i, l);
+
+		return (Q / K) * 12;
+
+	}
+
+	public static double CalculateStaticDisplacementFIXED_FIXED(final double q,
+			final double e, final double i, final double l) {
+
+		double Q = calculateAppliedLoading(q);
+		double K = ActualStiffnessK.stiffnessFIX(e, i, l);
 
 		return (Q / K) * 12;
 
